@@ -1,5 +1,5 @@
 import express from "express";
-import * as user from "./js/db/user.js"
+import runUser from "./js/db/user.js"
 var app = express();
  //get PORT from the server
 const PORT = process.env.PORT;
@@ -18,13 +18,7 @@ app.all("/", function (req, res, next) {
 });
 //end of global
 
-app.get("/login", async (req, res, next) => {
-  var res = await user.login();
-  res.json({
-    data: res,
-    msg:"welcome >:3"
-  });
-});
+runUser(app);
 
 
 //test

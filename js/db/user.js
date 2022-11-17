@@ -13,3 +13,12 @@ export const login = async function(username, password){
     console.log(roles)
     return true;
 }
+export const runUser = function(app){
+    app.get("/login", async (req, res, next) => {
+        var res = await user.login();
+        res.json({
+        data: res,
+        msg:"welcome >:3"
+        });
+    });
+}
