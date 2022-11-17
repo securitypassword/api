@@ -1,5 +1,5 @@
 import { collection, doc, setDoc } from "firebase/firestore"; 
-import db from "../fire"
+import db from "../fire.js"
 const rol = collection(db, "rol");
 
 export const getRoles = async function(){

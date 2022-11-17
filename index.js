@@ -1,5 +1,5 @@
 import express from "express";
-import * as user from "./js/db/user"
+import * as user from "./js/db/user.js"
 var app = express();
  //get PORT from the server
 const PORT = process.env.PORT;
