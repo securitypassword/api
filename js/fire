@@ -1,0 +1,27 @@
+// Import the functions you need from the SDKs you need
+const firebase = require('firebase/compat/app');
+const auth = require('firebase/compat/auth');
+var firestore = require('firebase/compat/firestore');
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyCaTUXOCdUYzJpaOdbqUJqnjjpyDmkyJ3s",
+  authDomain: "securitypassword-9ad22.firebaseapp.com",
+  projectId: "securitypassword-9ad22",
+  storageBucket: "securitypassword-9ad22.appspot.com",
+  messagingSenderId: "919837629069",
+  appId: "1:919837629069:web:a864ff7560a268ddf2e0c4",
+  measurementId: "G-JRC4H91F32"
+};
+
+// Use this to initialize the firebase App
+firebase.initializeApp(firebaseConfig);
+
+
+firestore = firebase.firestore();
+
+module.exports.firebase = firebase;
+module.exports.firestore = firestore;
