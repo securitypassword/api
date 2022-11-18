@@ -20,7 +20,7 @@ const runUser = function(app){
         var resp = await login();
         res.json({
         data: resp,
-        msg:"welcome >:3"
+        msg:"login"
         });
     });
 }
