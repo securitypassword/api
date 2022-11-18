@@ -20,7 +20,7 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const app = initializeApp({credential: admin.credential.cert(serviceAccount)});
+const app = initializeApp({credential: firebase.credential.cert(serviceAccount)});
 //export const analytics = getAnalytics(app);
 
 //declare database
