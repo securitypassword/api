@@ -13,7 +13,7 @@ const getRoles = async function(){
   const rolIDs = rolSnapshot.docs.map(doc => doc.key);
   //juntarlas
   const rolList = rolIDs.map( function(x, i){
-    return {"id": x, "name": rolDocs[i]}
+    return {"id": x, "name": rolDocs[i].name}
   }, this);
   return rolList;
 }
