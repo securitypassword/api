@@ -5,6 +5,8 @@ import firebase from 'firebase-admin'
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
+var serviceAccount = require("../key/securitypassword-9ad22-firebase-adminsdk-4mlo9-b8d69d2c03.json");
+
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
@@ -18,7 +20,7 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
+const app = initializeApp({credential: admin.credential.cert(serviceAccount)});
 //export const analytics = getAnalytics(app);
 
 //declare database
