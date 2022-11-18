@@ -1,4 +1,4 @@
-import { collection, doc, setDoc } from "firebase/firestore"; 
+import { collection, doc, setDoc, getDocs } from "firebase/firestore"; 
 import db from "../fire.js"
 const rol = collection(db, "rol");
 
