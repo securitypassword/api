@@ -8,7 +8,7 @@ const getRoles = async function(){
     return querySnapshot
   })
   //crear una lista con los documentos y las ids
-  const rolList = rolSnapshot.docs.map(doc => {doc.data(),doc.id});
+  const rolList = rolSnapshot.docs.map(doc => doc.data());
   return rolList;
 }
 
