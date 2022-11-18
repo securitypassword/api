@@ -17,9 +17,9 @@ const login = async function(username, password){
 }
 const runUser = function(app){
     app.get("/login", async (req, res, next) => {
-        var res = await login();
+        var resp = await login();
         res.json({
-        data: res,
+        data: resp,
         msg:"welcome >:3"
         });
     });
