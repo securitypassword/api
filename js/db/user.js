@@ -10,7 +10,7 @@ const getRoles = async function(){
   //crear una lista con los documentos
   const rolDocs = rolSnapshot.docs.map(doc => doc.data());
   //las ids
-  const rolIDs = rolSnapshot.docs.map(doc => doc.key);
+  const rolIDs = rolSnapshot.docs.map(doc => doc.id);
   //juntarlas
   const rolList = rolIDs.map( function(x, i){
     return {"id": x, "name": rolDocs[i].name}
