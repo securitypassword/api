@@ -1,6 +1,6 @@
 import { collection, doc, setDoc, getDocs } from "firebase-admin/firestore"; 
 import db from "../fire.js"
-const rol = collection(db, "rol");
+const rol = db.collection("rol");
 
 const getRoles = async function(){
   const rolSnapshot = await getDocs(rol);
