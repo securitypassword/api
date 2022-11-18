@@ -3,7 +3,7 @@ import db from "../fire.js"
 const rol = db.collection("rol");
 
 const getRoles = async function(){
-  const rolSnapshot = await getDocs(rol);
+  const rolSnapshot = await rol.docs();
   const rolList = rolSnapshot.docs.map(doc => doc.data());
   return rolList;
 }
