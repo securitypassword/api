@@ -25,7 +25,7 @@ app.all("/", function (req, res, next) {
 //ejecutar el main de user.js
 runUser(app);
 runFree(app);
-runSec(app);
+await runSec(app);
 
 
 //test
