@@ -29,6 +29,7 @@ const runSec = async function(app){
   console.log("seguridad uwu")
   //generar
   app.post("/generateKeys", async (req, res, next) => {
+    console.log("generate keys attempt")
     const publicKey = await generateKeysAdmin(req.body);
     var resp ={
       data: publicKey,
