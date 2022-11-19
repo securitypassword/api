@@ -30,11 +30,19 @@ const runSec = async function(app){
     generateKeys();
   }
   console.log("seguridad uwu")
-  //test
+  //generar
   app.post("/generateKeys", async (req, res, next) => {
-    const publicKey = generateKeys(req.body);
+    const publicKey = generateKeysAdmin(req.body);
     res.send({
       data: publicKey,
+      msg:"generated"});
+  });
+  //cifrar con la llave publica
+  app.get("/encode", async (req, res, next) => {
+    const text = decodeURI(req.query.text)
+    const resp = encryptTextPublic(text);
+    res.json({
+      data: resp,
       msg:"generated"});
   });
 }
@@ -47,6 +55,7 @@ export default runSec;
 import fs from 'fs'
 import crypto from 'crypto'
 
+//crear archivo exista o no
 const createFile = function(fileName){
   fs.writeFile(fileName, {flag: 'wx'}, function (err, data) 
             { 
@@ -67,6 +76,18 @@ const generateKeys = function (){
     console.log("public")
     console.log(publicKey)
     return pathPublic
+}
+
+//cambiar las llaves desde el modo admin
+const generateKeysAdmin = function(body){
+  let resp = ''
+  if(body.ley == key){
+    resp = generateKeys();
+  }else{
+    console.log("some fellow is tryin to change the keys")
+    resp = "nope"
+  }
+  return resp;
 }
 
 function encryptTextKey (plainText, thisKey) {
