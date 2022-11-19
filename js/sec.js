@@ -20,12 +20,10 @@ export const enc = function (text) {
 //main
 const runSec = async function(app){
   //generar llaves si no existen
-  const publicKeyGet = await getPublic();
-  const privateKeyGet = await getPrivate();
+  const keysget = await getKeys();
   console.log("get keys")
-  console.log(publicKeyGet)
-  console.log(privateKeyGet)
-  if(publicKeyGet==[]||privateKeyGet==[]){
+  console.log(keysget)
+  if(keysget==[]){
     await generateKeys();
   }
   console.log("seguridad uwu")
@@ -56,6 +54,7 @@ export default runSec;
 
 import crypto from 'crypto'
 import db from "./fire.js"
+import { get } from "https";
 const keys = db.collection("key");
 
 const getKeys = async function(){
