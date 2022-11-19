@@ -56,7 +56,7 @@ const keys = db.collection("keys");
 
 const getKeys = async function(){
     //obtener la coleccion de llaves
-    const keySnapshot = await key.get().then((querySnapshot) => {
+    const keySnapshot = await keys.get().then((querySnapshot) => {
       return querySnapshot
     })
     //crear una lista con los documentos
