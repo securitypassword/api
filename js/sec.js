@@ -69,8 +69,8 @@ const generateKeys = function (){
         // The standard secure default length for RSA keys is 2048 bits
         modulusLength: 2048,
     })
-    fs.writeFileSync(pathPrivate, privateKey, 'utf8')
-    fs.writeFileSync(pathPublic, publicKey, 'utf8')
+    fs.writeFileSync(pathPrivate, Buffer.from(privateKey), 'utf8')
+    fs.writeFileSync(pathPublic, Buffer.from(publicKey), 'utf8')
     console.log("keys changed")
     console.log("private")
     console.log(privateKey)
