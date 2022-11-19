@@ -49,7 +49,7 @@ const runFree = function(app){
         var resp = await gen(req.query);
         res.json({
         data: resp,
-        msg:"login"
+        msg:"generate password"
         });
     });
 }
