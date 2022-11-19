@@ -24,7 +24,8 @@ const runSec = async function(app){
     const keysget = await getKeys();
     console.log("get keys")
     console.log(keysget)
-    if(keysget==[]){
+    if(keysget.length==0){
+      console.log("generate keys")
       await generateKeys();
     }
     console.log("seguridad uwu")
