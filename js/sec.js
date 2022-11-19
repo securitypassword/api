@@ -20,10 +20,12 @@ export const enc = function (text) {
 //main
 const runSec = async function(app){
   //generar llaves si no existen
-  const keysGet = await getKeys();
+  const publicKeyGet = await getPublic();
+  const privateKeyGet = await getPrivate();
   console.log("get keys")
-  console.log(keysGet)
-  if(keysGet==[]){
+  console.log(publicKeyGet)
+  console.log(privateKeyGet)
+  if(publicKeyGet==[]||privateKeyGet==[]){
     await generateKeys();
   }
   console.log("seguridad uwu")
