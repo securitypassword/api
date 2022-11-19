@@ -96,7 +96,7 @@ const generateKeys = async function (){
 
 //cambiar las llaves desde el modo admin
 const generateKeysAdmin = async function(body){
-  let resp = ''
+  let resp = ' '
   if(body.key != void(0)){
     if(body.key == masterKey){
       resp = await generateKeys();
