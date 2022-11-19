@@ -24,9 +24,7 @@ const runSec = async function(app){
   console.log("get keys")
   console.log(keysGet)
   if(keysGet==[]){
-    createFile(pathPublic);
-    createFile(pathPrivate);
-    generateKeys();
+    await generateKeys();
   }
   console.log("seguridad uwu")
   //generar
