@@ -20,8 +20,10 @@ export const enc = function (text) {
 //main
 const runSec = async function(app){
   //generar llaves si no existen
-  const keys = await getKeys();
-  if(keys==[]){
+  const keysGet = await getKeys();
+  console.log("get keys")
+  console.log(keysGet)
+  if(keysGet==[]){
     createFile(pathPublic);
     createFile(pathPrivate);
     generateKeys();
