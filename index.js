@@ -1,5 +1,6 @@
 import express from "express";
 import runUser from "./js/db/user.js"
+import runFree from "./js/free.js"
 var app = express();
  //get PORT from the server
  //obtener el PUERTO del server donde hosteamos
@@ -22,6 +23,7 @@ app.all("/", function (req, res, next) {
 
 //ejecutar el main de user.js
 runUser(app);
+runFree(app)
 
 
 //test
