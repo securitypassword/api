@@ -54,10 +54,9 @@ export default runSec;
 
 //rsa
 
-import fs from 'fs'
 import crypto from 'crypto'
 import db from "./fire.js"
-const keys = db.collection("keys");
+const keys = db.collection("key");
 
 const getKeys = async function(){
     //obtener la coleccion de llaves
@@ -115,11 +114,13 @@ const generateKeys = async function (){
 const generateKeysAdmin = async function(body){
   let resp = ' '
   if(body != void(0)){
-    if(body.key == masterKey){
-      resp = await generateKeys();
-    }else{
-      console.log("some fellow is tryin to change the keys")
-      resp = "nope"
+    if(body.key != void(0)){
+      if(body.key == masterKey){
+        resp = await generateKeys();
+      }else{
+        console.log("some fellow is tryin to change the keys")
+        resp = "nope"
+      }
     }
   }
   return resp;
