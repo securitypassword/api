@@ -112,6 +112,7 @@ const generateKeys = async function (){
 //cambiar las llaves desde el modo admin
 const generateKeysAdmin = async function(body){
   let resp = ' '
+  try{
   if(body != void(0)){
     if(body.key != void(0)){
       if(body.key == masterKey){
@@ -123,6 +124,10 @@ const generateKeysAdmin = async function(body){
     }
   }
   return resp;
+  }catch(error){
+    console.log(error)
+    return 'error'
+  }
 }
 
 function encryptTextKey (plainText, thisKey) {
