@@ -57,7 +57,7 @@ import crypto from 'crypto'
 
 //crear archivo exista o no
 const createFile = function(fileName){
-  const data = ""
+  const data = "-"
   fs.writeFile(fileName, data, {flag: 'wx'}, function (err, data) 
             { 
                 callback();
