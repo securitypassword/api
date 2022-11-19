@@ -25,8 +25,8 @@ const pathPrivate = './private_key.pem';
 const runSec = async function(app){
   //generar llaves si no existen
   if((!fs.existsSync(pathPublic))||(!fs.existsSync(pathPrivate))){
-    createFile(pathPublic);
-    createFile(pathPrivate);
+    createFile(pathPublic.toString());
+    createFile(pathPrivate.toString());
     generateKeys();
   }
   console.log("seguridad uwu")
