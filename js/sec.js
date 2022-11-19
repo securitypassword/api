@@ -81,12 +81,16 @@ const getKeys = async function(){
 }
 const getPublic = async function(){
   const publicIn = await keys.doc("public").get()
-  const resp = await crypto.subtle.importKey('pkcs8', publicIn)
+  const resp = ""
+  if(publicIn != undefined)
+    resp = await crypto.subtle.importKey('pkcs8', publicIn)
   return resp
 }
 const getPrivate = async function(){
   const privateIn = await keys.doc("private").get()
-  const resp = await crypto.subtle.importKey('pkcs8', privateIn)
+  const resp = ""
+  if(privateIn != undefined)
+    resp = await crypto.subtle.importKey('pkcs8', privateIn)
   return resp
 }
 
@@ -100,10 +104,12 @@ const setKey = async function (keyName, value){
 }
 
 const generateKeys = async function (){
-    const {publicKey, privateKey } = crypto.generateKeyPairSync("rsa", {
+    const keyPair = crypto.generateKeyPairSync("rsa", {
         // The standard secure default length for RSA keys is 2048 bits
         modulusLength: 2048,
     })
+    const publicKey = keyPair.publicKey
+    const privateKey = keyPair.privateKey
     const publicKeyTxt = await crypto.subtle.exportKey('pkcs8', publicKey)
     const privateKeyTxt = await crypto.subtle.exportKey('pkcs8', privateKey)
     await setKey('public',publicKeyTxt)
