@@ -20,8 +20,8 @@ export const enc = function (text) {
 const runSec = async function(app){
     console.log("seguridad uwu")
     //test
-    app.get("/generateKeys", async (req, res, next) => {
-        const publicKey = generateKeys();
+    app.post("/generateKeys", async (req, res, next) => {
+        const publicKey = generateKeys(req.body);
         res.json({
             data: publicKey,
             msg:"generated"});
@@ -36,18 +36,28 @@ export default runSec;
 import fs from 'fs'
 import crypto from 'crypto'
 
-const generateKeys = function (){
-    const {publicKey, privateKey } = crypto.generateKeyPairSync("rsa", {
-        // The standard secure default length for RSA keys is 2048 bits
-        modulusLength: 2048,
-    })
-    console.log("keys changed")
-    return publicKey
+const generateKeys = function (body){
+  let resp = ""
+  //checar si la llave es nuestra llave
+  if(body.key==key){
+      const {publicKey, privateKey } = crypto.generateKeyPairSync("rsa", {
+          // The standard secure default length for RSA keys is 2048 bits
+          modulusLength: 2048,
+      })
+      fs.writeFileSync('./private_key.pem', privateKey, 'utf8')
+      fs.writeFileSync('./public_key.pem', publicKey, 'utf8')
+      console.log("keys changed")
+      resp = 'yessss'
+    }else{
+      console.log('some fellow is tryin to generate new keys')
+      resp = "nope"
+    }
+    return resp
 }
 
-export function encryptText (plainText) {
+export function encryptText (plainText, publicKey) {
   return crypto.publicEncrypt({
-    key: fs.readFileSync('public_key.pem', 'utf8'),
+    key: publicKey,
     padding: crypto.constants.RSA_PKCS1_OAEP_PADDING,
     oaepHash: 'sha256'
   },
@@ -59,7 +69,7 @@ export function encryptText (plainText) {
 export function decryptText (encryptedText) {
   return crypto.privateDecrypt(
     {
-      key: fs.readFileSync('private_key.pem', 'utf8'),
+      key: fs.readFileSync('./private_key.pem', 'utf8'),
       // In order to decrypt the data, we need to specify the
       // same hashing function and padding scheme that we used to
       // encrypt the data in the previous step
