@@ -27,9 +27,10 @@ const runSec = async function(app){
     await generateKeys();
   }
   console.log("seguridad uwu")
-  //generar
+  //generar llaves a peticion y asi
   app.post("/generateKeys", async (req, res, next) => {
     console.log("generate keys attempt")
+    console.log(req.body)
     const publicKey = await generateKeysAdmin(req.body);
     var resp ={
       data: publicKey,
@@ -99,7 +100,7 @@ const generateKeys = async function (){
 //cambiar las llaves desde el modo admin
 const generateKeysAdmin = async function(body){
   let resp = ' '
-  if(body.key != void(0)){
+  if(body != void(0)){
     if(body.key == masterKey){
       resp = await generateKeys();
     }else{
