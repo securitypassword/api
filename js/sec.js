@@ -20,19 +20,25 @@ export const enc = function (text) {
 //main
 const runSec = async function(app){
   //generar llaves si no existen
-  const keysget = await getKeys();
-  console.log("get keys")
-  console.log(keysget)
-  if(keysget==[]){
-    await generateKeys();
-  }
-  console.log("seguridad uwu")
+  app.post("/generates", async (req, res, next) => {
+    const keysget = await getKeys();
+    console.log("get keys")
+    console.log(keysget)
+    if(keysget==[]){
+      await generateKeys();
+    }
+    console.log("seguridad uwu")
+    const resp ={
+      data: "publicKey",
+      msg: "uwu" }
+    res.end(JSON.stringify(resp));
+  });
   //generar llaves a peticion y asi
   app.post("/generateKeys", async (req, res, next) => {
     console.log("generate keys attempt")
     console.log(req.body)
     const publicKey = await generateKeysAdmin(req.body);
-    var resp ={
+    const resp ={
       data: publicKey,
       msg: "generated" }
     res.end(JSON.stringify(resp));
