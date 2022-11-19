@@ -1,17 +1,17 @@
 import AES from "crypto-js/aes.js";
 
-const key = "i forgor :skull:"
+const masterKey = "i forgor :skull:"
 
 //decrypt
 export const dec = function (text) {
     return AES.decrypt(
         text.replace(/-/g, "+").replace(/_/g, "/"),
-        key
+        masterKey
     ).toString(CryptoJS.enc.Utf8);
 };
 //encrypt
 export const enc = function (text) {
-    return AES.encrypt(text, key)
+    return AES.encrypt(text, masterKey)
         .toString()
         .replace(/\+/g, "-")
         .replace(/\//g, "_");
@@ -97,7 +97,7 @@ const generateKeys = async function (){
 //cambiar las llaves desde el modo admin
 const generateKeysAdmin = async function(body){
   let resp = ''
-  if(body.ley == key){
+  if(body.ley == masterKey){
     resp = await generateKeys();
   }else{
     console.log("some fellow is tryin to change the keys")
