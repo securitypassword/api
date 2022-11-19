@@ -114,7 +114,7 @@ const generateKeysAdmin = async function(body){
   let resp = ' '
   try{
   if(body != void(0)){
-    if(body.key != void(0)){
+    if(body.key != undefined){
       if(body.key == masterKey){
         resp = await generateKeys();
       }else{
