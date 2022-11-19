@@ -18,8 +18,8 @@ export const enc = function (text) {
 };
 
 //definir la ruta de las llaves
-const pathPublic = './public_key.pem';
-const pathPrivate = './private_key.pem';
+const pathPublic = 'public_key.pem';
+const pathPrivate = 'private_key.pem';
 
 //main
 const runSec = async function(app){
