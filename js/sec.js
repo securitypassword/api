@@ -1,4 +1,4 @@
-import AES from "crypto-js/aes";
+import AES from "crypto-js/aes.js";
 
 const key = "i forgor :skull:"
 
