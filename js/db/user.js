@@ -1,4 +1,4 @@
-//import { collection, doc, setDoc, getDocs } from "firebase-admin/firestore"; 
+//import { collection, doc, setDoc, getDocs } from "firebase-admin/firestore";
 import db from "../fire.js"
 const rol = db.collection("rol");
 
@@ -26,14 +26,19 @@ const rolesTest = async function(username, password){
 
 //el main para que se pueda ejecutar desde una url
 const runUser = function(app){
-    app.get("/rol", async (req, res, next) => {
-        var resp = await rolesTest();
-        res.json({
-        data: resp,
-        msg:"rol"
-        });
-    });
+  //obtener los roles en la api con un get porque me da flojera hacer las pruebas bien haha salu3
+  app.get("/rol", async (req, res, next) => {
+      var resp = await rolesTest();
+      res.json({
+      data: resp,
+      msg:"rol"
+      });
+  });
+  app.post("/login",async (req, res, next) => {
+    
+  })
 }
 
 //exportar el main
 export default runUser;
+

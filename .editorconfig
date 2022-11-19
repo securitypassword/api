@@ -1,0 +1,27 @@
+# EditorConfig is awesome: https://EditorConfig.org
+
+# top-most EditorConfig file
+root = true
+
+[*]
+indent_style = space
+indent_size = 4
+end_of_line = crlf
+charset = utf-8
+trim_trailing_whitespace = true
+insert_final_newline = true
+
+# JS Indent
+[lib/**.js]
+indent_style = space
+indent_size = 2
+extra_spaces = remove_all
+space_before_comma = true
+space_before_semicolon= false
+space_after_semicolon_in_for_statement = true
+space_before_method_call_parentheses= false
+space_between_method_call_name_and_opening_parenthesis = false
+space_between_method_call_parameter_list_parentheses = true
+space_between_method_call_empty_parameter_list_parentheses = false
+space_before_method_parentheses = true
+space_before_method_parentheses_anonymous = true
