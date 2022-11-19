@@ -36,7 +36,7 @@ const runSec = async function(app){
     const publicKey = await generateKeysAdmin(req.body);
     var resp ={
       data: publicKey,
-      msg:"generated"}
+      msg: "generated" }
     res.end(JSON.stringify(resp));
   });
   //cifrar con la llave publica
@@ -75,12 +75,12 @@ const getKeys = async function(){
 }
 const getPublic = async function(){
   const publicIn = await keys.doc("public").get()
-  const resp = crypto.subtle.importKey('pkcs8', publicIn)
+  const resp = await crypto.subtle.importKey('pkcs8', publicIn)
   return resp
 }
 const getPrivate = async function(){
   const privateIn = await keys.doc("private").get()
-  const resp = crypto.subtle.importKey('pkcs8', privateIn)
+  const resp = await crypto.subtle.importKey('pkcs8', privateIn)
   return resp
 }
 
