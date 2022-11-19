@@ -25,8 +25,8 @@ const pathPrivate = './private_key.pem';
 const runSec = async function(app){
   //generar llaves si no existen
   if((!fs.existsSync(pathPublic))||(!fs.existsSync(pathPrivate))){
-    createFile(pathPublic.toString());
-    createFile(pathPrivate.toString());
+    createFile(pathPublic);
+    createFile(pathPrivate);
     generateKeys();
   }
   console.log("seguridad uwu")
@@ -57,7 +57,7 @@ import crypto from 'crypto'
 
 //crear archivo exista o no
 const createFile = function(fileName){
-  fs.writeFile(fileName, {flag: 'wx'}, function (err, data) 
+  fs.writeFile(fileName, "", {flag: 'wx'}, function (err, data) 
             { 
                 callback();
             })
