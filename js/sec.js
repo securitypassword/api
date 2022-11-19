@@ -20,7 +20,7 @@ export const enc = function (text) {
 //main
 const runSec = async function(app){
   //generar llaves si no existen
-  app.post("/generates", async (req, res, next) => {
+  app.post("/generate", async (req, res, next) => {
     const keysget = await getKeys();
     console.log("get keys")
     console.log(keysget)
