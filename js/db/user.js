@@ -18,7 +18,7 @@ const getRoles = async function(){
   return rolList;
 }
 
-const login = async function(username, password){
+const rolesTest = async function(username, password){
     let roles = await getRoles();
     console.log(roles)
     return true;
@@ -26,11 +26,11 @@ const login = async function(username, password){
 
 //el main para que se pueda ejecutar desde una url
 const runUser = function(app){
-    app.get("/login", async (req, res, next) => {
-        var resp = await login();
+    app.get("/rol", async (req, res, next) => {
+        var resp = await rolesTest();
         res.json({
         data: resp,
-        msg:"login"
+        msg:"rol"
         });
     });
 }
