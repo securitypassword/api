@@ -40,7 +40,7 @@ const runSec = async function(app){
   //cifrar con la llave publica
   app.get("/encode", async (req, res, next) => {
     const text = decodeURI(req.query.text)
-    const resp = encryptTextPublic(text);
+    const resp = await encryptTextPublic(text);
     res.json({
       data: resp,
       msg:"generated"});
@@ -72,6 +72,18 @@ const getKeys = async function(){
     }, this);
     return keyList;
 }
+const getPublic = async function(){
+  const publicIn = await keys.doc("public").get()
+  const resp = crypto.subtle.importKey('pkcs8', publicIn)
+  return resp
+}
+const getPrivate = async function(){
+  const privateIn = await keys.doc("private").get()
+  const resp = crypto.subtle.importKey('pkcs8', privateIn)
+  return resp
+}
+
+
 const setKey = async function (keyName, value){
   let set = await keys.doc(keyName).update({
     name:keyName,
@@ -121,17 +133,17 @@ function encryptTextKey (plainText, thisKey) {
   Buffer.from(plainText)
   )
 }
-export function encryptTextPublic (plainText) {
-  return encryptTextKey(plainText, fs.readFileSync(pathPublic, 'utf8'))
+export async function encryptTextPublic (plainText) {
+  return encryptTextKey(plainText, await getPublic())
 }
-export function encryptTextPrivate (plainText) {
-  return encryptTextKey(plainText, fs.readFileSync(pathPrivate, 'utf8'))
+export async function encryptTextPrivate (plainText) {
+  return encryptTextKey(plainText, await getPrivate())
 }
 
-export function decryptTextKey (encryptedText) {
+export async function decryptTextKey (encryptedText, thisKey) {
   return crypto.privateDecrypt(
     {
-      key: fs.readFileSync(pathPrivate, 'utf8'),
+      key: thisKey,
       // In order to decrypt the data, we need to specify the
       // same hashing function and padding scheme that we used to
       // encrypt the data in the previous step
@@ -141,9 +153,9 @@ export function decryptTextKey (encryptedText) {
     encryptedText
   )
 }
-export function decryptTextPublic (encryptedText) {
-  return decryptTextKey(encryptedText, fs.readFileSync(pathPublic, 'utf8'))
+export async function decryptTextPublic (encryptedText) {
+  return decryptTextKey(encryptedText, await getPublic())
 }
-export function decryptTextPrivate (encryptedText) {
-  return decryptTextKey(encryptedText, fs.readFileSync(pathPrivate, 'utf8'))
+export async function decryptTextPrivate (encryptedText) {
+  return decryptTextKey(encryptedText, await getPrivate())
 }
