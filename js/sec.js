@@ -30,9 +30,10 @@ const runSec = async function(app){
   //generar
   app.post("/generateKeys", async (req, res, next) => {
     const publicKey = await generateKeysAdmin(req.body);
-    res.send({
+    var resp ={
       data: publicKey,
-      msg:"generated"});
+      msg:"generated"}
+    res.end(JSON.stringify(resp));
   });
   //cifrar con la llave publica
   app.get("/encode", async (req, res, next) => {
