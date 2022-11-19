@@ -1,5 +1,4 @@
-import { CryptoJS } from "crypto-js";
-const AES = CryptoJS.AES
+import AES from "crypto-js/aes";
 
 const key = "i forgor :skull:"
 
