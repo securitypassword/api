@@ -17,14 +17,11 @@ export const enc = function (text) {
         .replace(/\//g, "_");
 };
 
-//definir la ruta de las llaves
-const pathPublic = './public_key.pem';
-const pathPrivate = './private_key.pem';
-
 //main
 const runSec = async function(app){
   //generar llaves si no existen
-  if((!fs.existsSync(pathPublic))||(!fs.existsSync(pathPrivate))){
+  const keys = await getKeys();
+  if(keys==[]){
     createFile(pathPublic);
     createFile(pathPrivate);
     generateKeys();
@@ -32,7 +29,7 @@ const runSec = async function(app){
   console.log("seguridad uwu")
   //generar
   app.post("/generateKeys", async (req, res, next) => {
-    const publicKey = generateKeysAdmin(req.body);
+    const publicKey = await generateKeysAdmin(req.body);
     res.send({
       data: publicKey,
       msg:"generated"});
@@ -54,36 +51,54 @@ export default runSec;
 
 import fs from 'fs'
 import crypto from 'crypto'
+import db from "./fire.js"
+const keys = db.collection("keys");
 
-//crear archivo exista o no
-const createFile = function(fileName){
-  const data = "-"
-  fs.writeFile(fileName, data, {flag: 'wx'}, function (err, data) 
-            { 
-                callback();
-            })
+const getKeys = async function(){
+    //obtener la coleccion de llaves
+    const keySnapshot = await key.get().then((querySnapshot) => {
+      return querySnapshot
+    })
+    //crear una lista con los documentos
+    const keyDocs = keySnapshot.docs.map(doc => doc.data());
+    //las ids
+    const keyIDs = keySnapshot.docs.map(doc => doc.id);
+    //juntarlas
+    const keyList = keyIDs.map( function(x, i){
+      return {"id": x, "value": keyDocs[i].value}
+    }, this);
+    return keyList;
+}
+const setKey = async function (keyName, value){
+  let set = await keys.doc(keyName).update({
+    name:keyName,
+    value: value})
+  console.log("set",keyName)
+  console.log(set)
 }
 
-const generateKeys = function (){
+const generateKeys = async function (){
     const {publicKey, privateKey } = crypto.generateKeyPairSync("rsa", {
         // The standard secure default length for RSA keys is 2048 bits
         modulusLength: 2048,
     })
-    fs.writeFileSync(pathPrivate, Buffer.of(privateKey), {flag: 'wx', encoding: 'utf8'})
-    fs.writeFileSync(pathPublic, Buffer.of(publicKey), {flag: 'wx', encoding: 'utf8'})
+    const publicKeyTxt = await crypto.subtle.exportKey('pkcs8', publicKey)
+    const privateKeyTxt = await crypto.subtle.exportKey('pkcs8', privateKey)
+    await setKey('public',publicKeyTxt)
+    await setKey('private',privateKeyTxt)
     console.log("keys changed")
     console.log("private")
-    console.log(privateKey)
+    console.log(publicKeyTxt)
     console.log("public")
-    console.log(publicKey)
-    return pathPublic
+    console.log(privateKeyTxt)
+    return publicKeyTxt
 }
 
 //cambiar las llaves desde el modo admin
-const generateKeysAdmin = function(body){
+const generateKeysAdmin = async function(body){
   let resp = ''
   if(body.ley == key){
-    resp = generateKeys();
+    resp = await generateKeys();
   }else{
     console.log("some fellow is tryin to change the keys")
     resp = "nope"
