@@ -83,7 +83,7 @@ const getPublic = async function(){
   publicIn = publicIn.data()
   console.log("get public key")
   console.log(publicIn)
-  const resp = ""
+  let resp = ""
   if(publicIn != undefined)
     resp = Buffer.from(publicIn.value)
   return resp
@@ -93,7 +93,7 @@ const getPrivate = async function(){
   privateIn = privateIn.data()
   console.log("get private key")
   console.log(privateIn)
-  const resp = ""
+  let resp = ""
   if(privateIn != undefined)
     resp = Buffer.from(privateIn.value)
   return resp
