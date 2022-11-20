@@ -73,7 +73,7 @@ export default runSec;
 
 import crypto from "crypto";
 import db from "./fire.js"
-import * as jose from 'jose';
+import * as jwt from 'jsonwebtoken';
 const keys = db.collection("key");
 const tokens = db.collection("token");
 
@@ -205,7 +205,7 @@ export async function decryptTextPrivate (encryptedText) {
 
 export const signToken= async function(toDo){
   
-  const token = jose.jwt.sign(
+  const token = jwt.sign(
     { user_id: user._id, email },
     await getPrivate(),
     {
