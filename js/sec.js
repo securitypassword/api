@@ -80,6 +80,8 @@ const getKeys = async function(){
 }
 const getPublic = async function(){
   const publicIn = await keys.doc("public").get()
+  console.log("get public key")
+  console.log(publicIn)
   const resp = ""
   if(publicIn != undefined)
     resp = Buffer.from(publicIn)
@@ -87,6 +89,8 @@ const getPublic = async function(){
 }
 const getPrivate = async function(){
   const privateIn = await keys.doc("private").get()
+  console.log("get private key")
+  console.log(privateIn)
   const resp = ""
   if(privateIn != undefined)
     resp = Buffer.from(privateIn)
