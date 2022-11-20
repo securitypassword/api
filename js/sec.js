@@ -103,6 +103,8 @@ const setKey = async function (keyName, value){
   console.log(set)
 }
 
+import window from "window"
+
 const generateKeys = async function (){
     const keyPair = crypto.generateKeyPairSync("rsa", {
         // The standard secure default length for RSA keys is 2048 bits
@@ -110,7 +112,7 @@ const generateKeys = async function (){
     })
     const publicKey = keyPair.publicKey
     const privateKey = keyPair.privateKey
-    const cryptoSubtle = crypto.subtle
+    const cryptoSubtle = window.crypto.Subtle
     const publicKeyTxt = await cryptoSubtle.exportKey('pkcs8', publicKey)
     const privateKeyTxt = await cryptoSubtle.exportKey('pkcs8', privateKey)
     await setKey('public',publicKeyTxt)
