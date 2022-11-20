@@ -73,6 +73,7 @@ export default runSec;
 
 import crypto from "crypto";
 import db from "./fire.js"
+import * as jose from 'jose';
 const keys = db.collection("key");
 const tokens = db.collection("token");
 
@@ -204,7 +205,7 @@ export async function decryptTextPrivate (encryptedText) {
 
 export const signToken= async function(toDo){
   
-  const token = await CryptoJS.SignJWT({ id: CryptoJS.SHA3(toDo) }) // details to  encode in the token
+  const token = await new jose.SignJWT({ id: CryptoJS.SHA3(toDo) }) // details to  encode in the token
       .setProtectedHeader({ alg: 'HS256' }) // algorithm
       .setIssuedAt()
       .setIssuer("Server") // issuer
@@ -217,7 +218,7 @@ export const signToken= async function(toDo){
 
 const setToken = async function (value){
   const newId = CryptoJS.SHA256(value)
-  let set = await keys.doc(newId).set({
+  let set = await tokens.doc(newId).set({
     name:keyName,
     value: value})
   console.log("set new token")
