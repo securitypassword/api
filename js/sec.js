@@ -205,13 +205,21 @@ export async function decryptTextPrivate (encryptedText) {
 
 export const signToken= async function(toDo){
   
-  const token = await jose.SignJWT({ id: CryptoJS.SHA3(toDo) }) // details to  encode in the token
+  const token = jwt.sign(
+    { user_id: user._id, email },
+    await getPrivate(),
+    {
+      expiresIn: "2h",
+    }
+  );
+  /* jose.SignJWT({ id: CryptoJS.SHA3(toDo) }) // details to  encode in the token
       .setProtectedHeader({ alg: 'HS256' }) // algorithm
       .setIssuedAt()
       .setIssuer("Server") // issuer
       .setAudience("Client") // audience
       .setExpirationTime("2 hours") // token expiration time, e.g., "1 day"
       .sign(await getPrivate()); // secretKey generated from previous step
+      */
   console.log(token); // log token to console
   return token
 }
