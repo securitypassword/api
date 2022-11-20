@@ -59,7 +59,7 @@ export default runSec;
 
 //rsa
 
-import CryptoJS from "crypto-js";
+import crypto from "crypto";
 import db from "./fire.js"
 const keys = db.collection("key");
 
@@ -103,9 +103,18 @@ const setKey = async function (keyName, value){
 }
 
 const generateKeys = async function (){
-    const keyPair = CryptoJS.RSA_PKCS1_OAEP_PADDING.generateKeys()
-    const publicKeyTxt = keyPair.publicKeyTxt
-    const privateKeyTxt = keyPair.privateKeyTxt
+    const { privateKey, publicKey } = crypto.generateKeyPairSync("rsa", {
+      // The standard secure default length for RSA keys is 2048 bits
+      modulusLength: 2048,
+    });
+    const publicKeyTxt = publicKey.export({
+      type: "pkcs1",
+      format: "pem",
+    });
+    const privateKeyTxt = privateKey.export({
+      type: "pkcs1",
+      format: "pem",
+    });
     console.log("keys changed")
     console.log("private")
     console.log(publicKeyTxt)
