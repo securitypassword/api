@@ -59,9 +59,8 @@ export default runSec;
 
 //rsa
 
-import crypto from 'crypto'
+import CryptoJS from "crypto-js";
 import db from "./fire.js"
-import { get } from "https";
 const keys = db.collection("key");
 
 const getKeys = async function(){
