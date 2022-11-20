@@ -129,6 +129,8 @@ const runUser = function(app){
     
   })
   app.post("/register",async (req, res, next) => {
+    console.log("reg")
+    console.log(req)
     const reg = await register(req.body)
     const resp = {
       data : reg.data,
