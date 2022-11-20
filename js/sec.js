@@ -82,20 +82,20 @@ const getPublic = async function(){
   const publicIn = await keys.doc("public").get()
   const resp = ""
   if(publicIn != undefined)
-    resp = await crypto.subtle.importKey('pkcs8', publicIn)
+    resp = Buffer.from(publicIn)
   return resp
 }
 const getPrivate = async function(){
   const privateIn = await keys.doc("private").get()
   const resp = ""
   if(privateIn != undefined)
-    resp = await crypto.subtle.importKey('pkcs8', privateIn)
+    resp = Buffer.from(privateIn)
   return resp
 }
 
 
 const setKey = async function (keyName, value){
-  let set = await keys.doc(keyName).update({
+  let set = await keys.doc(keyName).set({
     name:keyName,
     value: value})
   console.log("set",keyName)
