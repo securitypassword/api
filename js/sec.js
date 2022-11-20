@@ -62,7 +62,7 @@ const runSec = async function(app){
     }
     res.json({
       data: resp,
-      msg:"generated"});
+      msg:"token"});
   });
 }
 
