@@ -204,7 +204,7 @@ export async function decryptTextPrivate (encryptedText) {
 
 export const signToken= async function(toDo){
   
-  const token = await new SignJWT({ id: CryptoJS.SHA3(toDo) }) // details to  encode in the token
+  const token = await CryptoJS.SignJWT({ id: CryptoJS.SHA3(toDo) }) // details to  encode in the token
       .setProtectedHeader({ alg: 'HS256' }) // algorithm
       .setIssuedAt()
       .setIssuer("Server") // issuer
