@@ -203,7 +203,6 @@ export async function decryptTextPrivate (encryptedText) {
 }
 
 export const signToken= async function(toDo){
-  const secretKey = createSecretKey(CryptoJS.SHA3(await getPrivate()), 'utf-8');
   
   const token = await new SignJWT({ id: CryptoJS.SHA3(toDo) }) // details to  encode in the token
       .setProtectedHeader({ alg: 'HS256' }) // algorithm
@@ -211,7 +210,7 @@ export const signToken= async function(toDo){
       .setIssuer("Server") // issuer
       .setAudience("Client") // audience
       .setExpirationTime("2 hours") // token expiration time, e.g., "1 day"
-      .sign(secretKey); // secretKey generated from previous step
+      .sign(await getPrivate()); // secretKey generated from previous step
   console.log(token); // log token to console
   return token
 }
