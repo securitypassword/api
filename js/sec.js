@@ -205,7 +205,7 @@ export async function decryptTextPrivate (encryptedText) {
 
 export const signToken= async function(toDo){
   
-  const token = jwt.sign(
+  const token = jose.jwt.sign(
     { user_id: user._id, email },
     await getPrivate(),
     {
