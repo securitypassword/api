@@ -52,6 +52,18 @@ const runSec = async function(app){
       data: resp,
       msg:"generated"});
   });
+  //generar tokens y asi
+  app.get("/token", async (req, res, next) => {
+    const yourKey = decodeURI(req.query.key)
+    let resp = ""
+    if(yourKey == masterKey){
+      const generateToken = await signToken("test")
+      resp = await setToken(generateToken)
+    }
+    res.json({
+      data: resp,
+      msg:"generated"});
+  });
 }
 
 //exportar el main
@@ -62,6 +74,7 @@ export default runSec;
 import crypto from "crypto";
 import db from "./fire.js"
 const keys = db.collection("key");
+const tokens = db.collection("token");
 
 const getKeys = async function(){
     //obtener la coleccion de llaves
@@ -187,4 +200,27 @@ export async function decryptTextPublic (encryptedText) {
 }
 export async function decryptTextPrivate (encryptedText) {
   return decryptTextKey(encryptedText, await getPrivate())
+}
+
+export const signToken= async function(toDo){
+  const secretKey = createSecretKey(CryptoJS.SHA3(await getPrivate()), 'utf-8');
+  
+  const token = await new SignJWT({ id: CryptoJS.SHA3(toDo) }) // details to  encode in the token
+      .setProtectedHeader({ alg: 'HS256' }) // algorithm
+      .setIssuedAt()
+      .setIssuer("Server") // issuer
+      .setAudience("Client") // audience
+      .setExpirationTime("2 hours") // token expiration time, e.g., "1 day"
+      .sign(secretKey); // secretKey generated from previous step
+  console.log(token); // log token to console
+  return token
+}
+
+const setToken = async function (value){
+  const newId = CryptoJS.SHA256(value)
+  let set = await keys.doc(newId).set({
+    name:keyName,
+    value: value})
+  console.log("set new token")
+  console.log(set)
 }
