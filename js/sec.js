@@ -85,7 +85,7 @@ const getPublic = async function(){
   console.log(publicIn)
   const resp = ""
   if(publicIn != undefined)
-    resp = Buffer.from(publicIn)
+    resp = Buffer.from(publicIn.value)
   return resp
 }
 const getPrivate = async function(){
@@ -95,7 +95,7 @@ const getPrivate = async function(){
   console.log(privateIn)
   const resp = ""
   if(privateIn != undefined)
-    resp = Buffer.from(privateIn)
+    resp = Buffer.from(privateIn.value)
   return resp
 }
 
