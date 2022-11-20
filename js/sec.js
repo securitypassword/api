@@ -113,7 +113,7 @@ const generateKeys = async function (){
     })
     const publicKey = keyPair.publicKey
     const privateKey = keyPair.privateKey
-    const cryptoSubtle = cryptoObj.subtle
+    const cryptoSubtle = cryptoObj.subtle()
     const publicKeyTxt = await cryptoSubtle.exportKey('pkcs8', publicKey)
     const privateKeyTxt = await cryptoSubtle.exportKey('pkcs8', privateKey)
     await setKey('public',publicKeyTxt)
