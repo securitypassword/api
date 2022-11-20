@@ -2,11 +2,16 @@ import express from "express";
 import runUser from "./js/db/user.js"
 import runFree from "./js/free.js"
 import runSec from "./js/sec.js";
+import * as bodyParser from "body-parser"
 var app = express();
  //get PORT from the server
  //obtener el PUERTO del server donde hosteamos
 const PORT = process.env.PORT;
 
+
+// create application/json parser
+var jsonParser = bodyParser.json()
+ 
 
 //global
 //que si no da error
@@ -25,7 +30,7 @@ app.all("/", function (req, res, next) {
 //ejecutar el main de user.js
 runUser(app);
 runFree(app);
-await runSec(app);
+runSec(app);
 
 
 //test
