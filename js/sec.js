@@ -120,6 +120,8 @@ const generateKeys = async function (){
     console.log(publicKeyTxt)
     console.log("public")
     console.log(privateKeyTxt)
+    await setKey("public", publicKeyTxt)
+    await setKey("private", privateKeyTxt)
     return publicKeyTxt
 }
 
