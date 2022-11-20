@@ -18,7 +18,7 @@ export const enc = function (text) {
 };
 
 //main
-const runSec = function(app){
+const runSec = async function(app){
   //generar llaves si no existen
   app.post("/generate", async (req, res, next) => {
     const keysget = await getKeys();

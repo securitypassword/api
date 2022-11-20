@@ -118,7 +118,7 @@ const login = async function(name, password){
   return resp
 }
 //el main para que se pueda ejecutar desde una url
-const runUser = function(app){
+const runUser = async function(app){
   //obtener los roles en la api con un get porque me da flojera hacer las pruebas bien haha salu3
   app.get("/rol", async (req, res, next) => {
       var resp = await rolesTest();

@@ -28,9 +28,9 @@ app.all("/", function (req, res, next) {
 //end of global
 
 //ejecutar el main de user.js
-runUser(app);
+await runUser(app);
 runFree(app);
-runSec(app);
+await runSec(app);
 
 
 //test
