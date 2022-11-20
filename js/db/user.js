@@ -57,6 +57,7 @@ const newId = async function(){
 
 const register = async function(body){
   console.log("register")
+  console.log(body)
   let resp = {}
   if(body == undefined){
     resp = {
