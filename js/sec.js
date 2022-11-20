@@ -103,20 +103,10 @@ const setKey = async function (keyName, value){
   console.log(set)
 }
 
-import window from "window"
-
 const generateKeys = async function (){
-    const keyPair = crypto.generateKeyPairSync("rsa", {
-        // The standard secure default length for RSA keys is 2048 bits
-        modulusLength: 2048,
-    })
-    const publicKey = keyPair.publicKey
-    const privateKey = keyPair.privateKey
-    const cryptoSubtle = await crypto.subtle
-    const publicKeyTxt = await cryptoSubtle.exportKey('pkcs8', publicKey)
-    const privateKeyTxt = await cryptoSubtle.exportKey('pkcs8', privateKey)
-    await setKey('public',publicKeyTxt)
-    await setKey('private',privateKeyTxt)
+    const keyPair = CryptoJS.RSA_PKCS1_OAEP_PADDING.generateKeys()
+    const publicKeyTxt = keyPair.publicKeyTxt
+    const privateKeyTxt = keyPair.privateKeyTxt
     console.log("keys changed")
     console.log("private")
     console.log(publicKeyTxt)
