@@ -79,7 +79,7 @@ const getKeys = async function(){
     return keyList;
 }
 const getPublic = async function(){
-  const publicIn = await keys.doc("public").get()
+  let publicIn = await keys.doc("public").get()
   publicIn = publicIn.data()
   console.log("get public key")
   console.log(publicIn)
@@ -89,7 +89,7 @@ const getPublic = async function(){
   return resp
 }
 const getPrivate = async function(){
-  const privateIn = await keys.doc("private").get()
+  let privateIn = await keys.doc("private").get()
   privateIn = privateIn.data()
   console.log("get private key")
   console.log(privateIn)
