@@ -25,15 +25,38 @@ const rolesTest = async function(username, password){
     return true;
 }
 
-const userExists = async function(name){
-  const existing = await db.query(user, where("name", "==", name));
-  console.log("does",name,"exist?")
+const userExists = async function(testName){
+  const existing = await db.query(user, where("usu_name", "==", testName));
+  console.log("does",testName,"exist?")
   console.log(existing)
   const exists = existing == []
   return exists
 }
+const userIdExists = async function(testId){
+  const existing = await user.doc(testId).get()
+  console.log("does",testId,"id exist?")
+  console.log(existing)
+  const exists = !(existing == [] || existing == undefined)
+  return exists
+}
+
+import gen from "../free.js"
+const newId = async function(){
+  let id = "demma"
+  let exists = await user.doc(id).get()
+  const query = { low : "true" ,
+    up : "true" ,
+    nums : "true" ,
+    len : "32" }
+  while(exists==undefined || exists == []){
+    id = gen(query)
+    exists = await user.doc(id).get()
+  }
+  return id
+}
 
 const register = async function(body){
+  console.log("register")
   let resp = {}
   if(body == undefined){
     resp = {
@@ -65,9 +88,18 @@ const register = async function(body){
         msg : "already registered"
       }
     }else{
+      console.log("success",body.name)
+      const id = await newId()
+      await user.doc(id).set({
+        usu_name : body.name,
+        usu_email : body.email,
+        usu_password : CryptoJS.SHA256(body.password),
+        usu_autodelete : false,
+        usu_autodel_count : 0
+      })
       resp = {
         data : "success" , 
-        msg : "lol"
+        msg : id
       }
     } 
   }

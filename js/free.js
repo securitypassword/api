@@ -1,4 +1,4 @@
-const gen = async function(query){
+export const gen = async function(query){
     var allowed = "";
     if (query.low == "true") {
       allowed += "abcdefghijklmnopqrstuvwxyz";
