@@ -1,17 +1,17 @@
-import AES from "crypto-js/aes.js";
+import CryptoJS from "crypto-js";
 
 const masterKey = "i forgor :skull:"
 
 //decrypt
 export const dec = function (text) {
-    return AES.decrypt(
+    return CryptoJS.AES.decrypt(
         text.replace(/-/g, "+").replace(/_/g, "/"),
         masterKey
     ).toString(CryptoJS.enc.Utf8);
 };
 //encrypt
 export const enc = function (text) {
-    return AES.encrypt(text, masterKey)
+    return CryptoJS.AES.encrypt(text, masterKey)
         .toString()
         .replace(/\+/g, "-")
         .replace(/\//g, "_");
