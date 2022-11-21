@@ -141,6 +141,7 @@ const loginToken = async function(body){
   let resp = {
     data: "",
     msg: "not found"}
+  console.log("login token")
   console.log(gettoken)
   if(JSON.stringify(gettoken) != "{}"){
     resp.msg = "found"
