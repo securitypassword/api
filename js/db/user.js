@@ -34,6 +34,7 @@ const userExists = async function(testName){
   const existing = query.docs.map(doc => doc.data());
   console.log(existing)
   const exists = existing == []
+  console.log(exists)
   return exists
 }
 const userIdExists = async function(testId){
