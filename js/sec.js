@@ -234,5 +234,14 @@ const setToken = async function (value){
 }
 
 export const sha = function(text){
-  return CryptoJS.SHA256(text)
+  return CryptoJS.SHA256(text).toString(CryptoJS.enc.Base64url)
+}
+
+export const to64 = function(text){
+  return atob(text).replace(/\+/g, "-")
+  .replace(/\//g, "_");
+}
+export const from64 = function(text){
+  return btoa(text.replace(/\+/g, "-")
+  .replace(/\//g, "_"));
 }

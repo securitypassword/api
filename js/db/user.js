@@ -98,8 +98,8 @@ const register = async function(body){
       console.log("success",body.name)
       const id = await newId()
       await user.doc(id).set({
-        usu_name : body.name,
-        usu_email : body.email,
+        usu_name : sec.to64(body.name),
+        usu_email : sec.to64(body.email),
         usu_password : sec.sha(body.password),
         usu_autodelete : false,
         usu_autodel_count : 0
