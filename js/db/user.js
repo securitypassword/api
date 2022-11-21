@@ -46,6 +46,7 @@ const userIdExists = async function(testId){
 }
 
 import gen from "../free.js"
+import e from "express";
 
 const register = async function(body){
   console.log("register")
@@ -120,9 +121,16 @@ const login = async function(body){
           resp.data = userquery.id
           resp.msg = "login"
           await sec.signToken(resp)
-        }   
+        }else{
+          resp.msg = "incorrecto password"
+        }
+      }else{
+        resp.msg = "enter a valid name"   
       }
+    }else{
+      resp.msg = "enter a password"
     }
+  }else{
     resp.msg = "enter a name"
   }
   return resp
