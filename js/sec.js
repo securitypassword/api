@@ -235,8 +235,8 @@ export const getToken = async function(token){
   const tokenGot = tokenList[0]
   console.log(tokenGot)
   if(tokenList.length!=0){
-    resp = tokenList[0]
-    await tokens.doc(tokenList.id).delete()
+    resp = tokenGot
+    await tokens.doc(tokenGot.tok_name).delete()
   }
   console.log("result", resp)
   return resp
