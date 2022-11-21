@@ -138,9 +138,12 @@ const login = async function(body){
 
 const loginToken = async function(body){
   const gettoken = await sec.getToken(body.token)
-  let resp = ""
+  let resp = {
+    data: "",
+    msg: "not found"}
   if(gettoken!={}){
-    resp=gettoken
+    resp.msg = "found"
+    resp.data = gettoken
   }
   return resp
 }
