@@ -232,3 +232,7 @@ const setToken = async function (value){
   console.log("set new token")
   console.log(set)
 }
+
+export const sha = function(text){
+  return CryptoJS.SHA256(text)
+}

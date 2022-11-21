@@ -1,5 +1,7 @@
 //import { collection, doc, setDoc, getDocs } from "firebase-admin/firestore";
+import { securityRules } from "firebase-admin";
 import db from "../fire.js"
+import * as sec from "../sec.js"
 const rol = db.collection("rol");
 const user = db.collection("user");
 
@@ -99,7 +101,7 @@ const register = async function(body){
       await user.doc(id).set({
         usu_name : body.name,
         usu_email : body.email,
-        usu_password : CryptoJS.SHA256(body.password),
+        usu_password : sec.sha(body.password),
         usu_autodelete : false,
         usu_autodel_count : 0
       })
