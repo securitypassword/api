@@ -238,10 +238,10 @@ export const sha = function(text){
 }
 
 export const to64 = function(text){
-  return atob(text).replace(/\+/g, "-")
+  return btoa(text).replace(/\+/g, "-")
   .replace(/\//g, "_");
 }
 export const from64 = function(text){
-  return btoa(text.replace(/\+/g, "-")
+  return atob(text.replace(/\+/g, "-")
   .replace(/\//g, "_"));
 }
