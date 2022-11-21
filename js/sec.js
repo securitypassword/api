@@ -227,7 +227,7 @@ export const signToken= async function(toDo){
 
 export const getToken = async function(token){
   console.log("get token", token)
-  const query = await tokens.where("tok_name", "==", token).get().then((querySnapshot) => {
+  const query = await tokens.where("tok_name", "==", JSON.stringify(token)).get().then((querySnapshot) => {
     return querySnapshot
   })
   const tokenList = query.docs.map(doc => doc.data());
