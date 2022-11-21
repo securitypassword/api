@@ -15,16 +15,11 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
 
 //global
 //que si no da error
-app.all("*", function (req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "X-Requested-With");
-    next();
-});
-app.all("/", function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "X-Requested-With");
-  next();
-});
+const corsConfig = {
+    credentials: true,
+    origin: true,
+};
+app.use(cors(corsConfig));
 //end of global
 
 //ejecutar el main de user.js
