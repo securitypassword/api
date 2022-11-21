@@ -46,19 +46,6 @@ const userIdExists = async function(testId){
 }
 
 import gen from "../free.js"
-const newId = async function(){
-  let id = "demma"
-  let exists = await user.doc(id).get()
-  const query = { low : "true" ,
-    up : "true" ,
-    nums : "true" ,
-    len : "32" }
-  while(exists==undefined || exists == []){
-    id = gen(query)
-    exists = await user.doc(id).get()
-  }
-  return id
-}
 
 const register = async function(body){
   console.log("register")
@@ -97,8 +84,7 @@ const register = async function(body){
       }
     }else{
       console.log("success",body.name)
-      const id = await newId()
-      await user.doc(id).set({
+      await user.doc(sec.to64(body.name)).set({
         usu_name : sec.to64(body.name),
         usu_email : sec.to64(body.email),
         usu_password : sec.sha(body.password),
