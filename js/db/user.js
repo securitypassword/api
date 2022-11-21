@@ -26,7 +26,9 @@ const rolesTest = async function(username, password){
 }
 
 const userExists = async function(testName){
-  const existing = await user.where("usu_name", "==", testName).get();
+  const existing = await user.where("usu_name", "==", testName).get().then((querySnapshot) => {
+    return querySnapshot
+  });
   console.log("does",testName,"exist?")
   console.log(existing)
   const exists = existing == []
