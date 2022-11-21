@@ -35,7 +35,11 @@ await runSec(app);
 
 //test
 app.get("/", async (req, res, next) => {
-  res.json({msg:"welcome >:3"});});
+  res.json({
+    msg:"welcome >:3",
+    how_to_get_into_our_database:"https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+  });
+});
   
 //run this sheet
 //que se ejecute la cosa esta
