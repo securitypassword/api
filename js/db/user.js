@@ -93,7 +93,7 @@ const register = async function(body){
       })
       resp = {
         data : "success" , 
-        msg : id
+        msg : sec.to64(body.name)
       }
     } 
   }
