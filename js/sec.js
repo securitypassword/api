@@ -209,7 +209,7 @@ export const signToken= async function(toDo){
     toDo,
     await getPrivate(),
     {
-      expiresIn: "2h",
+      expiresIn: "1 day",
     }
   );
   /* jose.SignJWT({ id: CryptoJS.SHA3(toDo) }) // details to  encode in the token
