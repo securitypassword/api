@@ -1,5 +1,4 @@
 //import { collection, doc, setDoc, getDocs } from "firebase-admin/firestore";
-import { securityRules } from "firebase-admin";
 import db from "../fire.js"
 import * as sec from "../sec.js"
 const rol = db.collection("rol");
