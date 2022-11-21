@@ -30,7 +30,7 @@ const userExists = async function(testName){
   const query = await user.where("usu_name", "==", sec.to64(testName)).get().then((querySnapshot) => {
     return querySnapshot
   })
-  console.log("does",testName,"exist?")
+  console.log("does", sec.to64(testName),"exist?")
   const existing = query.docs.map(doc => doc.data());
   console.log(existing)
   const exists = existing == []
