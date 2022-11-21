@@ -28,6 +28,9 @@ const getRole = async function(rol_id){
     return querySnapshot
   })
   console.log(query.data())
+  if(query.data() != undefined){
+    resp = query.data().name
+  }
   return resp
 }
 
