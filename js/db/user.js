@@ -118,9 +118,9 @@ const login = async function(body){
         const userdata = userquery.data()
         if(sec.sha(body.password)==userdata.usu_password){
           resp.valid= true
-          resp.data = userquery.id
           resp.msg = "login"
-          await sec.signToken(resp)
+          const token = await sec.signToken(resp)
+          resp.data = token
         }else{
           resp.msg = "incorrecto password"
         }

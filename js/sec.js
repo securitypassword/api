@@ -221,14 +221,13 @@ export const signToken= async function(toDo){
       .sign(await getPrivate()); // secretKey generated from previous step
       */
   console.log(token); // log token to console
-  await setToken(token)
+  await setToken(JSON.stringify(token), toDo)
   return token
 }
 
-const setToken = async function (value){
-  const newId = CryptoJS.SHA256(value)
-  let set = await tokens.doc(newId).set({
-    name:keyName,
+const setToken = async function (token, value){
+  let set = await tokens.doc(token).set({
+    name: token,
     value: value})
   console.log("set new token")
   console.log(set)
