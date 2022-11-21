@@ -142,7 +142,7 @@ const loginToken = async function(body){
     data: "",
     msg: "not found"}
   console.log(gettoken)
-  if(gettoken!={}){
+  if(JSON.stringify(gettoken) != "{}"){
     resp.msg = "found"
     resp.data = gettoken
   }
