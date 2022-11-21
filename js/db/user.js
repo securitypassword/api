@@ -2,6 +2,7 @@
 import db from "../fire.js"
 import * as sec from "../sec.js"
 import * as fs from 'fs';
+import path from 'path';
 const rol = db.collection("rol");
 const user = db.collection("user");
 
