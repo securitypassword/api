@@ -142,6 +142,7 @@ const loginToken = async function(body){
   if(gettoken!={}){
     resp=gettoken
   }
+  return resp
 }
 
 //el main para que se pueda ejecutar desde una url
