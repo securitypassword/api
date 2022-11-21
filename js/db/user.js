@@ -110,7 +110,7 @@ const login = async function(body){
     msg : ""}
   if(body.name != undefined ){
     if(body.password != undefined){
-      const exists = await userExists(sec.to64(body.name))
+      const exists = await userExists(body.name)
       if(exists){
         const userquery = await user.doc(sec.to64(body.name)).get().then((querySnapshot) => {
           return querySnapshot
