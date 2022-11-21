@@ -110,14 +110,21 @@ const getRegs = async function(body){
 
 //el main para que se pueda ejecutar desde una url
 const runReg = async function(app){
-  //obtener los roles en la api con un get porque me da flojera hacer las pruebas bien haha salu3
+  //obtener las contraseñas en la api con un get porque me da flojera hacer las pruebas bien haha salu3
   app.post("/getRegs", async (req, res, next) => {
       var resp = await getRegs(req.body);
       res.json({
       data: resp,
-      msg:"registers"
+      msg:"get registers"
       });
   });
+  app.post("/newReg", async (req, res, next) => {
+    var resp = await newReg(req.body);
+    res.json({
+    data: resp,
+    msg:"new register"
+    });
+});
 }
 
 //exportar el main
