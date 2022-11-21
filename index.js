@@ -7,6 +7,9 @@ var app = express();
  //obtener el PUERTO del server donde hosteamos
 const PORT = process.env.PORT;
 
+const bodyParser = require('body-parser');
+app.use(bodyParser.urlencoded({ extended: true }));
+
 //global
 //que si no da error
 app.all("*", function (req, res, next) {
