@@ -228,7 +228,7 @@ export const signToken= async function(toDo){
 export const getToken = async function(token){
   console.log("get token", token)
   let tokenFormated = '"'+token+'"'
-  tokenFormated = sec.sha(tokenFormated)
+  tokenFormated = sha(tokenFormated)
   const query = await tokens.where("tok_name", "==", tokenFormated).get().then((querySnapshot) => {
     return querySnapshot
   })
