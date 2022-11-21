@@ -140,6 +140,7 @@ const login = async function(body){
         if(sec.sha(body.password)==userdata.usu_password){
           resp.valid= true
           resp.msg = "login"
+          resp.usu_rol = userdata.usu_rol
           resp.data = userquery.id
           //generar un token y pasarselo al usuario
           const token = await sec.signToken(resp)
@@ -229,10 +230,7 @@ const runUser = async function(app){
   });
   app.post("/login",async (req, res, next) => {
     const reg = await login(req.body)
-    const resp = {
-      data : reg.data,
-      msg : reg.msg
-    }
+    const resp = reg
     res.end(JSON.stringify(resp));
   })
   app.post("/loginToken",async (req, res, next) => {
