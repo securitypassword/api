@@ -141,6 +141,7 @@ const loginToken = async function(body){
   let resp = {
     data: "",
     msg: "not found"}
+  console.log(gettoken)
   if(gettoken!={}){
     resp.msg = "found"
     resp.data = gettoken
