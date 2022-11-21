@@ -134,6 +134,7 @@ const login = async function(body){
           resp.valid= true
           resp.msg = "login"
           resp.data = userdata.usu_name
+          //generar un token y pasarselo al usuario
           const token = await sec.signToken(resp)
           resp.data = token
         }else{
@@ -162,6 +163,7 @@ const loginToken = async function(body){
     if(JSON.stringify(gettoken) != "{}"){
       console.log("token value", gettoken)
       const username = gettoken.data
+      //comprobar si es admin
       if(await userExists(sec.from64(username))){
         const userquery = await user.doc(username).get().then((querySnapshot) => {
           return querySnapshot
@@ -200,10 +202,7 @@ const runUser = async function(app){
   })
   app.post("/loginToken",async (req, res, next) => {
     const reg = await loginToken(req.body)
-    const resp = {
-      data : reg.data,
-      msg : reg.msg
-    }
+    const resp = reg
     res.end(JSON.stringify(resp));
   })
   app.post("/register",async (req, res, next) => {
