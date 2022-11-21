@@ -136,8 +136,8 @@ const login = async function(body){
   return resp
 }
 
-const loginToken = async function(token){
-  const gettoken = await sec.getToken(token)
+const loginToken = async function(body){
+  const gettoken = await sec.getToken(body.token)
   let resp = ""
   if(gettoken!={}){
     resp=gettoken
