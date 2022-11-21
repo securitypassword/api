@@ -8,9 +8,10 @@ var app = express();
  //obtener el PUERTO del server donde hosteamos
 const PORT = process.env.PORT;
 
-app.use(express.json());
-app.use(express.urlencoded());
-app.use(express.multipart());
+app.use( bodyParser.json() );       // to support JSON-encoded bodies
+app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
+  extended: true
+})); 
 
 //global
 //que si no da error
