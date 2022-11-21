@@ -116,9 +116,7 @@ const login = async function(body){
           return querySnapshot
         })
         const userdata = userquery.data()
-        console.log("password")
-        console.log(sec.sha(body.password), userdata.password)
-        if(sec.sha(body.password)==userdata.password){
+        if(sec.sha(body.password)==userdata.usu_password){
           resp.valid= true
           resp.data = userquery.id
           resp.msg = "login"
