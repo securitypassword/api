@@ -232,7 +232,8 @@ export const getToken = async function(token){
   })
   const tokenList = query.docs.map(doc => doc.data());
   let resp = {}
-  console.log(tokenList)
+  const tokenGot = tokenList[0]
+  console.log(tokenGot)
   if(tokenList.length!=0){
     resp = tokenList[0]
     await tokens.doc(tokenList.id).delete()
