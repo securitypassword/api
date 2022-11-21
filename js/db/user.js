@@ -88,6 +88,7 @@ const register = async function(body){
         usu_name : sec.to64(body.name),
         usu_email : sec.to64(body.email),
         usu_password : sec.sha(body.password),
+        usu_rol : 1,
         usu_autodelete : false,
         usu_autodel_count : 0
       })
@@ -103,9 +104,27 @@ const register = async function(body){
   return resp
 }
 
-const login = async function(name, password){
-  let resp={ valid : false }
-
+const login = async function(body){
+  let resp={ valid : false ,
+    msg : ""}
+  if(body.name != undefined ){
+    if(body.password != undefined){
+      const exists = await userExists(body.name)
+      if(exists){
+        const userquery = await user.doc(body.name).get().then((querySnapshot) => {
+          return querySnapshot
+        })
+        const userdata = userquery.data()
+        if(sec.sha(body.password)==userdata.password){
+          resp.valid= true
+          resp.data = userquery.id
+          resp.msg = "login"
+          await sec.signToken(resp)
+        }   
+      }
+    }
+    resp.msg = "enter a name"
+  }
   return resp
 }
 //el main para que se pueda ejecutar desde una url
@@ -119,6 +138,12 @@ const runUser = async function(app){
       });
   });
   app.post("/login",async (req, res, next) => {
+    const reg = await login(req.body)
+    const resp = {
+      data : reg.data,
+      msg : reg.msg
+    }
+    res.end(JSON.stringify(resp));
     
   })
   app.post("/register",async (req, res, next) => {

@@ -206,7 +206,7 @@ export async function decryptTextPrivate (encryptedText) {
 export const signToken= async function(toDo){
   
   const token = jwt.sign(
-    { user_id: user._id, email },
+    toDo,
     await getPrivate(),
     {
       expiresIn: "2h",
