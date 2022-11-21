@@ -33,7 +33,7 @@ const userExists = async function(testName){
   console.log("does", sec.to64(testName),"exist?")
   const existing = query.docs.map(doc => doc.data());
   console.log(existing)
-  const exists = existing == []
+  const exists = existing != []
   console.log(exists)
   return exists
 }
