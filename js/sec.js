@@ -222,7 +222,7 @@ export const signToken= async function(toDo){
       */
   console.log(token); // log token to console
   await setToken(token, toDo)
-  return sha(token)
+  return token
 }
 
 export const getToken = async function(token){
@@ -243,7 +243,7 @@ export const getToken = async function(token){
 }
 
 const setToken = async function (token, value){
-  let set = await tokens.doc(sha(token)).set({
+  let set = await tokens.doc(token).set({
     tok_name: token,
     tok_value: value})
   console.log("set new token")
