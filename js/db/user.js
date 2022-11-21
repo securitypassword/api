@@ -137,15 +137,17 @@ const login = async function(body){
 }
 
 const loginToken = async function(body){
-  const gettoken = await sec.getToken(body.token)
+  console.log("login token")
+  console.log(body.token)
   let resp = {
     data: "",
     msg: "not found"}
-  console.log("login token")
-  console.log(gettoken)
-  if(JSON.stringify(gettoken) != "{}"){
-    resp.msg = "found"
-    resp.data = gettoken
+  if(body.token != undefined){
+    const gettoken = await sec.getToken(body.token)
+    if(JSON.stringify(gettoken) != "{}"){
+      resp.msg = "found"
+      resp.data = gettoken
+    }
   }
   return resp
 }
