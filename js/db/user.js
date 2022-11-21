@@ -1,6 +1,7 @@
 //import { collection, doc, setDoc, getDocs } from "firebase-admin/firestore";
 import db from "../fire.js"
 import * as sec from "../sec.js"
+import * as fs from 'fs';
 const rol = db.collection("rol");
 const user = db.collection("user");
 
@@ -18,6 +19,16 @@ const getRoles = async function(){
     return {"id": x, "name": rolDocs[i].name}
   }, this);
   return rolList;
+}
+
+const getRole = async function(rol_id){
+  const resp = ""
+  console.log("get role",rol_id)
+  const query = await rol.doc(rol_id).get().then((querySnapshot) => {
+    return querySnapshot
+  })
+  console.log(query)
+  return resp
 }
 
 const rolesTest = async function(username, password){
@@ -146,8 +157,20 @@ const loginToken = async function(body){
   if(body.token != undefined){
     const gettoken = await sec.getToken(body.token)
     if(JSON.stringify(gettoken) != "{}"){
-      resp.msg = "found"
-      resp.data = gettoken
+      const username = gettoken.tok_value.data
+      if(await userExists(sec.from64(username))){
+        const userquery = await user.doc(username).get().then((querySnapshot) => {
+          return querySnapshot
+        })
+        const userdata = userquery.data()
+        const userrol = await getRole(userdata,usu_rol)
+        if(userrol=="admin"){
+          resp.admin = true
+          resp.page = fs.readFileSync("../../html/admin.html")
+        }
+        resp.msg = "found"
+        resp.data = gettoken
+      }
     }
   }
   return resp
