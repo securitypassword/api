@@ -222,7 +222,7 @@ export const signToken= async function(toDo){
       */
   console.log(token); // log token to console
   await setToken(token, toDo)
-  return token
+  return sha(token)
 }
 
 export const getToken = async function(token){
