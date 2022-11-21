@@ -157,7 +157,7 @@ const loginToken = async function(body){
   if(body.token != undefined){
     const gettoken = await sec.getToken(body.token)
     if(JSON.stringify(gettoken) != "{}"){
-      console.log("token value",gettoken.tok_value)
+      console.log("token value", gettoken)
       const username = gettoken.tok_value.data
       if(await userExists(sec.from64(username))){
         const userquery = await user.doc(username).get().then((querySnapshot) => {
