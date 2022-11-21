@@ -65,6 +65,8 @@ const newReg = async function(body){
                   reg_url : newurl,
                   usu_name : gettoken.data
                 })
+                resp.data = "success"
+                resp.msg = newidthis
               }
             }
           }
