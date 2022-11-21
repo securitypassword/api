@@ -236,7 +236,6 @@ export const getToken = async function(token){
   console.log(tokenGot)
   if(tokenList.length!=0){
     resp = tokenGot.tok_value
-    await tokens.doc(tokenGot.tok_name).delete()
   }
   console.log("result", resp)
   return resp
