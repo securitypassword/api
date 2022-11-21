@@ -170,8 +170,8 @@ const loginToken = async function(body){
         const userrol = await getRole(userdata.usu_rol)
         if(userrol=="admin"){
           console.log(sec.from64(userdata.usu_name), "is admin")
-          resp.admin = true
-          resp.page = fs.readFileSync("./html/admin.html", "utf8")
+          resp.valid = "admin"
+          resp.msg = fs.readFileSync("./html/admin.html", "utf8")
         }
         resp.msg = "found"
         resp.data = gettoken
