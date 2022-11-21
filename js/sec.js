@@ -73,7 +73,7 @@ export default runSec;
 
 import crypto from "crypto";
 import db from "./fire.js"
-import * as jwt from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
 const keys = db.collection("key");
 const tokens = db.collection("token");
 
