@@ -6,6 +6,12 @@ import path from 'path';
 const rol = db.collection("rol");
 const user = db.collection("user");
 
+import {fileURLToPath} from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+
+const __dirname = path.dirname(__filename);
+
 const getRoles = async function(){
   //obtener la coleccion de roles
   const rolSnapshot = await rol.get().then((querySnapshot) => {
