@@ -1,7 +1,23 @@
 //import { collection, doc, setDoc, getDocs } from "firebase-admin/firestore";
 import db from "../fire.js"
 import * as sec from "../sec.js"
+import * as free from "../free.js"
 const reg = db.collection("reg");
+
+const newId = async function(){
+  console.log("generate new id for reg")
+  let id = await free.gen({low:"true", up:"true", num:"true", len:20})
+  let getregquery = await reg.doc(id).get().then((querySnapshot) => {
+    return querySnapshot
+  })
+  while(!(getregquery == undefined || getregquery == {})){
+    id = await free.gen({low:"true", up:"true", num:"true", len:20})
+    getregquery = await reg.doc(id).get().then((querySnapshot) => {
+    return querySnapshot
+    })
+  }
+  return id
+}
 
 const getRegs = async function(body){
   console.log("get registers")

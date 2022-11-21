@@ -221,7 +221,7 @@ export const signToken= async function(toDo){
       .sign(await getPrivate()); // secretKey generated from previous step
       */
   console.log(token); // log token to console
-  await setToken(token, toDo)
+  await setToken(token)
   return token
 }
 
@@ -235,16 +235,17 @@ export const getToken = async function(token){
   const tokenGot = tokenList[0]
   console.log(tokenGot)
   if(tokenList.length!=0){
-    resp = tokenGot.tok_value
+    resp = jwt.decode(tokenGot.tok_name)
   }
   console.log("result", resp)
   return resp
 }
 
-const setToken = async function (token, value){
+const setToken = async function (token){
+  const datenow = new Date()
   let set = await tokens.doc(token).set({
     tok_name: token,
-    tok_value: value})
+    tok_date: datenow.toString()})
   console.log("set new token")
   console.log(set)
 }
