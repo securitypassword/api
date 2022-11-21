@@ -24,7 +24,7 @@ const getRoles = async function(){
 const getRole = async function(rol_id){
   const resp = ""
   console.log("get role",rol_id)
-  const query = await rol.doc(rol_id).get().then((querySnapshot) => {
+  const query = await rol.doc(rol_id.toString()).get().then((querySnapshot) => {
     return querySnapshot
   })
   console.log(query)
