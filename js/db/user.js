@@ -119,6 +119,7 @@ const login = async function(body){
         if(sec.sha(body.password)==userdata.usu_password){
           resp.valid= true
           resp.msg = "login"
+          resp.data = userdata.usu_name
           const token = await sec.signToken(resp)
           resp.data = token
         }else{
