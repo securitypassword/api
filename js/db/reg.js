@@ -2,6 +2,7 @@
 import db from "../fire.js"
 import * as sec from "../sec.js"
 import * as free from "../free.js"
+import * as user from "./user.js"
 const reg = db.collection("reg");
 
 const newId = async function(){
@@ -17,6 +18,62 @@ const newId = async function(){
     })
   }
   return id
+}
+
+const newReg = async function(body){
+  let resp = {
+    data: "error",
+    msg: ""
+  }
+  console.log("new register")
+  console.log("start of body")
+  console.log(body)
+  console.log("end of body")
+  if(body == undefined || body == ""){
+    resp.msg = "please introduce data"
+  }else{
+    if(body.name == undefined || body.name == ""){
+      resp.msg = "please introduce name"
+    }else{
+      if(body.value == undefined || body.value == ""){
+        resp.msg = "please introduce the password"
+      }else{
+        if(body.token == undefined || body.token ==""){
+          resp.msg = "invalid session"
+        }else{
+          const gettoken = sec.getToken(body.token)
+          if(!(gettoken.valid == true)){
+            resp.msg = "token not valid"
+          }else{
+            if(gettoken.data == undefined || gettoken.data == ""){
+              resp.msg = "token has no data"
+            }else{
+              const userexists = await user.userExists(sec.from64(gettoken.data))
+              if(!userexists){
+                resp.msg = "user doesnt exist"
+              }else{
+                let newurl = ""
+                if(body.url == undefined || body.url == ""){
+                  newurl = "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+                }else{
+                  newurl = body.url
+                }
+                let newidthis = await newId()
+                await reg.doc(newidthis).set({
+                  reg_name : sec.to64(body.name),
+                  reg_value : sec.encryptTextPublic(body.value),
+                  reg_url : newurl,
+                  usu_name : gettoken.data
+                })
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  return resp
 }
 
 const getRegs = async function(body){

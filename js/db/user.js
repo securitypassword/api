@@ -40,7 +40,7 @@ const rolesTest = async function(username, password){
     return true;
 }
 
-const userExists = async function(testName){
+export const userExists = async function(testName){
   const query = await user.where("usu_name", "==", sec.to64(testName)).get().then((querySnapshot) => {
     return querySnapshot
   })
@@ -133,7 +133,7 @@ const login = async function(body){
         if(sec.sha(body.password)==userdata.usu_password){
           resp.valid= true
           resp.msg = "login"
-          resp.data = userdata.usu_name
+          resp.data = userquery.id
           //generar un token y pasarselo al usuario
           const token = await sec.signToken(resp)
           resp.data = token
