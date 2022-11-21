@@ -182,6 +182,34 @@ const loginToken = async function(body){
   return resp
 }
 
+const loginAdmin = async function(query){
+  console.log("login as admin", query)
+  let resp = false
+  if(query != undefined && query != ""){
+    if(query.token != undefined && query.token != ""){
+      const gettoken = await sec.getToken(query.token)
+      if(gettoken != undefined){
+        if(gettoken.data != undefined && gettoken.data != ""){
+          const getuser = await user.doc(gettoken.data).get().then((querySnapshot) => {
+            return querySnapshot
+          })
+          if(getuser != undefined && getuser!= ""){
+            const datafromuser = getuser.data()
+            if(datafromuser.usu_rol!=undefined && datafromuser.usu_rol!=""){
+              const rolfromuser = await getRole(datafromuser.usu_rol)
+              if(rolfromuser=="admin"){
+                console.log(datafromuser.usu_name,"is admin")
+                resp=true
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  return resp
+}
+
 //el main para que se pueda ejecutar desde una url
 const runUser = async function(app){
   //obtener los roles en la api con un get porque me da flojera hacer las pruebas bien haha salu3
@@ -212,6 +240,17 @@ const runUser = async function(app){
       msg : reg.msg
     }
     res.end(JSON.stringify(resp));
+  })
+  app.post("/loginAdmin",async (req, res, next) => {
+    const isadmin = await loginAdmin(req.body)
+    if(isadmin){
+      let filePath = path.join(__dirname, "html/admin.html");
+      const resp = { data: "admin", msg: fs.readFileSync(filePath)}
+      res.end(JSON.stringify(resp))
+    }else{
+      res.end(JSON.stringify({data:"invalid",
+      msg : "login as admin"}))
+    }
   })
 }
 
