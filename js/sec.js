@@ -221,13 +221,13 @@ export const signToken= async function(toDo){
       .sign(await getPrivate()); // secretKey generated from previous step
       */
   console.log(token); // log token to console
-  await setToken(JSON.stringify(token), toDo)
+  await setToken(token, toDo)
   return token
 }
 
 export const getToken = async function(token){
   console.log("get token", token)
-  const query = await tokens.where("tok_name", "==", JSON.stringify(token)).get().then((querySnapshot) => {
+  const query = await tokens.where("tok_name", "==", token).get().then((querySnapshot) => {
     return querySnapshot
   })
   const tokenList = query.docs.map(doc => doc.data());
