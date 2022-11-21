@@ -27,7 +27,7 @@ const getRole = async function(rol_id){
   const query = await rol.doc(rol_id.toString()).get().then((querySnapshot) => {
     return querySnapshot
   })
-  console.log(query)
+  console.log(query.data())
   return resp
 }
 
