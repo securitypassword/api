@@ -225,10 +225,25 @@ export const signToken= async function(toDo){
   return token
 }
 
+export const getToken = async function(token){
+  console.log("get token", token)
+  const query = await tokens.where("tok_name", "==", token).get().then((querySnapshot) => {
+    return querySnapshot
+  })
+  const tokenList = query.docs.map(doc => doc.data());
+  let resp = {}
+  if(tokenList.length!=0){
+    resp = tokenList[0]
+    await tokens.doc(tokenList[0].id).delete()
+  }
+  console.log("result", resp)
+  return resp
+}
+
 const setToken = async function (token, value){
   let set = await tokens.doc(token).set({
-    name: token,
-    value: value})
+    tok_name: token,
+    tok_value: value})
   console.log("set new token")
   console.log(set)
 }

@@ -135,6 +135,15 @@ const login = async function(body){
   }
   return resp
 }
+
+const loginToken = async function(token){
+  const gettoken = await sec.getToken(token)
+  let resp = ""
+  if(gettoken!={}){
+    resp=gettoken
+  }
+}
+
 //el main para que se pueda ejecutar desde una url
 const runUser = async function(app){
   //obtener los roles en la api con un get porque me da flojera hacer las pruebas bien haha salu3
@@ -152,7 +161,14 @@ const runUser = async function(app){
       msg : reg.msg
     }
     res.end(JSON.stringify(resp));
-    
+  })
+  app.post("/loginToken",async (req, res, next) => {
+    const reg = await loginToken(req.body)
+    const resp = {
+      data : reg.data,
+      msg : reg.msg
+    }
+    res.end(JSON.stringify(resp));
   })
   app.post("/register",async (req, res, next) => {
     const reg = await register(req.body)
