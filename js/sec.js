@@ -173,8 +173,8 @@ function encryptTextKey (plainText, thisKey) {
     oaepHash: 'sha256'
   },
   // We convert the data string to a buffer
-  Buffer.from(plainText).toJSON
-  )
+  Buffer.from(plainText)
+  ).toJSON()
 }
 export async function encryptTextPublic (plainText) {
   return encryptTextKey(plainText, await getPublic())
