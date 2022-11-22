@@ -2,6 +2,7 @@ import express from "express";
 import runUser from "./js/db/user.js"
 import runFree from "./js/free.js"
 import runSec from "./js/sec.js";
+import runReg from "./js/db/reg.js";
 import bodyParser from "body-parser";
 import cors from 'cors';
 var app = express();
@@ -27,7 +28,7 @@ app.use(cors(corsConfig));
 await runUser(app);
 runFree(app);
 await runSec(app);
-
+await runReg(app)
 
 //test
 app.get("/", async (req, res, next) => {
