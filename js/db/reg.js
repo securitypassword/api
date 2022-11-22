@@ -123,7 +123,7 @@ const setReg = async function(body){
                 console.log("reg new id",newidthis)
                 await reg.doc(newidthis).set({
                   reg_name : sec.to64(body.name),
-                  reg_value : sec.encryptTextPublic(body.value),
+                  reg_value : sec.encryptTextPublic(body.value).toString('base64'),
                   reg_url : newurl,
                   usu_name : gettoken.data
                 })

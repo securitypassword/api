@@ -174,7 +174,7 @@ function encryptTextKey (plainText, thisKey) {
   },
   // We convert the data string to a buffer
   Buffer.from(plainText)
-  ).toString('base64')
+  )
 }
 export async function encryptTextPublic (plainText) {
   return encryptTextKey(plainText, await getPublic())
