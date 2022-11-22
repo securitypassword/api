@@ -120,7 +120,7 @@ const setReg = async function(body){
                 if(!alreadyExists){
                   newidthis =await newId()
                 }
-                const newregvaluencrypt = await sec.encryptTextPublic(body.value)
+                const newregvaluencrypt = sec.enc(body.value)
                 const newregvalue = newregvaluencrypt.toString('base64')
                 console.log("reg new id",newidthis)
                 console.log("new reg value", newregvalue)
@@ -161,8 +161,8 @@ const getRegs = async function(body){
         //las ids
         const regIDs = regSnapshot.docs.map(doc => doc.id);
         //juntarlas
-        const regList = await regIDs.map( async function(x, i){
-          return {"id": x, "name": regDocs[i].reg_name, "url": regDocs[i].reg_url, "value": (await sec.decryptTextPrivate(regDocs[i].reg_value))}
+        const regList = regIDs.map( function(x, i){
+          return {"id": x, "name": regDocs[i].reg_name, "url": regDocs[i].reg_url, "value": sec.dec(regDocs[i].reg_value)}
         }, this);
         if(regList.length!=0){
           resp=regList
