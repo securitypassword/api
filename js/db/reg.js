@@ -37,7 +37,8 @@ const delReg = async function(body){
       resp.msg = "invalid session"
       }else{
         const gettoken = sec.getToken(body.token)
-        if(!(gettoken.valid == true)){
+        console.log(gettoken)
+        if(gettoken.valid != true){
           resp.msg = "token not valid"
         }else{
           if(gettoken.data == undefined || gettoken.data == ""){
@@ -86,7 +87,8 @@ const setReg = async function(body){
           resp.msg = "invalid session"
         }else{
           const gettoken = sec.getToken(body.token)
-          if(!(gettoken.valid == true)){
+          console.log(gettoken)
+          if(gettoken.valid != true){
             resp.msg = "token not valid"
           }else{
             if(gettoken.data == undefined || gettoken.data == ""){
