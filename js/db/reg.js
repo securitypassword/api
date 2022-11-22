@@ -47,7 +47,7 @@ const delReg = async function(body){
             if(!userexists){
               resp.msg = "user doesnt exist"
             }else{
-              const regquery = await getRegs()
+              const regquery = await getRegs(body)
               for(let prevRegs in regquery){
                 if(regquery[prevRegs].id==body.id){
                   await reg.doc(body.id).delete()
@@ -102,7 +102,7 @@ const setReg = async function(body){
                 }else{
                   newurl = body.url
                 }
-                const prevRegs = await getRegs(body)
+                const prevRegs = await getRegs({token:body.token})
                 let alreadyExists= false
                 let newidthis = 0
                 for(let prev in prevRegs){
@@ -137,7 +137,7 @@ const getRegs = async function(body){
   console.log("get registers")
   let resp = {}
   if(body!=undefined){
-    if(body.token!=null){
+    if(body.token!=null&&body.token!=""&&body.token!=undefined){
       const gettoken = await sec.getToken(body.token)
       if(JSON.stringify(gettoken) != "{}"){
         console.log("token value", gettoken)
