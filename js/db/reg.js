@@ -11,14 +11,13 @@ const newId = async function(){
   let getregquery = await reg.doc(id).get().then((querySnapshot) => {
     return querySnapshot
   })
-  while(getregquery != undefined && getregquery != {} && getregquery != []){
-    console.log(getregquery)
+  while(getregquery.data() != undefined && getregquery.data() != {} && getregquery.data() != []){
+    console.log(getregquery.data())
     id = await free.gen({low:"true", up:"true", num:"true", len:20})
     console.log(id)
     getregquery = await reg.doc(id).get().then((querySnapshot) => {
     return querySnapshot
     })
-    getregquery = getregquery.data()
   }
   return id
 }
