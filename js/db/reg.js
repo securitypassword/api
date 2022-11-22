@@ -110,7 +110,7 @@ const setReg = async function(body){
                 }
                 const prevRegs = await getRegs({token:body.token})
                 let alreadyExists= false
-                let newidthis = 0
+                let newidthis = "0"
                 for(let prev in prevRegs){
                   if(prevRegs[prev].name==body.name){
                     alreadyExists=true
@@ -120,6 +120,7 @@ const setReg = async function(body){
                 if(!alreadyExists){
                   newidthis =await newId()
                 }
+                console.log("reg new id",newidthis)
                 await reg.doc(newidthis).set({
                   reg_name : sec.to64(body.name),
                   reg_value : sec.encryptTextPublic(body.value),
@@ -166,6 +167,7 @@ const getRegs = async function(body){
       }
     }
   }
+  console.log(resp)
   return resp
 }
 
