@@ -184,6 +184,7 @@ export async function encryptTextPrivate (plainText) {
 }
 
 export async function decryptTextKey (encryptedText, thisKey) {
+  console.log("decrypt",encryptedText)
   return crypto.privateDecrypt( thisKey, Buffer.from(encryptedText, "base64"))
 }
 export async function decryptTextPublic (encryptedText) {
