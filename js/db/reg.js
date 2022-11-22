@@ -18,6 +18,7 @@ const newId = async function(){
     getregquery = await reg.doc(id).get().then((querySnapshot) => {
     return querySnapshot
     })
+    getregquery = getregquery.data()
   }
   return id
 }
