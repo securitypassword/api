@@ -186,7 +186,14 @@ export async function encryptTextPrivate (plainText) {
 export async function decryptTextKey (encryptedText, thisKey) {
   console.log("decrypt",encryptedText)
   const bufferEncrypt =  Buffer.from(encryptedText, "base64")
-  return crypto.privateDecrypt( thisKey, bufferEncrypt)
+  return crypto.privateDecrypt(
+    {
+      key: getPrivate().toString(),
+      passphrase: '',
+      padding:crypto.constants.RSA_PKCS1_PADDING
+    },
+    bufferEncrypt,
+  )
 }
 export async function decryptTextPublic (encryptedText) {
   return decryptTextKey(encryptedText, await getPublic())
