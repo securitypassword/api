@@ -120,10 +120,12 @@ const setReg = async function(body){
                 if(!alreadyExists){
                   newidthis =await newId()
                 }
+                const newregvalue = sec.to64(sec.encryptTextPublic(body.value))
                 console.log("reg new id",newidthis)
+                console.log("new reg value", newregvalue)
                 await reg.doc(newidthis).set({
                   reg_name : sec.to64(body.name),
-                  reg_value : sec.encryptTextPublic(body.value).toString('base64'),
+                  reg_value : newregvalue,
                   reg_url : newurl,
                   usu_name : gettoken.data
                 })
