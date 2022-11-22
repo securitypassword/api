@@ -161,8 +161,8 @@ const getRegs = async function(body){
         //las ids
         const regIDs = regSnapshot.docs.map(doc => doc.id);
         //juntarlas
-        const regList = regIDs.map( function(x, i){
-          return {"id": x, "name": regDocs[i].name, "url": regDocs[i].url, "value": sec.decryptTextPrivate(regDocs[i].value)}
+        const regList = await regIDs.map( async function(x, i){
+          return {"id": x, "name": regDocs[i].reg_name, "url": regDocs[i].reg_url, "value": (await sec.decryptTextPrivate(regDocs[i].reg_value))}
         }, this);
         if(regList.length!=0){
           resp=regList
