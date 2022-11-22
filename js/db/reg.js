@@ -11,7 +11,7 @@ const newId = async function(){
   let getregquery = await reg.doc(id).get().then((querySnapshot) => {
     return querySnapshot
   })
-  console.log(getregquery)
+  console.log(getregquery.data())
   console.log(id)
   while(getregquery.data() != undefined && getregquery.data() != {} && getregquery.data() != []){
     console.log(getregquery.data())
