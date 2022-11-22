@@ -112,7 +112,7 @@ const setReg = async function(body){
                 let alreadyExists= false
                 let newidthis = "0"
                 for(let prev in prevRegs){
-                  if(prevRegs[prev].name==body.name){
+                  if(prevRegs[prev].reg_name==sec.to64(body.name)){
                     alreadyExists=true
                     newidthis=prevRegs[prev].id
                   }
@@ -127,7 +127,7 @@ const setReg = async function(body){
                 await reg.doc(newidthis).set({
                   reg_name : sec.to64(body.name),
                   reg_value : newregvalue,
-                  reg_url : newurl,
+                  reg_url : sec.to64(newurl),
                   usu_name : gettoken.data
                 })
                 resp.data = "success"
