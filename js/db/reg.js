@@ -121,7 +121,7 @@ const setReg = async function(body){
                   newidthis =await newId()
                 }
                 const newregvaluencrypt = await sec.encryptTextPublic(body.value)
-                const newregvalue = sec.to64(newregvaluencrypt)
+                const newregvalue = sec.to64(newregvaluencrypt.toString())
                 console.log("reg new id",newidthis)
                 console.log("new reg value", newregvalue)
                 await reg.doc(newidthis).set({
