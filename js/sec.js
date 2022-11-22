@@ -44,6 +44,13 @@ const runSec = async function(app){
       msg: "generated" }
     res.end(JSON.stringify(resp));
   });
+  //norrar tokens
+  app.post("/delTokens", async (req, res, next) => {
+    console.log("delete all tokens attempt")
+    console.log(req.body)
+    const resp = await delTokensAdmin(req.body);
+    res.end(JSON.stringify(resp));
+  });
   //cifrar con la llave publica
   app.get("/encode", async (req, res, next) => {
     const text = decodeURI(req.query.text)
@@ -146,6 +153,30 @@ const generateKeys = async function (){
 }
 
 //cambiar las llaves desde el modo admin
+const delTokensAdmin = async function(body){
+  let resp = {}
+  try{
+  if(body != void(0)){
+    if(body.key != undefined){
+      if(body.key == masterKey){
+        const gettokkens = await tokens.get().then((querySnapshot) => {
+          return querySnapshot
+        })
+        for(var i in gettokkens){
+          tokens.doc(gettokkens[i].id).delete()
+        }
+      }else{
+        console.log("some fellow is tryin to delete the tokens")
+        resp = "nope"
+      }
+    }
+  }
+  return resp;
+  }catch(error){
+    console.log(error)
+    return {data: 'error', msg:error}
+  }
+}
 const generateKeysAdmin = async function(body){
   let resp = ' '
   try{
@@ -165,6 +196,7 @@ const generateKeysAdmin = async function(body){
     return 'error'
   }
 }
+
 
 function encryptTextKey (plainText, thisKey) {
   return crypto.publicEncrypt({
