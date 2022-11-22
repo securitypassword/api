@@ -112,7 +112,7 @@ const setReg = async function(body){
                 let alreadyExists= false
                 let newidthis = "0"
                 for(let prev in prevRegs){
-                  if(prevRegs[prev].reg_name==sec.to64(body.name)){
+                  if(prevRegs[prev].name==sec.to64(body.name)){
                     alreadyExists=true
                     newidthis=prevRegs[prev].id
                   }
