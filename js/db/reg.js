@@ -120,7 +120,7 @@ const setReg = async function(body){
                 if(!alreadyExists){
                   newidthis =await newId()
                 }
-                const newregvaluencrypt = await sec.encryptTextPublic(body.value)
+                const newregvaluencrypt = sec.enc(body.value)
                 const newregvalue = newregvaluencrypt.toString('base64')
                 console.log("reg new id",newidthis)
                 console.log("new reg value", newregvalue)
@@ -163,7 +163,7 @@ const getRegs = async function(body){
         //juntarlas
         let regList = []
         for(let i in regDocs){
-          let gettingvalue = await sec.decryptTextPrivate(regDocs[i].reg_value)
+          let gettingvalue = sec.dec(regDocs[i].reg_value)
           regList[i] = {"id": regIDs[i], "name": regDocs[i].reg_name, "url": regDocs[i].reg_url, "value": gettingvalue}
         };
         if(regList.length!=0){
