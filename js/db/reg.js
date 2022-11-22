@@ -20,7 +20,51 @@ const newId = async function(){
   return id
 }
 
-const newReg = async function(body){
+const delReg = async function(body){
+  console.log("deleting a register")
+  let resp = {data:"error", msg:""}
+  console.log("start of body")
+  console.log(body)
+  console.log("end of body")
+
+  if(body == undefined || body == ""){
+    resp.msg = "please introduce data"
+  }else{
+    if(body.id == undefined || body.id==""){
+      resp.msg = "please introduce an id"
+    }else{
+      if(body.token == undefined || body.token == ""){
+      resp.msg = "invalid session"
+      }else{
+        const gettoken = sec.getToken(body.token)
+        if(!(gettoken.valid == true)){
+          resp.msg = "token not valid"
+        }else{
+          if(gettoken.data == undefined || gettoken.data == ""){
+            resp.msg = "token has no data"
+          }else{
+            const userexists = await user.userExists(sec.from64(gettoken.data))
+            if(!userexists){
+              resp.msg = "user doesnt exist"
+            }else{
+              const regquery = await getRegs()
+              for(let prevRegs in regquery){
+                if(regquery[prevRegs].id==body.id){
+                  await reg.doc(body.id).delete()
+                  resp.data = "succes"
+                  resp.msg = "" + body.id + " deleted"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  return resp
+}
+
+const setReg = async function(body){
   let resp = {
     data: "error",
     msg: ""
@@ -58,7 +102,18 @@ const newReg = async function(body){
                 }else{
                   newurl = body.url
                 }
-                let newidthis = await newId()
+                const prevRegs = await getRegs(body)
+                let alreadyExists= false
+                let newidthis = 0
+                for(let prev in prevRegs){
+                  if(prevRegs[prev].name==body.name){
+                    alreadyExists=true
+                    newidthis=prevRegs[prev].id
+                  }
+                }
+                if(!alreadyExists){
+                  newidthis =await newId()
+                }
                 await reg.doc(newidthis).set({
                   reg_name : sec.to64(body.name),
                   reg_value : sec.encryptTextPublic(body.value),
@@ -97,7 +152,7 @@ const getRegs = async function(body){
         const regIDs = regSnapshot.docs.map(doc => doc.id);
         //juntarlas
         const regList = regIDs.map( function(x, i){
-          return {"id": x, "name": regDocs[i].name}
+          return {"id": x, "name": regDocs[i].name, "url": regDocs[i].url, "value": sec.decryptTextPrivate(regDocs[i].value)}
         }, this);
         if(regList.length!=0){
           resp=regList
@@ -113,18 +168,22 @@ const runReg = async function(app){
   //obtener las contraseñas en la api con un get porque me da flojera hacer las pruebas bien haha salu3
   app.post("/getRegs", async (req, res, next) => {
       var resp = await getRegs(req.body);
-      res.json({
+      res.end(JSON.stringify({
       data: resp,
       msg:"get registers"
-      });
+      }));
   });
-  app.post("/newReg", async (req, res, next) => {
-    var resp = await newReg(req.body);
-    res.json({
+  app.post("/setReg", async (req, res, next) => {
+    var resp = await setReg(req.body);
+    res.end(JSON.stringify({
     data: resp,
     msg:"new register"
-    });
+    }));
 });
+  app.post("/delReg", async (req, res, next) => {
+    var resp = await delReg(req.body);
+    res.end(JSON.stringify(resp))
+  });
 }
 
 //exportar el main
