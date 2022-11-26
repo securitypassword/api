@@ -159,6 +159,33 @@ const login = async function(body){
   }
   return resp
 }
+const deleteUser = async function(body){
+  let resp={ valid : false ,
+    msg : ""}
+  if(body.name != undefined ){
+    if(body.password != undefined){
+      const exists = await userExists(body.name)
+      if(exists){
+        const logintokenhere = await loginToken(body)
+        if(logintokenhere.msg!=undefined&&logintokenhere.msg!=""){
+          if(logintokenhere.msg=="found"){
+            if(logintokenhere.data!=undefined&&logintokenhere.data!=""){
+              console.log("delete user",sec.from64(logintokenhere.data))
+              await user.doc(logintokenhere.data).delete()
+            }
+          }
+        }
+      }else{
+        resp.msg = "enter a valid name"   
+      }
+    }else{
+      resp.msg = "enter a password"
+    }
+  }else{
+    resp.msg = "enter a name"
+  }
+  return resp
+}
 
 const loginToken = async function(body){
   console.log("login token")
@@ -230,6 +257,11 @@ const runUser = async function(app){
   });
   app.post("/login",async (req, res, next) => {
     const reg = await login(req.body)
+    const resp = reg
+    res.end(JSON.stringify(resp));
+  })
+  app.post("/deleteUser",async (req, res, next) => {
+    const reg = await deleteUser(req.body)
     const resp = reg
     res.end(JSON.stringify(resp));
   })

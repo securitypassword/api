@@ -128,6 +128,7 @@ const setReg = async function(body){
                   reg_name : sec.to64(body.name),
                   reg_value : newregvalue,
                   reg_url : sec.to64(newurl),
+                  reg_bin : false,
                   usu_name : gettoken.data
                 })
                 resp.data = "success"
@@ -176,9 +177,79 @@ const getRegs = async function(body){
   return resp
 }
 
+const getActiveRegs = async function(body){
+  console.log("get active registers")
+  let resp = {}
+  if(body!=undefined){
+    if(body.token!=null&&body.token!=""&&body.token!=undefined){
+      const gettoken = await sec.getToken(body.token)
+      if(JSON.stringify(gettoken) != "{}"){
+        console.log("token value", gettoken)
+        const username = gettoken.data
+        console.log("from",sec.from64(username))
+        const regSnapshot = await reg.where("usu_name", "==", username).get().then((querySnapshot) => {
+          return querySnapshot
+        })
+        //crear una lista con los registros/contraseñas
+        const regDocs = regSnapshot.docs.map(doc => doc.data());
+        //las ids
+        const regIDs = regSnapshot.docs.map(doc => doc.id);
+        //juntarlas
+        let regList = []
+        for(let i in regDocs){
+          let gettingvalue = sec.dec(regDocs[i].reg_value)
+          if(regDocs[i].reg_bin==false){
+            regList.push({"id": regIDs[i], "name": regDocs[i].reg_name, "url": regDocs[i].reg_url, "value": gettingvalue})
+          }
+        };
+        if(regList.length!=0){
+          resp=regList
+        }
+      }
+    }
+  }
+  console.log(resp)
+  return resp
+}
+
+const getBinRegs = async function(body){
+  console.log("get active registers")
+  let resp = {}
+  if(body!=undefined){
+    if(body.token!=null&&body.token!=""&&body.token!=undefined){
+      const gettoken = await sec.getToken(body.token)
+      if(JSON.stringify(gettoken) != "{}"){
+        console.log("token value", gettoken)
+        const username = gettoken.data
+        console.log("from",sec.from64(username))
+        const regSnapshot = await reg.where("usu_name", "==", username).get().then((querySnapshot) => {
+          return querySnapshot
+        })
+        //crear una lista con los registros/contraseñas
+        const regDocs = regSnapshot.docs.map(doc => doc.data());
+        //las ids
+        const regIDs = regSnapshot.docs.map(doc => doc.id);
+        //juntarlas
+        let regList = []
+        for(let i in regDocs){
+          let gettingvalue = sec.dec(regDocs[i].reg_value)
+          if(regDocs[i].reg_bin==true){
+            regList.push({"id": regIDs[i], "name": regDocs[i].reg_name, "url": regDocs[i].reg_url, "value": gettingvalue})
+          }
+        };
+        if(regList.length!=0){
+          resp=regList
+        }
+      }
+    }
+  }
+  console.log(resp)
+  return resp
+}
+
 //el main para que se pueda ejecutar desde una url
 const runReg = async function(app){
-  //obtener las contraseñas en la api con un get porque me da flojera hacer las pruebas bien haha salu3
+  //obtener las contraseñas en la api
   app.post("/getRegs", async (req, res, next) => {
       var resp = await getRegs(req.body);
       res.end(JSON.stringify({
@@ -186,13 +257,27 @@ const runReg = async function(app){
       msg:"get registers"
       }));
   });
+  app.post("/getActiveRegs", async (req, res, next) => {
+    var resp = await getActiveRegs(req.body);
+    res.end(JSON.stringify({
+    data: resp,
+    msg:"get active registers"
+    }));
+  });
+  app.post("/getBinRegs", async (req, res, next) => {
+    var resp = await getBinRegs(req.body);
+    res.end(JSON.stringify({
+    data: resp,
+    msg:"get registers in the bin"
+    }));
+  });
   app.post("/setReg", async (req, res, next) => {
     var resp = await setReg(req.body);
     res.end(JSON.stringify({
     data: resp,
     msg:"new register"
     }));
-});
+  });
   app.post("/delReg", async (req, res, next) => {
     var resp = await delReg(req.body);
     res.end(JSON.stringify(resp))

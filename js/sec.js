@@ -1,6 +1,13 @@
 import CryptoJS from "crypto-js";
+import cron from "node-cron"
 
-const masterKey = "i forgor :skull:"
+
+cron.schedule('*/5 * * * *', async () => {
+  await delTokensAdmin({key:process.env.MASTER_KEY})
+});
+
+//master bait here we gooooooo
+const masterKey = process.env.MASTER_KEY
 
 //decrypt
 export const dec = function (text) {
@@ -44,11 +51,18 @@ const runSec = async function(app){
       msg: "generated" }
     res.end(JSON.stringify(resp));
   });
-  //norrar tokens
+  //borrar tokens
   app.post("/delTokens", async (req, res, next) => {
     console.log("delete all tokens attempt")
-    console.log(req.body)
+    console.log("body",req.body)
     const resp = await delTokensAdmin(req.body);
+    res.end(JSON.stringify(resp));
+  });
+  //norrar tokens
+  app.post("/delToken", async (req, res, next) => {
+    console.log("delete a specific tokens attempt")
+    console.log(req.body)
+    const resp = await delToken(req.body);
     res.end(JSON.stringify(resp));
   });
   //cifrar con la llave publica
@@ -162,9 +176,15 @@ const delTokensAdmin = async function(body){
         const gettokkens = await tokens.get().then((querySnapshot) => {
           return querySnapshot
         })
-        for(var i in gettokkens){
-          tokens.doc(gettokkens[i].id).delete()
-        }
+        gettokkens.forEach((doc) =>{
+          console.log("token",doc)
+          console.log("id",doc.id)
+          if(doc.data().tok_touched==true){
+            tokens.doc(doc.id).delete()
+          }else{
+            tokens.doc(doc.id).update({tok_touched:true})
+          }
+        })
       }else{
         console.log("some fellow is tryin to delete the tokens")
         resp = "nope"
@@ -176,6 +196,29 @@ const delTokensAdmin = async function(body){
     console.log(error)
     return {data: 'error', msg:error}
   }
+}
+//eliminar un token en especifico
+const delToken = async function(body){
+  console.log("delete a token")
+  resp = {data:"error", msg:""}
+  if(body == undefined || body == ""){
+    resp.msg = "please introduce data"
+  }else{
+    if(body.token == undefined || body.token ==""){
+      resp.msg = "please introduce token"
+    }else{
+      const gettoken = await tokens.doc(body.token).get().then((querySnapshot) => {
+        return querySnapshot
+      })
+      if(gettoken.data()==undefined||gettoken.data()==""){
+        resp.msg = "token no existe"
+      }else{
+        await tokens.doc(body.token).delete()
+        console.log("delete", body.token)
+      }
+    }
+  }
+  return resp
 }
 const generateKeysAdmin = async function(body){
   let resp = ' '
@@ -268,6 +311,13 @@ export const getToken = async function(token){
   if(tokenList.length!=0){
     resp = jwt.decode(tokenGot.tok_name)
   }
+  if(token.Got!=undefined){
+    if(tokenGot.tok_touched!=undefined){
+      if(tokenGot.tok_touched==true){
+        tokens.doc(tokenGot.tok_name).update({tok_touched:false})
+      }
+    }
+  }
   console.log("result", resp)
   return resp
 }
@@ -276,7 +326,9 @@ const setToken = async function (token){
   const datenow = new Date()
   let set = await tokens.doc(token).set({
     tok_name: token,
-    tok_date: datenow.toString()})
+    tok_date: datenow.toString(),
+    tok_touched : false
+  })
   console.log("set new token")
   console.log(set)
 }
