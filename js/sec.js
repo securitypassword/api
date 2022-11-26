@@ -1,10 +1,10 @@
 import CryptoJS from "crypto-js";
-import cron from "node-cron"
+//import cron from "node-cron"
 
 
-cron.schedule('*/5 * * * *', async () => {
-  await delTokensAdmin({key:process.env.MASTER_KEY})
-});
+//cron.schedule('*/5 * * * *', async () => {
+//  await delTokensAdmin({key:process.env.MASTER_KEY})
+//});
 
 //master bait here we gooooooo
 const masterKey = process.env.MASTER_KEY
