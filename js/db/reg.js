@@ -159,7 +159,7 @@ const setReg = async function(body){
               }else{
                 let newurl = ""
                 if(body.url == undefined || body.url == ""){
-                  newurl = "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+                  newurl = ""
                 }else{
                   newurl = body.url
                 }
