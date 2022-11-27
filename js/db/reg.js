@@ -144,6 +144,87 @@ const setReg = async function(body){
   return resp
 }
 
+
+const editReg = async function(body){
+  let resp = {
+    data: "error",
+    msg: ""
+  }
+  console.log("new register")
+  console.log("start of body")
+  console.log(body)
+  console.log("end of body")
+  if(body == undefined || body == ""){
+    resp.msg = "please introduce data"
+  }else{
+    if(body.id == undefined || body.id == ""){
+      resp.msg = "please introduce id"
+    }else{
+      if(body.name == undefined || body.name == ""){
+        resp.msg = "please introduce name"
+      }else{
+      if(body.value == undefined || body.value == ""){
+        resp.msg = "please introduce the password"
+      }else{
+        if(body.token == undefined || body.token ==""){
+          resp.msg = "invalid session"
+        }else{
+          const gettoken = await sec.getToken(body.token)
+          console.log(gettoken)
+          if(gettoken.valid != true){
+            resp.msg = "token not valid"
+          }else{
+            if(gettoken.data == undefined || gettoken.data == ""){
+              resp.msg = "token has no data"
+            }else{
+              const userexists = await user.userExists(sec.from64(gettoken.data))
+              if(!userexists){
+                resp.msg = "user doesnt exist"
+              }else{
+                let newurl = ""
+                if(body.url == undefined || body.url == ""){
+                  newurl = ""
+                }else{
+                  newurl = body.url
+                }
+                const prevRegs = await getRegs({token:body.token})
+                let alreadyExists= false
+                let newidthis = "0"
+                for(let prev in prevRegs){
+                  if(prevRegs[prev].id==body.id){
+                    alreadyExists=true
+                    newidthis=prevRegs[prev].id
+                  }
+                }
+                if(!alreadyExists){
+                  resp.msg="invalid register"
+                }else{
+                  const newregvaluencrypt = sec.enc(body.value)
+                  const newregvalue = newregvaluencrypt.toString('base64')
+                  console.log("reg id",newidthis)
+                  console.log("reg new value", newregvalue)
+                  await reg.doc(newidthis).set({
+                    reg_name : sec.to64(body.name),
+                    reg_value : newregvalue,
+                    reg_url : sec.to64(newurl),
+                    reg_bin : false,
+                    usu_name : gettoken.data
+                  })
+                  resp.data = "success"
+                  resp.msg = newidthis
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    }
+  }
+
+  return resp
+}
+
 const getRegs = async function(body){
   console.log("get registers")
   let resp = {}
@@ -165,7 +246,7 @@ const getRegs = async function(body){
         let regList = []
         for(let i in regDocs){
           let gettingvalue = sec.dec(regDocs[i].reg_value)
-          regList[i] = {"id": regIDs[i], "name": regDocs[i].reg_name, "url": regDocs[i].reg_url, "value":  sec.to64(gettingvalue)}
+          regList[i] = {"id": regIDs[i], "name": regDocs[i].reg_name, "url": regDocs[i].reg_url, "value": gettingvalue}
         };
         if(regList.length!=0){
           resp=regList
@@ -199,7 +280,7 @@ const getActiveRegs = async function(body){
         for(let i in regDocs){
           let gettingvalue = sec.dec(regDocs[i].reg_value)
           if(regDocs[i].reg_bin==false){
-            regList.push({"id": regIDs[i], "name": regDocs[i].reg_name, "url": regDocs[i].reg_url, "value":  sec.to64(gettingvalue)})
+            regList.push({"id": regIDs[i], "name": regDocs[i].reg_name, "url": regDocs[i].reg_url, "value": gettingvalue})
           }
         };
         if(regList.length!=0){
@@ -234,7 +315,7 @@ const getBinRegs = async function(body){
         for(let i in regDocs){
           let gettingvalue = sec.dec(regDocs[i].reg_value)
           if(regDocs[i].reg_bin==true){
-            regList.push({"id": regIDs[i], "name": regDocs[i].reg_name, "url": regDocs[i].reg_url, "value":  sec.to64(gettingvalue)})
+            regList.push({"id": regIDs[i], "name": regDocs[i].reg_name, "url": regDocs[i].reg_url, "value": gettingvalue})
           }
         };
         if(regList.length!=0){
@@ -277,6 +358,10 @@ const runReg = async function(app){
     data: resp,
     msg:"new register"
     }));
+  });
+  app.post("/editReg", async (req, res, next) => {
+    var resp = await editReg(req.body);
+    res.end(JSON.stringify(resp))
   });
   app.post("/delReg", async (req, res, next) => {
     var resp = await delReg(req.body);
