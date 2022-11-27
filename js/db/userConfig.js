@@ -33,6 +33,7 @@ const getAutoDel = async function(body){
     if(body!=undefined){
         if(body.token!=null&&body.token!=""&&body.token!=undefined){
             const gettoken = await sec.getToken(body.token)
+            console.log("uwu")
             if(JSON.stringify(gettoken) != "{}"){
                 console.log("token value", gettoken)
                 const username = gettoken.data
