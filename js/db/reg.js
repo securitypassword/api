@@ -255,6 +255,7 @@ const getRegs = async function(body){
         //juntarlas
         let regList = []
         for(let i in regDocs){
+          console.log("uwu",sec.dec(regDocs[i].reg_value))
           let gettingvalue = sec.to64(sec.dec(regDocs[i].reg_value))
           regList[i] = {"id": regIDs[i], "name": regDocs[i].reg_name, "url": regDocs[i].reg_url, "value": gettingvalue}
         };
