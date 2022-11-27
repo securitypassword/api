@@ -321,10 +321,10 @@ const getBinRegs = async function(body){
         //las ids
         const regIDs = regSnapshot.docs.map(doc => doc.id);
         //juntarlas
+          console.log(regDocs,"uwu2")
         let regList = []
         for(let i in regDocs){
           let gettingvalue = sec.to64(sec.dec(regDocs[i].reg_value))
-          console.log(regDocs[i],"uwu")
           if(regDocs[i].reg_bin==true){
             regList.push({"id": regIDs[i], "name": regDocs[i].reg_name, "url": regDocs[i].reg_url, "value": gettingvalue})
           }
