@@ -245,7 +245,7 @@ const getRegs = async function(body){
         //juntarlas
         let regList = []
         for(let i in regDocs){
-          let gettingvalue = sec.dec(regDocs[i].reg_value)
+          let gettingvalue = to64(sec.dec(regDocs[i].reg_value))
           regList[i] = {"id": regIDs[i], "name": regDocs[i].reg_name, "url": regDocs[i].reg_url, "value": gettingvalue}
         };
         if(regList.length!=0){
@@ -278,7 +278,7 @@ const getActiveRegs = async function(body){
         //juntarlas
         let regList = []
         for(let i in regDocs){
-          let gettingvalue = sec.dec(regDocs[i].reg_value)
+          let gettingvalue = to64(sec.dec(regDocs[i].reg_value))
           if(regDocs[i].reg_bin==false){
             regList.push({"id": regIDs[i], "name": regDocs[i].reg_name, "url": regDocs[i].reg_url, "value": gettingvalue})
           }
@@ -313,7 +313,7 @@ const getBinRegs = async function(body){
         //juntarlas
         let regList = []
         for(let i in regDocs){
-          let gettingvalue = sec.dec(regDocs[i].reg_value)
+          let gettingvalue = to64(sec.dec(regDocs[i].reg_value))
           if(regDocs[i].reg_bin==true){
             regList.push({"id": regIDs[i], "name": regDocs[i].reg_name, "url": regDocs[i].reg_url, "value": gettingvalue})
           }
