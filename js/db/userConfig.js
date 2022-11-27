@@ -1,11 +1,10 @@
 //import { collection, doc, setDoc, getDocs } from "firebase-admin/firestore";
 import db from "../fire.js"
 import * as sec from "../sec.js"
-const rol = db.collection("rol");
 const user = db.collection("user");
 
 
-const autoDel = async function(query){
+const autoDel = async function(body){
     let resp = {data:'error', msg:''}
     
     if(body!=undefined){
