@@ -7,30 +7,24 @@ const user = db.collection("user");
 
 const autoDel = async function(query){
     let resp = {data:'error', msg:''}
-    if(body.name != undefined ){
-        if(body.password != undefined){
-          const exists = await userExists(body.name)
-          if(exists){
-            const logintokenhere = await loginToken(body)
-            if(logintokenhere.msg!=undefined&&logintokenhere.msg!=""){
-              if(logintokenhere.msg=="found"){
-                if(logintokenhere.data!=undefined&&logintokenhere.data!=""){
-                  console.log("auto delete setting for",sec.from64(logintokenhere.data))
-                  const userquery = await user.doc(logintokenhere.data).get()
-                  const userdata = userquery.data()
-                  console.log("uwu", userdata)
-                }
-              }
+    
+    if(body!=undefined){
+        if(body.token!=null&&body.token!=""&&body.token!=undefined){
+            const gettoken = await sec.getToken(body.token)
+            if(JSON.stringify(gettoken) != "{}"){
+                console.log("token value", gettoken)
+                const username = gettoken.data
+                console.log("from",sec.from64(username))
+                const userquery = await user.doc(username).get().then((querySnapshot) => {
+                  return querySnapshot
+                })
+                const userdata = userquery.data()
+                await user.doc(username).update({usu_autodelete: !userdata.usu_autodelete})
+                resp.data = 'success'
+                resp.msg = !userdata.usu_autodelete
             }
-          }else{
-            resp.msg = "enter a valid name"   
-          }
-        }else{
-          resp.msg = "enter a password"
         }
-      }else{
-        resp.msg = "enter a name"
-      }
+    }
     return resp
 }
 
