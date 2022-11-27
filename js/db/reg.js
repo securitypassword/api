@@ -188,30 +188,39 @@ const editReg = async function(body){
                   newurl = body.url
                 }
                 const prevRegs = await getRegs({token:body.token})
-                let alreadyExists= false
+                let alreadyExistsId= false
+                let alreadyExistsName= false
                 let newidthis = "0"
                 for(let prev in prevRegs){
                   if(prevRegs[prev].id==body.id){
-                    alreadyExists=true
+                    alreadyExistsId=true
+                    newidthis=prevRegs[prev].id
+                  }
+                  if(prevRegs[prev].name==sec.to64(body.name)){
+                    alreadyExistsName=true
                     newidthis=prevRegs[prev].id
                   }
                 }
-                if(!alreadyExists){
+                if(!alreadyExistsId){
                   resp.msg="invalid register"
                 }else{
-                  const newregvaluencrypt = sec.enc(body.value)
-                  const newregvalue = newregvaluencrypt.toString('base64')
-                  console.log("reg id",newidthis)
-                  console.log("reg new value", newregvalue)
-                  await reg.doc(newidthis).set({
-                    reg_name : sec.to64(body.name),
-                    reg_value : newregvalue,
-                    reg_url : sec.to64(newurl),
-                    reg_bin : false,
-                    usu_name : gettoken.data
-                  })
-                  resp.data = "success"
-                  resp.msg = newidthis
+                  if(alreadyExistsName){
+                    resp.msg="name already used"
+                  }else{
+                    const newregvaluencrypt = sec.enc(body.value)
+                    const newregvalue = newregvaluencrypt.toString('base64')
+                    console.log("reg id",newidthis)
+                    console.log("reg new value", newregvalue)
+                    await reg.doc(newidthis).set({
+                      reg_name : sec.to64(body.name),
+                      reg_value : newregvalue,
+                      reg_url : sec.to64(newurl),
+                      reg_bin : false,
+                      usu_name : gettoken.data
+                    })
+                    resp.data = "success"
+                    resp.msg = newidthis
+                  }
                 }
               }
             }
