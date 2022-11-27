@@ -195,10 +195,11 @@ const editReg = async function(body){
                   if(prevRegs[prev].id==body.id){
                     alreadyExistsId=true
                     newidthis=prevRegs[prev].id
-                  }
-                  if(prevRegs[prev].name==sec.to64(body.name)){
-                    alreadyExistsName=true
-                    newidthis=prevRegs[prev].id
+                  }else{
+                    if(prevRegs[prev].name==sec.to64(body.name)){
+                      alreadyExistsName=true
+                      newidthis=prevRegs[prev].id
+                    }
                   }
                 }
                 if(!alreadyExistsId){
