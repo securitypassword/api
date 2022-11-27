@@ -55,9 +55,16 @@ const delReg = async function(body){
               const regquery = await getRegs(body)
               for(let prevRegs in regquery){
                 if(regquery[prevRegs].id==body.id){
-                  await reg.doc(body.id).delete()
+                  resp.msg = ""
+                  if(regquery[prevRegs].in_bin==false){
+                    reg.doc(body.id).update({reg_bin: true})
+                    resp.msg = "" + body.id + " in bin"
+                  }
+                  if(regquery[prevRegs].in_bin==true){
+                    await reg.doc(body.id).delete()
+                    resp.msg = "" + body.id + " deleted"
+                  }
                   resp.data = "succes"
-                  resp.msg = "" + body.id + " deleted"
                 }
               }
             }
@@ -256,7 +263,8 @@ const getRegs = async function(body){
         let regList = []
         for(let i in regDocs){
           let gettingvalue = sec.to64(sec.dec(regDocs[i].reg_value))
-          regList[i] = {"id": regIDs[i], "name": regDocs[i].reg_name, "url": regDocs[i].reg_url, "value": gettingvalue}
+          regList[i] = {"id": regIDs[i], "name": regDocs[i].reg_name
+          , "url": regDocs[i].reg_url, "value": gettingvalue, "in_bin": regDocs[i].reg_bin}
         };
         if(regList.length!=0){
           resp=regList
