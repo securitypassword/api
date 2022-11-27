@@ -45,13 +45,20 @@ export const gen = async function(query){
 
 //el main para que se pueda ejecutar desde una url
 const runFree = function(app){
-    app.get("/generate", async (req, res, next) => {
-        var resp = await gen(req.query);
-        res.json({
-        data: resp,
-        msg:"generate password"
-        });
-    });
+  app.get("/generate", async (req, res, next) => {
+      var resp = await gen(req.query);
+      res.json({
+      data: resp,
+      msg:"generate password"
+      });
+  });
+  app.post("/generate", async (req, res, next) => {
+      var resp = await gen(req.body);
+      res.end(JSON.stringify({
+      data: resp,
+      msg:"generate password"
+      }));
+  });
 }
 
 //exportar el main
