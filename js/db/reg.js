@@ -76,6 +76,54 @@ const delReg = async function(body){
   return resp
 }
 
+const resReg = async function(body){
+  console.log("restoring a register")
+  let resp = {data:"error", msg:""}
+  console.log("start of body")
+  console.log(body)
+  console.log("end of body")
+
+  if(body == undefined || body == ""){
+    resp.msg = "please introduce data"
+  }else{
+    if(body.id == undefined || body.id==""){
+      resp.msg = "please introduce an id"
+    }else{
+      if(body.token == undefined || body.token == ""){
+      resp.msg = "invalid session"
+      }else{
+        const gettoken = await sec.getToken(body.token)
+        console.log(gettoken)
+        if(gettoken.valid != true){
+          resp.msg = "token not valid"
+        }else{
+          if(gettoken.data == undefined || gettoken.data == ""){
+            resp.msg = "token has no data"
+          }else{
+            const userexists = await user.userExists(sec.from64(gettoken.data))
+            if(!userexists){
+              resp.msg = "user doesnt exist"
+            }else{
+              const regquery = await getRegs(body)
+              for(let prevRegs in regquery){
+                if(regquery[prevRegs].id==body.id){
+                  resp.msg = ""
+                  if(regquery[prevRegs].in_bin==true){
+                    reg.doc(body.id).update({reg_bin: false})
+                    resp.msg = "" + body.id + " restored"
+                  }
+                  resp.data = "succes"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  return resp
+}
+
 const setReg = async function(body){
   let resp = {
     data: "error",
@@ -384,6 +432,10 @@ const runReg = async function(app){
   });
   app.post("/delReg", async (req, res, next) => {
     var resp = await delReg(req.body);
+    res.end(JSON.stringify(resp))
+  });
+  app.post("/resReg", async (req, res, next) => {
+    var resp = await resReg(req.body);
     res.end(JSON.stringify(resp))
   });
 }
