@@ -165,7 +165,7 @@ const getRegs = async function(body){
         let regList = []
         for(let i in regDocs){
           let gettingvalue = sec.dec(regDocs[i].reg_value)
-          regList[i] = {"id": regIDs[i], "name": regDocs[i].reg_name, "url": regDocs[i].reg_url, "value": sec.to64(gettingvalue)}
+          regList[i] = {"id": regIDs[i], "name": regDocs[i].reg_name, "url": regDocs[i].reg_url, "value":  sec.to64(sec.to64(gettingvalue))}
         };
         if(regList.length!=0){
           resp=regList
@@ -199,7 +199,7 @@ const getActiveRegs = async function(body){
         for(let i in regDocs){
           let gettingvalue = sec.dec(regDocs[i].reg_value)
           if(regDocs[i].reg_bin==false){
-            regList.push({"id": regIDs[i], "name": regDocs[i].reg_name, "url": regDocs[i].reg_url, "value": sec.to64(gettingvalue)})
+            regList.push({"id": regIDs[i], "name": regDocs[i].reg_name, "url": regDocs[i].reg_url, "value":  sec.to64(sec.to64(gettingvalue))})
           }
         };
         if(regList.length!=0){
@@ -234,7 +234,7 @@ const getBinRegs = async function(body){
         for(let i in regDocs){
           let gettingvalue = sec.dec(regDocs[i].reg_value)
           if(regDocs[i].reg_bin==true){
-            regList.push({"id": regIDs[i], "name": regDocs[i].reg_name, "url": regDocs[i].reg_url, "value": sec.to64(gettingvalue)})
+            regList.push({"id": regIDs[i], "name": regDocs[i].reg_name, "url": regDocs[i].reg_url, "value":  sec.to64(sec.to64(gettingvalue))})
           }
         };
         if(regList.length!=0){
