@@ -1,7 +1,6 @@
 import * as emailjs from "emailjs"
 
- var XMLHttpRequest = require('xhr2');
- var xhr = new XMLHttpRequest();
+import 'xhr2';
 
 export const sendEmail = async function(to, subject, content){
     console.log("send email",to,subject,content)
