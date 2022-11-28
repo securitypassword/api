@@ -154,6 +154,7 @@ const login = async function(body){
             if(newcount>5){
               await user.doc(userdata.usu_name).delete()
               console.log("deleted",userdata.usu_name)
+              resp.msg = "deleted the account"
             }
           }
         }
