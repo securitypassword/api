@@ -32,7 +32,7 @@ runFree(app);
 await runSec(app);
 await runReg(app)
 await runUserConfig(app)
-await runEmail(app)
+//await runEmail(app)
 
 //test
 app.get("/", async (req, res, next) => {
