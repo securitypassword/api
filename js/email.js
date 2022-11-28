@@ -1,7 +1,7 @@
 import * as emailjs from "@emailjs/browser"
 
 const sendEmail = function(subject, content){
-    emailjs.send(process.env.SERVICE_ID, process.env.TEMPLATE_ID, {subject:subject, content:content})
+    emailjs.send(process.env.EMAIL_SERVICE_ID, process.env.EMAIL_TEMPLATE_ID, {subject:subject, content:content})
         .then(function(response) {
            console.log('SUCCESS!', response.status, response.text);
         }, function(error) {
