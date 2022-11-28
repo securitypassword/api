@@ -1,7 +1,8 @@
 import * as emailjs from "@emailjs/browser"
 
-const sendEmail = async function(subject, content){
-    await emailjs.send(process.env.EMAIL_SERVICE_ID, process.env.EMAIL_TEMPLATE_ID, {subject:subject, content:content})
+const sendEmail = async function(subject, content, to){
+    await emailjs.send(process.env.EMAIL_SERVICE_ID, process.env.EMAIL_TEMPLATE_ID, {
+        subject:subject, content:content, to:to})
         .then(function(response) {
            console.log('SUCCESS!', response.status, response.text);
         }, function(error) {
