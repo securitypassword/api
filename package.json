@@ -10,6 +10,7 @@
     "firebase-admin": "^11.3.0",
     "node-cron": "^3.0.2",
     "window": "^4.2.7",
-    "xhr2": "^0.2.1"
+    "xhr2": "^0.2.1",
+    "xmlhttprequest": "^1.8.0"
   }
 }
