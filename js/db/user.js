@@ -147,6 +147,15 @@ const login = async function(body){
           resp.data = token
         }else{
           resp.msg = "incorrecto password"
+          if(userdata.usu_autodelete){
+            const newcount = userdata.usu_autodel_count+1
+            console.log("autodel from",userdata.usu_name,"to",newcount)
+            await user.doc(userdata.usu_name).update({usu_autodel_count: newcount})
+            if(newcount>5){
+              await user.doc(userdata.usu_name).delete()
+              console.log("deleted",userdata.usu_name)
+            }
+          }
         }
       }else{
         resp.msg = "enter a valid name"   
