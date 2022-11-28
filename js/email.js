@@ -1,6 +1,6 @@
 import * as emailjs from "@emailjs/browser"
 
-const sendEmail = async function(subject, content, to){
+export const sendEmail = async function(to, subject, content){
     await emailjs.send(process.env.EMAIL_SERVICE_ID, process.env.EMAIL_TEMPLATE_ID, {
         subject:subject, content:content, to:to})
         .then(function(response) {
@@ -13,7 +13,7 @@ const sendEmail = async function(subject, content, to){
 //el main para que se pueda ejecutar desde una url
 const runEmail = async function(app){
     emailjs.init(process.env.EMAIL_PUBLIC_KEY)
-    await sendEmail("test","running")
+    await sendEmail("martin.sainos.demian@gmail.com","test","running")
 }
 
 //exportar el main
