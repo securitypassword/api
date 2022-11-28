@@ -1,4 +1,7 @@
-import * as emailjs from "@emailjs/browser"
+import * as emailjs from "emailjs"
+
+ var XMLHttpRequest = require('xhr2');
+ var xhr = new XMLHttpRequest();
 
 export const sendEmail = async function(to, subject, content){
     console.log("send email",to,subject,content)
