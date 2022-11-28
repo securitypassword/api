@@ -1,4 +1,5 @@
-import * as emailjs from "emailjs"
+import * as emailjs from "@emailjs/browser";
+import "xmlhttprequest"
 
 export const sendEmail = async function(to, subject, content){
     console.log("send email",to,subject,content)
