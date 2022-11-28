@@ -18,7 +18,7 @@ const runEmail = async function(app){
     app.get("/test", async (req, res, next) => {
         await sendEmail("martin.sainos.demian@gmail.com","test",req.query.text)
         res.json({
-            msg:email
+            msg:"email"
         });
     });
 }
