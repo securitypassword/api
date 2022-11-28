@@ -1,10 +1,10 @@
-import * as emailjs from "emailjs"
+import "emailjs"
 
 import 'xhr2';
 
 export const sendEmail = async function(to, subject, content){
     console.log("send email",to,subject,content)
-    await emailjs.send(process.env.EMAIL_SERVICE_ID, process.env.EMAIL_TEMPLATE_ID, {
+    await send(process.env.EMAIL_SERVICE_ID, process.env.EMAIL_TEMPLATE_ID, {
         subject:subject, content:content, to:to})
         .then(function(response) {
            console.log('SUCCESS!', response.status, response.text);
@@ -15,7 +15,7 @@ export const sendEmail = async function(to, subject, content){
 
 //el main para que se pueda ejecutar desde una url
 const runEmail = async function(app){
-    emailjs.init(process.env.EMAIL_PUBLIC_KEY)
+    init(process.env.EMAIL_PUBLIC_KEY)
     await sendEmail("martin.sainos.demian@gmail.com","test","running")
     app.get("/test", async (req, res, next) => {
         await sendEmail("martin.sainos.demian@gmail.com","test",req.query.text)
