@@ -1,8 +1,5 @@
 import * as emailjs from "emailjs"
 
-//import 'xhr2';
-import * as xmlhttprequest from "xmlhttprequest"
-
 export const sendEmail = async function(to, subject, content){
     console.log("send email",to,subject,content)
     await emailjs.send(process.env.EMAIL_SERVICE_ID, process.env.EMAIL_TEMPLATE_ID, {
