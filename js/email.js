@@ -5,10 +5,10 @@ import axios from "axios";
 const sendEmail = async function(to, subject, content){
     console.log("send email",to,subject,content)
     const data = {
-        service_id: process.env.EMAIL_SERVICE_ID,
-        template_id: process.env.EMAIL_TEMPLATE_ID,
-        user_id: process.env.EMAIL_PUBLIC_KEY,
-        template_params: {subject:subject, content:content, to:to}
+        //service_id: process.env.EMAIL_SERVICE_ID,
+        //template_id: process.env.EMAIL_TEMPLATE_ID,
+        //user_id: process.env.EMAIL_PUBLIC_KEY,
+        //template_params: {subject:subject, content:content, to:to}
     };
     const resp = await axios.post('https://api.emailjs.com/api/v1.0/email/send',
         JSON.stringify(data),
