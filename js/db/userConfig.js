@@ -50,29 +50,6 @@ const getAutoDel = async function(body){
     return resp
 }
 
-const changePassword = async function(body){
-    let resp = {data:'error', msg:''}
-    
-    if(body!=undefined){
-        if(body.token!=null&&body.token!=""&&body.token!=undefined){
-            const gettoken = await sec.getToken(body.token)
-            console.log("uwu")
-            if(JSON.stringify(gettoken) != "{}"){
-                console.log("token value", gettoken)
-                const username = gettoken.data
-                console.log("from",sec.from64(username))
-                const userquery = await user.doc(username).get().then((querySnapshot) => {
-                  return querySnapshot
-                })
-                const userdata = userquery.data()
-                resp.data = 'success'
-                resp.msg = userdata.usu_autodelete
-            }
-        }
-    }
-    return resp
-}
-
 //el main para que se pueda ejecutar desde una url
 const runUserConfig = async function(app){
     app.post("/autoDel",async (req, res, next) => {

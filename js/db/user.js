@@ -125,7 +125,10 @@ const register = async function(body){
         usu_password : sec.sha(body.password),
         usu_rol : 1,
         usu_autodelete : false,
-        usu_autodel_count : 0
+        usu_autodel_count : 0,
+        usu_has_question:false,
+        usu_question:"",
+        usu_answer:""
       })
       resp = {
         data : "success" , 
