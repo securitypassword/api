@@ -2,6 +2,7 @@
 import db from "../fire.js"
 import * as sec from "../sec.js"
 import * as fs from 'fs';
+import { sendEmail } from "../email.js";
 import path from 'path';
 const rol = db.collection("rol");
 const user = db.collection("user");
@@ -130,6 +131,7 @@ const register = async function(body){
         usu_question:"",
         usu_answer:""
       })
+      await sendEmail(body.email, "security password", "account created successfully")
       resp = {
         data : "success" , 
         msg : sec.to64(body.name)
