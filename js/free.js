@@ -7,7 +7,7 @@ export const gen = async function(query){
       allowed += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     }
     if (query.n == "true") {
-      if (req.query.low == "true") {
+      if (query.low == "true") {
         allowed += "ñæç";
       }
       if (query.up == "true") {
