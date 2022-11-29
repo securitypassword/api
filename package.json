@@ -2,6 +2,7 @@
   "type": "module",
   "dependencies": {
     "@emailjs/browser": "^3.10.0",
+    "axios": "^1.2.0",
     "cors": "^2.8.5",
     "crypto-js": "^4.1.1",
     "emailjs": "^4.0.1",
