@@ -125,6 +125,34 @@ const forgorPassword = async (body) => {
     return resp
 }
 
+const forgorPasswordToken = async function(body){
+    console.log("login token")
+    console.log(body.token)
+    let resp = {
+      data: "",
+      msg: "not found"}
+    if(body.token != undefined){
+        if(body.password != undefined && body.password != ""){
+            const gettoken = await sec.getToken(body.token)
+            if(JSON.stringify(gettoken) != "{}"){
+                console.log("token value", gettoken)
+                const username = gettoken.data
+                //comprobar si es admin
+                if(await userExists(sec.from64(username))){
+                const userquery = await user.doc(username).get().then((querySnapshot) => {
+                    return querySnapshot
+                })
+                const userset = await user.doc(username).update({usu_password: sec.sha(body.password)})
+                resp.msg = "found"
+                resp.data = "success"
+            }
+        }
+      }
+    }
+    return resp
+  }
+  
+
 const runEmail = async function(app){
     app.post("/setAsk",async (req, res, next) => {
         const reg = await setAsk(req.body)
