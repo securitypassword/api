@@ -20,6 +20,7 @@ const sendEmail = async function(to, subject, content){
     console.log("axios",resp)
 }
 
+
 //el main para que se pueda ejecutar desde una url
 const runEmail = async function(app){
     emailjs.init(process.env.EMAIL_PUBLIC_KEY)
