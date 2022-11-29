@@ -174,6 +174,11 @@ const runEmail = async function(app){
         const resp = reg
         res.end(JSON.stringify(resp));
     })
+    app.post("/forgorPasswordToken",async (req, res, next) => {
+        const reg = await forgorPasswordToken(req.body)
+        const resp = reg
+        res.end(JSON.stringify(resp));
+    })
 }
 
 //exportar el main
