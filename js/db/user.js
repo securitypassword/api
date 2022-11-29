@@ -58,6 +58,17 @@ export const userExists = async function(testName){
   console.log(exists)
   return exists
 }
+export const userExistsEmail = async function(testEmail){
+  const query = await user.where("usu_email", "==", sec.to64(testEmail)).get().then((querySnapshot) => {
+    return querySnapshot
+  })
+  console.log("does", sec.to64(testEmail), testEmail,"exist?")
+  const existing = query.docs.map(doc => doc.data());
+  console.log(existing, existing.length)
+  const exists = existing.length != 0
+  console.log(exists)
+  return exists
+}
 const userIdExists = async function(testId){
   const existing = await user.doc(testId).get()
   console.log("does",testId,"id exist?")
@@ -99,7 +110,9 @@ const register = async function(body){
       msg : "please introduce password"
     }
   }else{
-    if(await userExists(body.name)){
+    const userexiststhis = await userExists(body.name)
+    const emailexiststhis = await userExistsEmail(body.email)
+    if(userexiststhis || emailexiststhis){
       resp = {
         data : "error" ,
         msg : "already registered"
