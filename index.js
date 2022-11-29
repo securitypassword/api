@@ -5,6 +5,7 @@ import runSec from "./js/sec.js";
 import runReg from "./js/db/reg.js";
 import runUserConfig from "./js/db/userConfig.js"
 import runEmail from "./js/email.js";
+import runAsk from "./js/db/ask.js";
 import bodyParser from "body-parser";
 import cors from 'cors';
 var app = express();
@@ -33,6 +34,7 @@ await runSec(app);
 await runReg(app)
 await runUserConfig(app)
 await runEmail(app)
+await runAsk(app)
 
 //test
 app.get("/", async (req, res, next) => {

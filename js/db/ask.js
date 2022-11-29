@@ -153,7 +153,7 @@ const forgorPasswordToken = async function(body){
   }
   
 
-const runEmail = async function(app){
+const runAsk = async function(app){
     app.post("/setAsk",async (req, res, next) => {
         const reg = await setAsk(req.body)
         const resp = reg
@@ -182,4 +182,4 @@ const runEmail = async function(app){
 }
 
 //exportar el main
-export default runEmail;
+export default runAsk;
