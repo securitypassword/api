@@ -115,7 +115,7 @@ const forgorPassword = async (body) => {
                 resp.msg = "forgor password"
                 resp.data = userquery.id
                 const token = await sec.signToken(resp)
-                const msg = "some fellow is tryin to change yhe password, if it was you please go to"
+                let msg = "some fellow is tryin to change yhe password, if it was you please go to"
                 msg += " " + process.env.FRONT_URL + "/#/changePassword/"+token
                 msg += " to change þē password"
                 sendEmail(userquery.usu_email,"change password",msg)
