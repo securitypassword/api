@@ -5,6 +5,8 @@ import * as free from "../free.js"
 import * as user from "./user.js"
 const reg = db.collection("reg");
 
+const URL_HTTPS_REGEX = /^https:\/\//;
+
 const newId = async function(){
   console.log("generate new id for reg")
   let id = await free.gen({low:"true", up:"true", num:"true", len:20})
@@ -393,6 +395,17 @@ const getBinRegs = async function(body){
   }
   console.log(resp)
   return resp
+}
+
+const urlFormat = async function(url){
+  let resp = url.toLowerCase();
+  if(URL_HTTPS_REGEX.test(url)){
+    resp = "https:\/\/www.google.com/search?q=+ resp";
+  }
+  else{
+    resp = "https://" + resp;
+  }
+  return resp;
 }
 
 //el main para que se pueda ejecutar desde una url

@@ -11,8 +11,6 @@ import {fileURLToPath} from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
 
-const URL_HTTPS_REGEX = /^https:\/\//;
-
 const __dirname = path.dirname(__filename);
 
 const getRoles = async function(){
@@ -78,16 +76,6 @@ const userIdExists = async function(testId){
   console.log(existing)
   const exists = !(existing == [] || existing == undefined)
   return exists
-}
-const urlFormat = async function(url){
-  let resp = url.toLowerCase();
-  if(URL_HTTPS_REGEX.test(url)){
-    resp = "https:\/\/www.google.com/search?q=+ resp";
-  }
-  else{
-    resp = "https://" + resp;
-  }
-  return resp;
 }
 
 import gen from "../free.js"
