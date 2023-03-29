@@ -60,11 +60,55 @@ const delReg = async function(body){
                   resp.msg = ""
                   if(regquery[prevRegs].in_bin==false){
                     reg.doc(body.id).update({reg_bin: true})
-                    resp.msg = "" + body.id + " in bin"
+                    resp.msg = "" + body.id + " deleted"
                   }
+                  resp.data = "succes"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  return resp
+}
+
+const terReg = async function(body){
+  console.log("terminating a register")
+  let resp = {data:"error", msg:""}
+  console.log("start of body")
+  console.log(body)
+  console.log("end of body")
+
+  if(body == undefined || body == ""){
+    resp.msg = "please introduce data"
+  }else{
+    if(body.id == undefined || body.id==""){
+      resp.msg = "please introduce an id"
+    }else{
+      if(body.token == undefined || body.token == ""){
+      resp.msg = "invalid session"
+      }else{
+        const gettoken = await sec.getToken(body.token)
+        console.log(gettoken)
+        if(gettoken.valid != true){
+          resp.msg = "token not valid"
+        }else{
+          if(gettoken.data == undefined || gettoken.data == ""){
+            resp.msg = "token has no data"
+          }else{
+            const userexists = await user.userExists(sec.from64(gettoken.data))
+            if(!userexists){
+              resp.msg = "user doesnt exist"
+            }else{
+              const regquery = await getRegs(body)
+              for(let prevRegs in regquery){
+                if(regquery[prevRegs].id==body.id){
+                  resp.msg = ""
                   if(regquery[prevRegs].in_bin==true){
                     await reg.doc(body.id).delete()
-                    resp.msg = "" + body.id + " deleted"
+                    resp.msg = "" + body.id + " terminated"
                   }
                   resp.data = "succes"
                 }
@@ -445,6 +489,10 @@ const runReg = async function(app){
   });
   app.post("/delReg", async (req, res, next) => {
     var resp = await delReg(req.body);
+    res.end(JSON.stringify(resp))
+  });
+  app.post("/terReg", async (req, res, next) => {
+    var resp = await terReg(req.body);
     res.end(JSON.stringify(resp))
   });
   app.post("/resReg", async (req, res, next) => {
