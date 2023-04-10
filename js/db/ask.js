@@ -167,7 +167,6 @@ const cronii = async function(key){
     if(publicKey == key){
         resp.data = "yes"
     }
-    resp.data = publicKey
     return resp
 }
 
