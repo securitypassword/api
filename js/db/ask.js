@@ -158,7 +158,7 @@ const cronii = async function(key){
       msg: "no"}
     const keys = await sec.getKeys();
     resp.msg = "public key"
-    console.log(keys)
+    console.log(keys[1])
     resp.data = keys.public
     return resp
 }
