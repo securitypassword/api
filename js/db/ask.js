@@ -162,7 +162,7 @@ const cronii = async function(key){
     if(keys[1].id == "public"){
         publicKey = keys[1].value
     }
-    publicKey = sec.hash(publicKey)
+    publicKey = sec.hash(publicKey).substring(0, 15)
     console.log(publicKey)
     /*
     if(publicKey == key){
