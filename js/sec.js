@@ -26,7 +26,7 @@ export const enc = function (text) {
 };
 
 export const hash = function (text) {
-  return CryptoJS.HmacSHA256(text)
+  return CryptoJS.SHA256(text)
 }
 
 //main
