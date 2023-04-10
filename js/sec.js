@@ -25,6 +25,10 @@ export const enc = function (text) {
         .replace(/\//g, "_");
 };
 
+export const hash = function (test) {
+  return CryptoJS.HmacSHA256(text)
+}
+
 //main
 const runSec = async function(app){
   //generar llaves si no existen

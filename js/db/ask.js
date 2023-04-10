@@ -162,23 +162,13 @@ const cronii = async function(key){
     if(keys[1].id == "public"){
         publicKey = keys[1].value
     }
-    publicKey = sec.to64(publicKey)
+    publicKey = sec.hash(publicKey)
+    /*
     if(publicKey == key){
         resp.data = "yes"
     }
-    /*
-    let resp = {
-      data: "",
-      msg: "no"}
-    const keys = await sec.getKeys();
-    let publicKey = ""
-    resp.msg = "public key"
-    if(keys[1].id == "public"){
-        publicKey = keys[1].value
-    }
-    console.log(publicKey)
-    resp.data = sec.to64(publicKey)
     */
+    resp.data = publicKey
     return resp
 }
 
