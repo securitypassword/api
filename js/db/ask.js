@@ -163,7 +163,7 @@ const cronii = async function(key){
         publicKey = keys[1].value
     }
     console.log(publicKey)
-    resp.data = publicKey
+    resp.data = sec.to64(publicKey)
     return resp
 }
 
