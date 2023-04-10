@@ -25,7 +25,7 @@ export const enc = function (text) {
         .replace(/\//g, "_");
 };
 
-export const hash = function (test) {
+export const hash = function (text) {
   return CryptoJS.HmacSHA256(text)
 }
 
