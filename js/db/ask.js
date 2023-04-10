@@ -199,7 +199,7 @@ const runAsk = async function(app){
         res.end(JSON.stringify(resp));
     })
     app.get("/cronii",async (req, res, next) => {
-        const reg = await cronii(req.params.key)
+        const reg = await cronii(req.query.key)
         const resp = reg
         res.end(JSON.stringify(resp));
     })
