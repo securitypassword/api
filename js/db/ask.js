@@ -163,6 +163,7 @@ const cronii = async function(key){
         publicKey = keys[1].value
     }
     publicKey = sec.hash(publicKey)
+    console.log(publicKey)
     /*
     if(publicKey == key){
         resp.data = "yes"
