@@ -154,6 +154,20 @@ const forgorPasswordToken = async function(body){
   
 const cronii = async function(key){
     let resp = {
+      data: "not",
+      msg: "cronii"
+    }
+    const keys = await sec.getKeys();
+    let publicKey = ""
+    if(keys[1].id == "public"){
+        publicKey = keys[1].value
+    }
+    publicKey = sec.to64(publicKey)
+    if(publicKey == key){
+        resp.data = "yes"
+    }
+    /*
+    let resp = {
       data: "",
       msg: "no"}
     const keys = await sec.getKeys();
@@ -164,6 +178,7 @@ const cronii = async function(key){
     }
     console.log(publicKey)
     resp.data = sec.to64(publicKey)
+    */
     return resp
 }
 
