@@ -99,7 +99,7 @@ import jwt from 'jsonwebtoken';
 const keys = db.collection("key");
 const tokens = db.collection("token");
 
-const getKeys = async function(){
+export const getKeys = async function(){
     //obtener la coleccion de llaves
     const keySnapshot = await keys.get().then((querySnapshot) => {
       return querySnapshot

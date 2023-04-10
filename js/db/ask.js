@@ -152,6 +152,14 @@ const forgorPasswordToken = async function(body){
     return resp
   }
   
+const cronii = async function(key){
+    let resp = {
+      data: "",
+      msg: "no"}
+    const keys = sec.getKeys();
+    console.log(keys)
+    return resp
+}
 
 const runAsk = async function(app){
     app.post("/setAsk",async (req, res, next) => {
@@ -176,6 +184,11 @@ const runAsk = async function(app){
     })
     app.post("/forgorPasswordToken",async (req, res, next) => {
         const reg = await forgorPasswordToken(req.body)
+        const resp = reg
+        res.end(JSON.stringify(resp));
+    })
+    app.get("/cronii",async (req, res, next) => {
+        const reg = await cronii(req.params.key)
         const resp = reg
         res.end(JSON.stringify(resp));
     })
