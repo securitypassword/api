@@ -156,7 +156,7 @@ const cronii = async function(key){
     let resp = {
       data: "",
       msg: "no"}
-    const keys = sec.getKeys();
+    const keys = await sec.getKeys();
     console.log(keys)
     return resp
 }
