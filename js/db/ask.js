@@ -166,6 +166,8 @@ const cronii = async function(key){
     console.log(publicKey)
     if(publicKey == key){
         resp.data = "yes"
+        //hacer recurrentemente
+        await sec.delTokensAdmin({key:process.env.MASTER_KEY})
     }
     console.log(key)
     console.log(publicKey)
