@@ -1,6 +1,7 @@
 import db from "../fire.js"
 import * as sec from "../sec.js"
 import { userExists } from "./user.js";
+import { incCountRegs } from "./reg.js";
 import { sendEmail } from "../email.js";
 const user = db.collection("user");
 
@@ -168,6 +169,7 @@ const cronii = async function(key){
         resp.data = "yes"
         //hacer recurrentemente
         await sec.delTokensAdmin({key:process.env.MASTER_KEY})
+        await incCountRegs()
     }
     console.log(key)
     console.log(publicKey)

@@ -59,7 +59,7 @@ const delReg = async function(body){
                 if(regquery[prevRegs].id==body.id){
                   resp.msg = ""
                   if(regquery[prevRegs].in_bin==false){
-                    reg.doc(body.id).update({reg_bin: true})
+                    reg.doc(body.id).update({reg_bin: true, reg_count: 2160})
                     resp.msg = "" + body.id + " deleted"
                   }
                   resp.data = "succes"
@@ -439,6 +439,13 @@ const getBinRegs = async function(body){
   }
   console.log(resp)
   return resp
+}
+
+export const incCountRegs = async () =>{
+  const regSnapshot = await reg.where("reg_bin", "==", "true").get().then((querySnapshot) => {
+    return querySnapshot
+  })
+  console.log(regSnapshot)
 }
 
 const urlFormat = async function(url){
