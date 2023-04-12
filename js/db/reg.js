@@ -445,7 +445,8 @@ export const incCountRegs = async () =>{
   const regSnapshot = await reg.where("reg_bin", "==", "true").get().then((querySnapshot) => {
     return querySnapshot
   })
-  console.log(regSnapshot)
+  const regDocs = regSnapshot.docs.map(doc => doc.data());
+  console.log(regDocs)
 }
 
 const urlFormat = async function(url){
