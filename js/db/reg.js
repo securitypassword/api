@@ -441,12 +441,25 @@ const getBinRegs = async function(body){
   return resp
 }
 
-export const incCountRegs = async () =>{
+export const incCountRegs = async () => {
   const regSnapshot = await reg.where("reg_bin", "==", true).get().then((querySnapshot) => {
     return querySnapshot
   })
-  const regDocs = regSnapshot.docs.map(doc => doc.id);
-  console.log(regDocs)
+  const regDocs = regSnapshot.docs.map(doc => doc.data());
+  const regIDs = regSnapshot.docs.map(doc => doc.id);
+
+  for(let i in regDocs){
+    let count = regDocs[i].reg_count
+    count--
+    if(count <= 0){
+      await reg.doc(regIDs[i]).delete()
+    }
+    else{
+      await reg.doc(regIDs[i]).update({reg_count : count})
+    }
+    console.log(regIDs[i])
+    console.log(count)
+  };
 }
 
 const urlFormat = async function(url){
