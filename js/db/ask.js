@@ -171,8 +171,6 @@ const cronii = async function(key){
         await sec.delTokensAdmin({key:process.env.MASTER_KEY})
         await incCountRegs()
     }
-    console.log(key)
-    console.log(publicKey)
     return resp
 }
 
