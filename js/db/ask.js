@@ -164,7 +164,6 @@ const cronii = async function(key){
         publicKey = keys[1].value
     }
     publicKey = sec.hash(publicKey).substring(0, 15)
-    console.log(publicKey)
     if(publicKey == key){
         resp.data = "yes"
         //hacer recurrentemente
