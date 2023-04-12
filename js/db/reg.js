@@ -442,7 +442,7 @@ const getBinRegs = async function(body){
 }
 
 export const incCountRegs = async () =>{
-  const regSnapshot = await reg.where("reg_bin", "==", "true").get().then((querySnapshot) => {
+  const regSnapshot = await reg.where("reg_bin", "==", true).get().then((querySnapshot) => {
     return querySnapshot
   })
   const regDocs = regSnapshot.docs.map(doc => doc.id);
