@@ -184,7 +184,7 @@ const count = async (body) => {
         data: "count",
         msg: "yes"
     }
-    console.log(countCol("user"))
+    console.log( await countCol("user"))
     return resp
 }
 
