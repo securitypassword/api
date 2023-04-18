@@ -173,6 +173,16 @@ const cronii = async function(key){
     return resp
 }
 
+const countCol = async (collection) => {
+    let col = db.collection(collection)
+    let resp = await col.list()
+    return resp
+}
+
+const count = async (body) => {
+    console.log(countCol("user"))
+}
+
 const runAsk = async function(app){
     app.post("/setAsk",async (req, res, next) => {
         const reg = await setAsk(req.body)
@@ -201,6 +211,11 @@ const runAsk = async function(app){
     })
     app.get("/cronii",async (req, res, next) => {
         const reg = await cronii(req.query.key)
+        const resp = reg
+        res.end(JSON.stringify(resp));
+    })
+    app.post("/count",async (req, res, next) => {
+        const reg = await count(req.body)
         const resp = reg
         res.end(JSON.stringify(resp));
     })
