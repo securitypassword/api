@@ -180,7 +180,12 @@ const countCol = async (collection) => {
 }
 
 const count = async (body) => {
+    let resp = {
+        data: "count",
+        msg: "yes"
+    }
     console.log(countCol("user"))
+    return resp
 }
 
 const runAsk = async function(app){
