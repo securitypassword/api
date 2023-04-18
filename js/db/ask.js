@@ -188,9 +188,12 @@ const countCol = async (collection) => {
 const count = async (body) => {
     let resp = {
         data: "count",
-        msg: "yes"
+        msg: {}
     }
-    console.log( await countCol("user"))
+    resp.msg.users = await countCol("user")
+    resp.msg.registers = await countCol("reg")
+    resp.msg.tokens = await countCol("token")
+    console.log(resp)
     return resp
 }
 
