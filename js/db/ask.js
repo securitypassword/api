@@ -175,7 +175,7 @@ const cronii = async function(key){
 
 const countCol = async (collection) => {
     let col = db.collection(collection)
-    let resp = await col.list()
+    let resp = await col.latest()
     return resp
 }
 
