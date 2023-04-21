@@ -4,6 +4,7 @@ import * as sec from "../sec.js"
 import * as free from "../free.js"
 import * as user from "./user.js"
 const reg = db.collection("reg");
+import { check } from "./ask.js";
 
 const URL_HTTPS_REGEX = /^https:\/\//;
 
@@ -392,7 +393,7 @@ const getActiveRegs = async function(body){
         for(let i in regDocs){
           let gettingvalue = sec.to64(sec.dec(regDocs[i].reg_value))
           if(regDocs[i].reg_bin==false){
-            regList.push({"id": regIDs[i], "name": regDocs[i].reg_name, "url": regDocs[i].reg_url, "value": gettingvalue})
+            regList.push(regFormat({"id": regIDs[i], "name": regDocs[i].reg_name, "url": regDocs[i].reg_url, "value": gettingvalue}))
           }
         };
         if(regList.length!=0){
@@ -462,10 +463,34 @@ export const incCountRegs = async () => {
   };
 }
 
-const regFormat = async (id) => {
+const regFormat = (parms) => {
   let resp = {
-    
+    reg_bin : "",
+    reg_name : "",
+    reg_username : "",
+    reg_url : "",
+    reg_value : "",
+    usu_name : ""
   }
+  if(check(parms.reg_bin)){
+    resp.reg_bin = parms.reg_bin
+  }
+  if(check(parms.reg_name)){
+    resp.reg_name = parms.reg_name
+  }
+  if(check(parms.reg_username)){
+    resp.reg_username = parms.reg_username
+  }
+  if(check(parms.reg_url)){
+    resp.reg_url = parms.reg_url
+  }
+  if(check(parms.reg_value)){
+    resp.reg_value = parms.reg_value
+  }
+  if(check(parms.usu_name)){
+    resp.usu_name = parms.usu_name
+  }
+  return resp
 }
 
 const urlFormat = async function(url){
