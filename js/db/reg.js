@@ -205,9 +205,7 @@ const setReg = async function(body){
                 resp.msg = "user doesnt exist"
               }else{
                 let newurl = ""
-                if(body.url == undefined || body.url == ""){
-                  newurl = ""
-                }else{
+                if(check(body.url)){
                   newurl = body.url
                 }
                 const prevRegs = await getRegs({token:body.token})
@@ -229,7 +227,7 @@ const setReg = async function(body){
                 await reg.doc(newidthis).set({
                   reg_name : sec.to64(body.name),
                   reg_value : newregvalue,
-                  reg_url : sec.to64(newurl),
+                  reg_url : sec.to64(urlFormat(newurl)),
                   reg_bin : false,
                   usu_name : gettoken.data
                 })
@@ -491,11 +489,13 @@ const regFormat = (parms) => {
 
 const urlFormat = async function(url){
   let resp = url.toLowerCase();
-  if(URL_HTTPS_REGEX.test(url)){
-    resp = "https:\/\/www.google.com/search?q=+ resp";
-  }
-  else{
-    resp = "https://" + resp;
+  if(check(url)){
+    if(URL_HTTPS_REGEX.test(resp)){
+      resp = "https:\/\/www.google.com/search?q="+ resp;
+    }
+    else{
+      resp = "https://" + resp;
+    }
   }
   return resp;
 }
