@@ -462,6 +462,12 @@ export const incCountRegs = async () => {
   };
 }
 
+const regFormat = async (id) => {
+  let resp = {
+    
+  }
+}
+
 const urlFormat = async function(url){
   let resp = url.toLowerCase();
   if(URL_HTTPS_REGEX.test(url)){

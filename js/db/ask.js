@@ -197,6 +197,16 @@ const count = async (body) => {
     return resp
 }
 
+export const check = (test) => {
+    let resp = false
+    if(test == undefined || test == ""){
+        resp = false
+    }else{
+        resp = true
+    }
+    return resp
+}
+
 const runAsk = async function(app){
     app.post("/setAsk",async (req, res, next) => {
         const reg = await setAsk(req.body)
