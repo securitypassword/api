@@ -487,7 +487,7 @@ const regFormat = (parms) => {
   return resp
 }
 
-const urlFormat = async function(url){
+const urlFormat = function(url){
   let resp = url.toLowerCase();
   if(check(url)){
     if(URL_HTTPS_REGEX.test(resp)){
