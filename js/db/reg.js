@@ -528,7 +528,7 @@ const runReg = async function(app){
   app.post("/setReg", async (req, res, next) => {
     var resp = await setReg(req.body);
     res.end(JSON.stringify({
-    data: resp,
+    data: resp.data,
     msg:"new register"
     }));
   });
