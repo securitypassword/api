@@ -314,6 +314,7 @@ const editReg = async function(body){
                     console.log("reg new value", newregvalue)
                     await reg.doc(newidthis).set({
                       reg_name : sec.to64(body.name),
+                      reg_username : sec.to64(body.username),
                       reg_value : newregvalue,
                       reg_url : sec.to64(newurl),
                       reg_bin : false,
