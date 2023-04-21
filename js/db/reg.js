@@ -465,30 +465,26 @@ export const incCountRegs = async () => {
 
 const regFormat = (parms) => {
   let resp = {
-    reg_bin : "",
-    reg_name : "",
-    reg_username : "",
-    reg_url : "",
-    reg_value : "",
-    usu_name : ""
+    id : "",
+    name : "",
+    username : "",
+    url : "",
+    value : ""
   }
-  if(check(parms.reg_bin)){
-    resp.reg_bin = parms.reg_bin
+  if(check(parms.id)){
+    resp.id = parms.id
   }
-  if(check(parms.reg_name)){
-    resp.reg_name = parms.reg_name
+  if(check(parms.name)){
+    resp.name = parms.name
   }
-  if(check(parms.reg_username)){
-    resp.reg_username = parms.reg_username
+  if(check(parms.username)){
+    resp.username = parms.username
   }
-  if(check(parms.reg_url)){
-    resp.reg_url = parms.reg_url
+  if(check(parms.url)){
+    resp.url = parms.url
   }
-  if(check(parms.reg_value)){
-    resp.reg_value = parms.reg_value
-  }
-  if(check(parms.usu_name)){
-    resp.usu_name = parms.usu_name
+  if(check(parms.value)){
+    resp.value = parms.value
   }
   return resp
 }
