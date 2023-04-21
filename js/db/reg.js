@@ -183,9 +183,6 @@ const setReg = async function(body){
   if(body == undefined || body == ""){
     resp.msg = "please introduce data"
   }else{
-    if(body.name == undefined || body.name == ""){
-      resp.msg = "please introduce name"
-    }else{
       if(body.value == undefined || body.value == ""){
         resp.msg = "please introduce the password"
       }else{
@@ -226,6 +223,7 @@ const setReg = async function(body){
                 console.log("new reg value", newregvalue)
                 await reg.doc(newidthis).set({
                   reg_name : sec.to64(body.name),
+                  reg_username : sec.to64(body.username),
                   reg_value : newregvalue,
                   reg_url : sec.to64(urlFormat(newurl)),
                   reg_bin : false,
@@ -238,7 +236,6 @@ const setReg = async function(body){
           }
         }
       }
-    }
   }
 
   return resp
@@ -260,9 +257,6 @@ const editReg = async function(body){
     if(body.id == undefined || body.id == ""){
       resp.msg = "please introduce id"
     }else{
-      if(body.name == undefined || body.name == ""){
-        resp.msg = "please introduce name"
-      }else{
       if(body.value == undefined || body.value == ""){
         resp.msg = "please introduce the password"
       }else{
@@ -329,7 +323,6 @@ const editReg = async function(body){
           }
         }
       }
-    }
     }
   }
 
