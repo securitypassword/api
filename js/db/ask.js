@@ -105,6 +105,9 @@ const forgorPassword = async (body) => {
         if(body.name == undefined || body.name == ""){
             resp.msg = "please introduce name"
         }else{
+            if(body.password == undefined || body.password == ""){
+                resp.msg = "please introduce password"
+            }else{
             const exists = await userExists(body.name)
             if(!exists){
                 resp.msg = "invalid name"
@@ -114,7 +117,8 @@ const forgorPassword = async (body) => {
                 })
                 resp.valid= true
                 resp.msg = "forgor password"
-                resp.data = userquery.id
+                resp.data.user = userquery.id
+                resp.data.password = body.password
                 const token = await sec.signToken(resp)
                 let msg = "some fellow is tryin to change yhe password, if it was you please go to"
                 msg += " " + process.env.FRONT_URL + "/#/changePassword/"+token
@@ -122,12 +126,13 @@ const forgorPassword = async (body) => {
                 await sendEmail(sec.from64(userquery.data().usu_email),"change password",msg)
             }
         }
+        }
     }
     return resp
 }
 
 const forgorPasswordToken = async function(body){
-    console.log("login token")
+    console.log("forgor password token")
     console.log(body.token)
     let resp = {
       data: "",
@@ -137,13 +142,13 @@ const forgorPasswordToken = async function(body){
             const gettoken = await sec.getToken(body.token)
             if(JSON.stringify(gettoken) != "{}"){
                 console.log("token value", gettoken)
-                const username = gettoken.data
+                const username = gettoken.data.user
                 //comprobar si es admin
                 if(await userExists(sec.from64(username))){
                 const userquery = await user.doc(username).get().then((querySnapshot) => {
                     return querySnapshot
                 })
-                const userset = await user.doc(username).update({usu_password: sec.sha(body.password)})
+                const userset = await user.doc(username).update({usu_password: sec.sha(gettoken.data.password)})
                 resp.msg = "found"
                 resp.data = "success"
             }
