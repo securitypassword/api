@@ -131,7 +131,13 @@ const register = async function(body){
         usu_question:"",
         usu_answer:""
       })
-      await sendEmail(body.email, "security password", "account created successfully")
+      const emailSent = "<html>"
+      + "<head><h1>Account created succesfuly</h1></head>"
+      + "<br><p>Account created successfully at "
+      + '<a href="https://securitypassword.github.io">--Security password--</a></p>'
+      + "<br><p>Thanks</p>"
+      + "</html>"
+      await sendEmail(body.email, "security password", emailSent)
       resp = {
         data : "success" , 
         msg : sec.to64(body.name)
