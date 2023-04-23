@@ -6,19 +6,25 @@ import runReg from "./js/db/reg.js";
 import runUserConfig from "./js/db/userConfig.js"
 import runEmail from "./js/email.js";
 import runAsk from "./js/db/ask.js";
+import bodyParser from "body-parser";
 import cors from 'cors';
 var app = express();
  //get PORT from the server
  //obtener el PUERTO del server donde hosteamos
 const PORT = process.env.PORT;
-app.use(function (req, res, next) {
-  if (req.hostname.startsWith("https://securitypassword.github.io/")) {
-      res.setHeader('Access-Control-Allow-Origin', 'http://' + req.hostname)
-      res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,Content-Type')
-      res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE')
-  }
-  next()
-})
+
+app.use( bodyParser.json() );       // to support JSON-encoded bodies
+app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
+  extended: true
+})); 
+
+//global
+//que si no da error
+const corsConfig = {
+    credentials: true,
+    origin: true,
+};
+app.use(cors(corsConfig));
 //end of global
 
 //ejecutar el main de user.js
