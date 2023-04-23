@@ -302,20 +302,27 @@ const editReg = async function(body){
                   if(alreadyExistsName){
                     resp.msg="name already used"
                   }else{
-                    const newregvaluencrypt = sec.enc(body.value)
-                    const newregvalue = newregvaluencrypt.toString('base64')
-                    console.log("reg id",newidthis)
-                    console.log("reg new value", newregvalue)
-                    await reg.doc(newidthis).set({
-                      reg_name : sec.to64(body.name),
-                      reg_username : sec.to64(body.username),
-                      reg_value : newregvalue,
-                      reg_url : sec.to64(newurl),
-                      reg_bin : false,
-                      usu_name : gettoken.data
-                    })
-                    resp.data = "success"
-                    resp.msg = newidthis
+                    const prevReg = await reg.doc(newidthis).get()
+                    console.log(prevReg.data.usu_name+"=="+gettoken.data)
+                    if(prevReg.data.usu_name!=gettoken.data){
+                      resp.msg="not your password"
+                    }else{
+                      if(gettoken.data !=)
+                      const newregvaluencrypt = sec.enc(body.value)
+                      const newregvalue = newregvaluencrypt.toString('base64')
+                      console.log("reg id",newidthis)
+                      console.log("reg new value", newregvalue)
+                      await reg.doc(newidthis).set({
+                        reg_name : sec.to64(body.name),
+                        reg_username : sec.to64(body.username),
+                        reg_value : newregvalue,
+                        reg_url : sec.to64(newurl),
+                        reg_bin : false,
+                        usu_name : gettoken.data
+                      })
+                      resp.data = "success"
+                      resp.msg = newidthis
+                    }
                   }
                 }
               }
