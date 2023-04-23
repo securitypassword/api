@@ -11,7 +11,8 @@ var app = express();
  //get PORT from the server
  //obtener el PUERTO del server donde hosteamos
 const PORT = process.env.PORT;
-var allowedOrigins = ['http://localhost:3000', 'http://securitypassword.github.io'];
+var allowedOrigins = ['http://localhost:3000', 'http://securitypassword.github.io'
+, 'http://securitypassword.github.io/#/', 'http://securitypassword.github.io/*'];
 
 app.use(cors({
   origin: function(origin, callback){
