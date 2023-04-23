@@ -307,7 +307,6 @@ const editReg = async function(body){
                     if(prevReg.data.usu_name!=gettoken.data){
                       resp.msg="not your password"
                     }else{
-                      if(gettoken.data !=)
                       const newregvaluencrypt = sec.enc(body.value)
                       const newregvalue = newregvaluencrypt.toString('base64')
                       console.log("reg id",newidthis)
