@@ -303,8 +303,8 @@ const editReg = async function(body){
                     resp.msg="name already used"
                   }else{
                     const prevReg = await reg.doc(newidthis).get()
-                    console.log(prevReg.data().usu_name+"=="+gettoken.data)
-                    if(prevReg.data.usu_name!=gettoken.data){
+                    console.log(prevReg.data().usu_name+" == "+gettoken.data)
+                    if(prevReg.data().usu_name!=gettoken.data){
                       resp.msg="not your password"
                     }else{
                       const newregvaluencrypt = sec.enc(body.value)
