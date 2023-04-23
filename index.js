@@ -10,7 +10,7 @@ import cors from 'cors';
 var app = express();
  //get PORT from the server
  //obtener el PUERTO del server donde hosteamos
-// CORS
+const PORT = process.env.PORT;
 app.use(function (req, res, next) {
   if (req.hostname.startsWith("https://securitypassword.github.io/")) {
       res.setHeader('Access-Control-Allow-Origin', 'http://' + req.hostname)
