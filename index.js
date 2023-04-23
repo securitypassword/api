@@ -10,23 +10,15 @@ import cors from 'cors';
 var app = express();
  //get PORT from the server
  //obtener el PUERTO del server donde hosteamos
-const PORT = process.env.PORT;
-var allowedOrigins = ['http://localhost:3000', 'http://securitypassword.github.io'
-, 'http://securitypassword.github.io/#/', 'http://securitypassword.github.io/*'];
-
-app.use(cors({
-  origin: function(origin, callback){
-    // allow requests with no origin 
-    // (like mobile apps or curl requests)
-    if(!origin) return callback(null, true);
-    if(allowedOrigins.indexOf(origin) === -1){
-      var msg = 'The CORS policy for this site does not ' +
-                'allow access from the specified Origin.';
-      return callback(new Error(msg), false);
-    }
-    return callback(null, true);
+// CORS
+app.use(function (req, res, next) {
+  if (req.hostname.startsWith("https://securitypassword.github.io/")) {
+      res.setHeader('Access-Control-Allow-Origin', 'http://' + req.hostname)
+      res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,Content-Type')
+      res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE')
   }
-}));
+  next()
+})
 //end of global
 
 //ejecutar el main de user.js
