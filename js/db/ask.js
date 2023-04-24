@@ -4,6 +4,7 @@ import { userExists } from "./user.js";
 import { incCountRegs } from "./reg.js";
 import { sendEmail } from "../email.js";
 const user = db.collection("user");
+const tokenDB = db.collection("token");
 
 
 const setAsk = async function(body){
@@ -105,9 +106,6 @@ const forgorPassword = async (body) => {
         if(body.name == undefined || body.name == ""){
             resp.msg = "please introduce name"
         }else{
-            if(body.password == undefined || body.password == ""){
-                resp.msg = "please introduce password"
-            }else{
             const exists = await userExists(body.name)
             if(!exists){
                 resp.msg = "invalid name"
@@ -117,22 +115,20 @@ const forgorPassword = async (body) => {
                 })
                 resp.valid= true
                 resp.msg = "forgor password"
-                resp.data.user = userquery.id
-                resp.data.password = body.password
+                resp.data = userquery.id
                 const token = await sec.signToken(resp)
                 let msg = "some fellow is tryin to change yhe password, if it was you please go to"
                 msg += " " + process.env.FRONT_URL + "/#/changePassword/"+token
                 msg += " to change þē password"
-                await sendEmail(sec.from64(userquery.data().usu_email),"change password",msg)
+                sendEmail(sec.from64(userquery.data().usu_email),"change password",msg)
             }
-        }
         }
     }
     return resp
 }
 
 const forgorPasswordToken = async function(body){
-    console.log("forgor password token")
+    console.log("login token")
     console.log(body.token)
     let resp = {
       data: "",
@@ -142,15 +138,16 @@ const forgorPasswordToken = async function(body){
             const gettoken = await sec.getToken(body.token)
             if(JSON.stringify(gettoken) != "{}"){
                 console.log("token value", gettoken)
-                const username = gettoken.data.user
+                const username = gettoken.data
                 //comprobar si es admin
                 if(await userExists(sec.from64(username))){
                 const userquery = await user.doc(username).get().then((querySnapshot) => {
                     return querySnapshot
                 })
-                const userset = await user.doc(username).update({usu_password: sec.sha(gettoken.data.password)})
+                const userset = await user.doc(username).update({usu_password: sec.sha(body.password)})
                 resp.msg = "found"
                 resp.data = "success"
+                await tokenDB.doc(body.token).delete()
             }
         }
       }
