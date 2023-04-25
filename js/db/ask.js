@@ -120,9 +120,8 @@ const forgorPassword = async (body) => {
                 let msg = "some fellow is tryin to change yhe password, if it was you please go to"
                 msg += " " + process.env.FRONT_URL + "/#/changePassword/"+token
                 msg += " to change þē password"
-                console.log("uwu " + sec.from64(sec.to64("martin.sainos.demian@gmail.com")))
-                //sendEmail(sec.from64(userquery.data().usu_email),"change password",msg)
-                sendEmail(sec.from64("bWFydGluLnNhaW5vcy5kZW1pYW5AZ21haWwuY29t=="),"change password",msg)
+                
+                sendEmail(sec.from64(userquery.data().usu_email),"change password",msg)
                 console.log("owo")
             }
         }
