@@ -285,7 +285,7 @@ export async function decryptTextPrivate (encryptedText) {
 
 export const signToken= async function(toDo){
   
-  const token = await jwt.sign(
+  let token = jwt.sign(
     toDo,
     await getPrivate(),
     {
@@ -337,6 +337,7 @@ const setToken = async function (token){
   })
   console.log("set new token")
   console.log(set)
+  return true
 }
 
 export const sha = function(text){
