@@ -301,7 +301,7 @@ export const signToken= async function(toDo){
       .sign(await getPrivate()); // secretKey generated from previous step
       */
   console.log(token); // log token to console
-  await setToken(token)
+  const idle = await setToken(token)
   return token
 }
 
