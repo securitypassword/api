@@ -122,6 +122,7 @@ const forgorPassword = async (body) => {
                 msg += " to change þē password"
                 
                 console.log("uwu "+userquery.data().usu_email)
+                console.log("uwu "+sec.from64(userquery.data().usu_email))
                 sendEmail(sec.from64(userquery.data().usu_email),"change password",msg)
                 console.log("owo")
             }
