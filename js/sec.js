@@ -350,6 +350,6 @@ export const to64 = function(text){
 }
 export const from64 = function(text){
   console.log("from 64 "+text)
-  return atob(text.replace(/-/g, "+")
-  .replace(/_/g, "/"));
+  //return atob(text.replace(/-/g, "+").replace(/_/g, "/"))
+  return window.atob(text.replace(/-/g, "+").replace(/_/g, "/"))
 }
