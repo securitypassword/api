@@ -297,8 +297,8 @@ const makeAdmin = async (body) => {
     msg: "error"
   }
   if(query != undefined && query != ""){
-    if(query.id != undefined && query.id != ""){
-      if(await userExists(sec.from64(id))){
+    if(body.id != undefined && body.id != ""){
+      if(await userExists(sec.from64(body.id))){
         const gettoken = await sec.getToken(body.token)
         const usu = await user.doc(body.id).get().then((querySnapshot) => {
             return querySnapshot
