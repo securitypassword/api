@@ -291,6 +291,32 @@ const loginAdmin = async function(query){
   }
   return resp
 }
+const makeAdmin = async (body) => {
+  let resp = {
+    data: "",
+    msg: "error"
+  }
+  if(query != undefined && query != ""){
+    if(query.id != undefined && query.id != ""){
+      if(await userExists(sec.from64(id))){
+        const gettoken = await sec.getToken(body.token)
+        const usu = await user.doc(body.id).get().then((querySnapshot) => {
+            return querySnapshot
+          })
+        await user.doc(sec.from64(body.id)).update({
+            usu_rol : 42})
+        const emailSent = sec.from64(gettoken.data) + " made you admin at https://securitypassword.github.io"
+        await sendEmail(sec.from64(usu.data().usu_email), "security password", emailSent)
+      }
+      else{
+        resp.data = "user doesnt exist"
+      }
+    }
+    else{
+      resp.data = "ingrese una id"
+    }
+  }
+}
 
 //el main para que se pueda ejecutar desde una url
 const runUser = async function(app){
@@ -335,6 +361,20 @@ const runUser = async function(app){
       res.end(JSON.stringify({data:"invalid",
       msg : "login as admin"}))
     }
+    app.post("/makeAdmin",async (req, res, next) => {
+      let resp = {
+        data: "no",
+        msg: "error"
+      }
+      const isadmin = await loginAdmin(req.body)
+      if(isadmin){
+        resp = await makeAdmin(req.body)
+      }
+      else{
+        resp.data = "you are not an admin"
+      }
+      res.end(JSON.stringify(resp))
+    })
   })
 }
 
