@@ -318,6 +318,33 @@ const makeAdmin = async (body) => {
   }
 }
 
+const deleteAccount = async function(query){
+  console.log("delete account", query)
+  let resp = {
+    data : "",
+    msg : "error"
+  }
+  if(query != undefined && query != ""){
+    if(query.token != undefined && query.token != ""){
+      const gettoken = await sec.getToken(query.token)
+      if(gettoken != undefined){
+        if(gettoken.data != undefined && gettoken.data != ""){
+          await user.delete(gettoken.data)
+        }
+      }
+      else{
+        resp.msg = "please introduce valid token"
+      }
+    }
+    else{
+      resp.msg = "please introduce token"
+    }
+  }
+  else{
+    resp.msg = "please introduce data"
+  }
+  return resp
+}
 //el main para que se pueda ejecutar desde una url
 const runUser = async function(app){
   //obtener los roles en la api con un get porque me da flojera hacer las pruebas bien haha salu3
@@ -375,6 +402,10 @@ const runUser = async function(app){
       }
       res.end(JSON.stringify(resp))
     })
+    app.post("/deleteAccount",async (req, res, next) => {
+      const resp = await deleteAccount(req.body)
+      res.end(JSON.stringify(resp));
+  })
   })
 }
 
