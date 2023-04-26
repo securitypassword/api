@@ -165,7 +165,7 @@ const login = async function(body){
           const token = await sec.signToken(resp)
           resp.data = token
         }else{
-          resp.msg = "incorrecto password"
+          resp.msg = "Contraseña incorrecta"
           if(userdata.usu_autodelete){
             const newcount = userdata.usu_autodel_count+1
             console.log("autodel from",userdata.usu_name,"to",newcount)
