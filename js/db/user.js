@@ -188,6 +188,25 @@ const login = async function(body){
   }
   return resp
 }
+
+const deleteUserBD = async function(id){
+  console.log("delete user", id)
+  await user.doc(logintokenhere.data).delete()
+  const reg = db.collection("reg")
+  let regs = await reg.where("usu_name", "==", username).get().then((querySnapshot) => {
+    return querySnapshot
+  })
+  const regDocs = regSnapshot.docs.map(doc => doc.data());
+  //las ids
+  const regIDs = regSnapshot.docs.map(doc => doc.id);
+  for(let i in regIDs){
+    await reg.doc(regIDs[i]).set({
+      reg_bin : true,
+      reg_count : 72
+    })
+  }
+  return true
+}
 const deleteUser = async function(body){
   let resp={ valid : false ,
     msg : ""}
@@ -199,8 +218,7 @@ const deleteUser = async function(body){
         if(logintokenhere.msg!=undefined&&logintokenhere.msg!=""){
           if(logintokenhere.msg=="found"){
             if(logintokenhere.data!=undefined&&logintokenhere.data!=""){
-              console.log("delete user",sec.from64(logintokenhere.data))
-              await user.doc(logintokenhere.data).delete()
+              await deleteUserBD(logintokenhere.data)
             }
           }
         }
