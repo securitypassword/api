@@ -198,7 +198,7 @@ const deleteUserBD = async function(id){
   })
   const regDocs = regs.docs.map(doc => doc.data());
   //las ids
-  const regIDs = regSnapshot.docs.map(doc => doc.id);
+  const regIDs = regs.docs.map(doc => doc.id);
   for(let i in regIDs){
     await reg.doc(regIDs[i]).set({
       reg_bin : true,
