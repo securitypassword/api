@@ -229,9 +229,12 @@ const deleteUser = async function(body){
             else{
               resp.msg = "incorrect password"
             }
+          }
+        }else{
+          resp.msg = "enter a valid name"   
         }
       }else{
-        resp.msg = "enter a valid name"   
+        resp.msg = "user doesn't exist"
       }
     }else{
       resp.msg = "enter a password"
