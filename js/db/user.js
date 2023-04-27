@@ -193,7 +193,7 @@ const deleteUserBD = async function(id){
   console.log("delete user", id)
   await user.doc(id).delete()
   const reg = db.collection("reg")
-  let regs = await reg.where("usu_name", "==", username).get().then((querySnapshot) => {
+  let regs = await reg.where("usu_name", "==", id).get().then((querySnapshot) => {
     return querySnapshot
   })
   const regDocs = regSnapshot.docs.map(doc => doc.data());
