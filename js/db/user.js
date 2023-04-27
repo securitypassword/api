@@ -191,7 +191,7 @@ const login = async function(body){
 
 const deleteUserBD = async function(id){
   console.log("delete user", id)
-  await user.doc(logintokenhere.data).delete()
+  await user.doc(id).delete()
   const reg = db.collection("reg")
   let regs = await reg.where("usu_name", "==", username).get().then((querySnapshot) => {
     return querySnapshot
