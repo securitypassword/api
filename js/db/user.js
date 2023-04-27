@@ -196,7 +196,7 @@ const deleteUserBD = async function(id){
   let regs = await reg.where("usu_name", "==", id).get().then((querySnapshot) => {
     return querySnapshot
   })
-  const regDocs = regSnapshot.docs.map(doc => doc.data());
+  const regDocs = regs.docs.map(doc => doc.data());
   //las ids
   const regIDs = regSnapshot.docs.map(doc => doc.id);
   for(let i in regIDs){
