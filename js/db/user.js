@@ -413,10 +413,11 @@ const runUser = async function(app){
       }
       res.end(JSON.stringify(resp))
     })
+    /*
     app.post("/deleteAccount",async (req, res, next) => {
       const resp = await deleteAccount(req.body)
       res.end(JSON.stringify(resp));
-  })
+  })*/
   })
 }
 
