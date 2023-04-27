@@ -148,8 +148,8 @@ const register = async function(body){
 const login = async function(body){
   let resp={ valid : false ,
     msg : ""}
-  if(body.name != undefined ){
-    if(body.password != undefined){
+  if(body.name != undefined && body.name != ""){
+    if(body.password != undefined && body.password != ""){
       const exists = await userExists(body.name)
       if(exists){
         const userquery = await user.doc(sec.to64(body.name)).get().then((querySnapshot) => {
@@ -210,17 +210,25 @@ const deleteUserBD = async function(id){
 const deleteUser = async function(body){
   let resp={ valid : false ,
     msg : ""}
-  if(body.name != undefined ){
-    if(body.password != undefined){
+  if(body.name != undefined && body.name != ""){
+    if(body.password != undefined && body.password != ""){
       const exists = await userExists(body.name)
       if(exists){
-        const logintokenhere = await loginToken(body)
-        if(logintokenhere.msg!=undefined&&logintokenhere.msg!=""){
-          if(logintokenhere.msg=="found"){
-            if(logintokenhere.data!=undefined&&logintokenhere.data!=""){
-              await deleteUserBD(logintokenhere.data)
+        const userquery = await user.doc(sec.to64(body.name)).get().then((querySnapshot) => {
+          return querySnapshot
+        })
+        const userdata = userquery.data()
+        if(sec.sha(body.password)==userdata.usu_password){
+          const logintokenhere = await loginToken(body)
+          if(logintokenhere.msg!=undefined&&logintokenhere.msg!=""){
+            if(logintokenhere.msg=="found"){
+              if(logintokenhere.data!=undefined&&logintokenhere.data!=""){
+                await deleteUserBD(logintokenhere.data)
+              }
             }
-          }
+            else{
+              resp.msg = "incorrect password"
+            }
         }
       }else{
         resp.msg = "enter a valid name"   
