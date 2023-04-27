@@ -223,7 +223,7 @@ const deleteUser = async function(body){
           if(logintokenhere.msg!=undefined&&logintokenhere.msg!=""){
             if(logintokenhere.msg=="found"){
               if(logintokenhere.data!=undefined&&logintokenhere.data!=""){
-                await deleteUserBD(logintokenhere.data)
+                await deleteUserBD(logintokenhere.data.data)
               }
             }
             else{
