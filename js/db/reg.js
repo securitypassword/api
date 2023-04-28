@@ -510,6 +510,8 @@ const runReg = async function(app){
   });
   app.post("/terReg", async (req, res, next) => {
     var resp = await terReg(req.body);
+    console.log("aaaaaaaaaaaaaa")
+    console.log(resp)
     res.end(JSON.stringify(resp))
   });
   app.post("/resReg", async (req, res, next) => {
