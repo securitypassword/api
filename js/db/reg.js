@@ -14,12 +14,8 @@ const newId = async function(){
   let getregquery = await reg.doc(id).get().then((querySnapshot) => {
     return querySnapshot
   })
-  console.log(getregquery.data())
-  console.log(id)
   while(getregquery.data() != undefined && getregquery.data() != {} && getregquery.data() != []){
-    console.log(getregquery.data())
     id = await free.gen({low:"true", up:"true", num:"true", len:20})
-    console.log(id)
     getregquery = await reg.doc(id).get().then((querySnapshot) => {
     return querySnapshot
     })
@@ -30,9 +26,6 @@ const newId = async function(){
 const delReg = async function(body){
   console.log("deleting a register")
   let resp = {data:"error", msg:""}
-  console.log("start of body")
-  console.log(body)
-  console.log("end of body")
 
   if(body == undefined || body == ""){
     resp.msg = "please introduce data"
@@ -44,7 +37,6 @@ const delReg = async function(body){
       resp.msg = "invalid session"
       }else{
         const gettoken = await sec.getToken(body.token)
-        console.log(gettoken)
         if(gettoken.valid != true){
           resp.msg = "token not valid"
         }else{
@@ -78,9 +70,6 @@ const delReg = async function(body){
 const terReg = async function(body){
   console.log("terminating a register")
   let resp = {data:"error", msg:""}
-  console.log("start of body")
-  console.log(body)
-  console.log("end of body")
 
   if(body == undefined || body == ""){
     resp.msg = "please introduce data"
@@ -92,7 +81,6 @@ const terReg = async function(body){
       resp.msg = "invalid session"
       }else{
         const gettoken = await sec.getToken(body.token)
-        console.log(gettoken)
         if(gettoken.valid != true){
           resp.msg = "token not valid"
         }else{
@@ -126,9 +114,6 @@ const terReg = async function(body){
 const resReg = async function(body){
   console.log("restoring a register")
   let resp = {data:"error", msg:""}
-  console.log("start of body")
-  console.log(body)
-  console.log("end of body")
 
   if(body == undefined || body == ""){
     resp.msg = "please introduce data"
@@ -140,7 +125,6 @@ const resReg = async function(body){
       resp.msg = "invalid session"
       }else{
         const gettoken = await sec.getToken(body.token)
-        console.log(gettoken)
         if(gettoken.valid != true){
           resp.msg = "token not valid"
         }else{
@@ -177,9 +161,6 @@ const setReg = async function(body){
     msg: ""
   }
   console.log("new register")
-  console.log("start of body")
-  console.log(body)
-  console.log("end of body")
   if(body == undefined || body == ""){
     resp.msg = "please introduce data"
   }else{
@@ -190,7 +171,6 @@ const setReg = async function(body){
           resp.msg = "invalid session"
         }else{
           const gettoken = await sec.getToken(body.token)
-          console.log(gettoken)
           if(gettoken.valid != true){
             resp.msg = "token not valid"
           }else{
@@ -219,8 +199,6 @@ const setReg = async function(body){
                 }
                 const newregvaluencrypt = sec.enc(body.value)
                 const newregvalue = newregvaluencrypt.toString('base64')
-                console.log("reg new id",newidthis)
-                console.log("new reg value", newregvalue)
                 await reg.doc(newidthis).set({
                   reg_name : sec.to64(body.name),
                   reg_username : sec.to64(body.username),
@@ -258,9 +236,6 @@ const editReg = async function(body){
     msg: ""
   }
   console.log("new register")
-  console.log("start of body")
-  console.log(body)
-  console.log("end of body")
   if(body == undefined || body == ""){
     resp.msg = "please introduce data"
   }else{
@@ -274,7 +249,6 @@ const editReg = async function(body){
           resp.msg = "invalid session"
         }else{
           const gettoken = await sec.getToken(body.token)
-          console.log(gettoken)
           if(gettoken.valid != true){
             resp.msg = "token not valid"
           }else{
@@ -313,14 +287,11 @@ const editReg = async function(body){
                     resp.msg="name already used"
                   }else{
                     const prevReg = await reg.doc(newidthis).get()
-                    console.log(prevReg.data().usu_name+" == "+gettoken.data)
                     if(prevReg.data().usu_name!=gettoken.data){
                       resp.msg="not your password"
                     }else{
                       const newregvaluencrypt = sec.enc(body.value)
                       const newregvalue = newregvaluencrypt.toString('base64')
-                      console.log("reg id",newidthis)
-                      console.log("reg new value", newregvalue)
                       await reg.doc(newidthis).set({
                         reg_name : sec.to64(body.name),
                         reg_username : sec.to64(body.username),
@@ -352,9 +323,7 @@ const getRegs = async function(body){
     if(body.token!=null&&body.token!=""&&body.token!=undefined){
       const gettoken = await sec.getToken(body.token)
       if(JSON.stringify(gettoken) != "{}"){
-        console.log("token value", gettoken)
         const username = gettoken.data
-        console.log("from",sec.from64(username))
         const regSnapshot = await reg.where("usu_name", "==", username).get().then((querySnapshot) => {
           return querySnapshot
         })
@@ -375,7 +344,6 @@ const getRegs = async function(body){
       }
     }
   }
-  console.log(resp)
   return resp
 }
 
@@ -386,9 +354,7 @@ const getActiveRegs = async function(body){
     if(body.token!=null&&body.token!=""&&body.token!=undefined){
       const gettoken = await sec.getToken(body.token)
       if(JSON.stringify(gettoken) != "{}"){
-        console.log("token value", gettoken)
         const username = gettoken.data
-        console.log("from",sec.from64(username))
         const regSnapshot = await reg.where("usu_name", "==", username).get().then((querySnapshot) => {
           return querySnapshot
         })
@@ -410,7 +376,6 @@ const getActiveRegs = async function(body){
       }
     }
   }
-  console.log(resp)
   return resp
 }
 
@@ -421,9 +386,7 @@ const getBinRegs = async function(body){
     if(body.token!=null&&body.token!=""&&body.token!=undefined){
       const gettoken = await sec.getToken(body.token)
       if(JSON.stringify(gettoken) != "{}"){
-        console.log("token value", gettoken)
         const username = gettoken.data
-        console.log("from",sec.from64(username))
         const regSnapshot = await reg.where("usu_name", "==", username).get().then((querySnapshot) => {
           return querySnapshot
         })
@@ -432,7 +395,6 @@ const getBinRegs = async function(body){
         //las ids
         const regIDs = regSnapshot.docs.map(doc => doc.id);
         //juntarlas
-          console.log(regDocs,"uwu2")
         let regList = []
         for(let i in regDocs){
           let gettingvalue = sec.to64(sec.dec(regDocs[i].reg_value))
@@ -446,7 +408,6 @@ const getBinRegs = async function(body){
       }
     }
   }
-  console.log(resp)
   return resp
 }
 
@@ -466,8 +427,6 @@ export const incCountRegs = async () => {
     else{
       await reg.doc(regIDs[i]).update({reg_count : count})
     }
-    console.log(regIDs[i])
-    console.log(count)
   };
 }
 
