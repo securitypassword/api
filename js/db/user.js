@@ -211,13 +211,6 @@ const deleteUser = async function(body){
   let resp={ valid : false ,
     msg : ""}
     if(body.password != undefined && body.password != ""){
-      const exists = await userExists(body.name)
-      if(exists){
-        const userquery = await user.doc(sec.to64(body.name)).get().then((querySnapshot) => {
-          return querySnapshot
-        })
-        const userdata = userquery.data()
-        if(sec.sha(body.password)==userdata.usu_password){
           const logintokenhere = await loginToken(body)
           if(logintokenhere.msg!=undefined && logintokenhere.msg!=""){
             if(logintokenhere.msg=="found"){
@@ -225,22 +218,28 @@ const deleteUser = async function(body){
                 const usu = await user.doc(logintokenhere.data.data).get().then((querySnapshot) => {
                   return querySnapshot
                 })
+                if(sec.sha(body.password)==usu.data().usu_password){
                 const emailSent = "Your account has been deleted"
                 await sendEmail(sec.from64(usu.data().usu_email), "security password", emailSent)
                 await deleteUserBD(logintokenhere.data.data)
               }
+              else{
+              resp.msg = "wrong password"
+            }
             }
             else{
-              resp.msg = "incorrect password"
-            }
+            resp.msg = "invalid token data"
           }
-        }else{
-          resp.msg = "enter a valid name"   
+          }
+          else{
+          resp.msg = "token not found"
         }
-      }else{
-        resp.msg = "user doesn't exist"
+        }
+        else{
+        resp.msg = "token invalid"
       }
-    }else{
+      }
+      else{
       resp.msg = "enter a password"
     }
   return resp
