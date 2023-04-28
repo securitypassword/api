@@ -210,7 +210,6 @@ const deleteUserBD = async function(id){
 const deleteUser = async function(body){
   let resp={ valid : false ,
     msg : ""}
-  if(body.name != undefined && body.name != ""){
     if(body.password != undefined && body.password != ""){
       const exists = await userExists(body.name)
       if(exists){
@@ -220,9 +219,14 @@ const deleteUser = async function(body){
         const userdata = userquery.data()
         if(sec.sha(body.password)==userdata.usu_password){
           const logintokenhere = await loginToken(body)
-          if(logintokenhere.msg!=undefined&&logintokenhere.msg!=""){
+          if(logintokenhere.msg!=undefined && logintokenhere.msg!=""){
             if(logintokenhere.msg=="found"){
-              if(logintokenhere.data!=undefined&&logintokenhere.data!=""){
+              if(logintokenhere.data!=undefined && logintokenhere.data!=""){
+                const usu = await user.doc(logintokenhere.data.data).get().then((querySnapshot) => {
+                  return querySnapshot
+                })
+                const emailSent = "Your account has been deleted"
+                await sendEmail(sec.from64(usu.data().usu_email), "security password", emailSent)
                 await deleteUserBD(logintokenhere.data.data)
               }
             }
@@ -239,9 +243,6 @@ const deleteUser = async function(body){
     }else{
       resp.msg = "enter a password"
     }
-  }else{
-    resp.msg = "enter a name"
-  }
   return resp
 }
 
