@@ -35,7 +35,6 @@ const getRole = async function(rol_id){
   const query = await rol.doc(rol_id.toString()).get().then((querySnapshot) => {
     return querySnapshot
   })
-  console.log(query.data())
   if(query.data() != undefined){
     resp = query.data().name
   }
@@ -54,7 +53,6 @@ export const userExists = async function(testName){
   })
   console.log("does", sec.to64(testName), testName,"exist?")
   const existing = query.docs.map(doc => doc.data());
-  console.log(existing, existing.length)
   const exists = existing.length != 0
   console.log(exists)
   return exists
@@ -65,7 +63,6 @@ export const userExistsEmail = async function(testEmail){
   })
   console.log("does", sec.to64(testEmail), testEmail,"exist?")
   const existing = query.docs.map(doc => doc.data());
-  console.log(existing, existing.length)
   const exists = existing.length != 0
   console.log(exists)
   return exists
@@ -83,9 +80,6 @@ import e from "express";
 
 const register = async function(body){
   console.log("register")
-  console.log("start of body")
-  console.log(body)
-  console.log("end of body")
   let resp = {}
   if(body == undefined){
     resp = {
@@ -119,7 +113,6 @@ const register = async function(body){
         msg : "already registered"
       }
     }else{
-      console.log("success",body.name)
       await user.doc(sec.to64(body.name)).set({
         usu_name : sec.to64(body.name),
         usu_email : sec.to64(body.email),
@@ -247,14 +240,12 @@ const deleteUser = async function(body){
 
 const loginToken = async function(body){
   console.log("login token")
-  console.log(body.token)
   let resp = {
     data: "",
     msg: "not found"}
   if(body.token != undefined){
     const gettoken = await sec.getToken(body.token)
     if(JSON.stringify(gettoken) != "{}"){
-      console.log("token value", gettoken)
       const username = gettoken.data
       //comprobar si es admin
       if(await userExists(sec.from64(username))){
@@ -264,7 +255,6 @@ const loginToken = async function(body){
         const userdata = userquery.data()
         const userrol = await getRole(userdata.usu_rol)
         if(userrol=="admin"){
-          console.log(sec.from64(userdata.usu_name), "is admin")
           resp.admin = true
         }
         resp.msg = "found"
@@ -291,7 +281,6 @@ const loginAdmin = async function(query){
             if(datafromuser.usu_rol!=undefined && datafromuser.usu_rol!=""){
               const rolfromuser = await getRole(datafromuser.usu_rol)
               if(rolfromuser=="admin"){
-                console.log(datafromuser.usu_name,"is admin")
                 resp=true
               }
             }
