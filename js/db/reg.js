@@ -96,7 +96,8 @@ const terReg = async function(body){
                 if(regquery[prevRegs].id==body.id){
                   resp.msg = ""
                   if(regquery[prevRegs].in_bin==true){
-                    await reg.doc(body.id).delete()
+                    console.log("aaaaaaaaaaaaaa")
+                    console.log(await reg.doc(body.id).delete())
                     resp.msg = "" + body.id + " terminated"
                   }
                   resp.data = "succes"
@@ -510,8 +511,6 @@ const runReg = async function(app){
   });
   app.post("/terReg", async (req, res, next) => {
     var resp = await terReg(req.body);
-    console.log("aaaaaaaaaaaaaa")
-    console.log(resp)
     res.end(JSON.stringify(resp))
   });
   app.post("/resReg", async (req, res, next) => {
