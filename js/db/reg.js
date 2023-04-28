@@ -229,6 +229,16 @@ const setReg = async function(body){
                   reg_bin : false,
                   usu_name : gettoken.data
                 })
+                if(body.username == undefined || body.username == ""){
+                  await reg.doc(newidthis).update({
+                    reg_username : sec.to64("")
+                  })
+                }
+                if(body.name == undefined || body.name == ""){
+                  await reg.doc(newidthis).update({
+                    reg_name : sec.to64("")
+                  })
+                }
                 resp.data = "success"
                 resp.msg = newidthis
               }
