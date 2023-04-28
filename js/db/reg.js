@@ -91,13 +91,14 @@ const terReg = async function(body){
             if(!userexists){
               resp.msg = "user doesnt exist"
             }else{
+              console.log("aaaaaaaaaaaaaa")
               const regquery = await getRegs(body)
+              console.log("e")
               for(let prevRegs in regquery){
                 if(regquery[prevRegs].id==body.id){
                   resp.msg = ""
                   if(regquery[prevRegs].in_bin==true){
-                    console.log("aaaaaaaaaaaaaa")
-                    console.log(await reg.doc(body.id).delete())
+                    await reg.doc(body.id).delete()
                     resp.msg = "" + body.id + " terminated"
                   }
                   resp.data = "succes"
