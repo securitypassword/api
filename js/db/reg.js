@@ -95,6 +95,7 @@ const terReg = async function(body){
               for(let prevRegs in regquery){
                 console.log(regquery[prevRegs].id + " == " + body.id)
                 if(regquery[prevRegs].id==body.id){
+                  console.log("-")
                   resp.msg = ""
                   if(regquery[prevRegs].in_bin==true){
                     await reg.doc(body.id).delete()
