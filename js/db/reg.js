@@ -93,7 +93,6 @@ const terReg = async function(body){
             }else{
               const regquery = await getRegs(body)
               for(let prevRegs in regquery){
-                console.log(regquery[prevRegs].id + " == " + body.id)
                 if(regquery[prevRegs].id==body.id){
                   console.log(regquery[prevRegs])
                   resp.msg = ""
