@@ -367,7 +367,6 @@ const getActiveRegs = async function(body){
         let regList = []
         for(let i in regDocs){
           let gettingvalue = sec.to64(sec.dec(regDocs[i].reg_value))
-          console.log(regDocs[i])
           if(regDocs[i].reg_bin==false){
             regList.push(regFormat({"id": regIDs[i], "name": regDocs[i].reg_name, "username": regDocs[i].reg_username, "url": regDocs[i].reg_url, "value": gettingvalue}))
           }
