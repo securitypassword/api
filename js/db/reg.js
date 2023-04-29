@@ -92,10 +92,8 @@ const terReg = async function(body){
               resp.msg = "user doesnt exist"
             }else{
               const regquery = await getRegs(body)
-              console.log(regquery)
-              console.log("-")
               for(let prevRegs in regquery){
-                console.log(regquery[prevRegs].id)
+                console.log(regquery[prevRegs].id + " == " + body.id)
                 if(regquery[prevRegs].id==body.id){
                   resp.msg = ""
                   if(regquery[prevRegs].in_bin==true){
