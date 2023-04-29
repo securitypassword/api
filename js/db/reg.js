@@ -438,6 +438,7 @@ const regFormat = (parms) => {
     name : "",
     username : "",
     url : "",
+    in_bin : "",
     value : ""
   }
   if(check(parms.id)){
@@ -451,6 +452,9 @@ const regFormat = (parms) => {
   }
   if(check(parms.url)){
     resp.url = parms.url
+  }
+  if(check(parms.in_bin)){
+    resp.in_bin = parms.in_bin
   }
   if(check(parms.value)){
     resp.value = parms.value
