@@ -124,7 +124,7 @@ const register = async function(body){
         usu_question:"",
         usu_answer:""
       })
-      const emailSent = "Account created successfully at https://securitypassword.github.io"
+      const emailSent = "Cuenta creada con éxito en https://securitypassword.github.io"
       await sendEmail(body.email, "security password", emailSent)
       resp = {
         data : "success" , 
