@@ -107,10 +107,15 @@ const register = async function(body){
   }else{
     const userexiststhis = await userExists(body.name)
     const emailexiststhis = await userExistsEmail(body.email)
-    if(userexiststhis || emailexiststhis){
+    if(userexiststhis){
       resp = {
         data : "error" ,
-        msg : "already registered"
+        msg : "El nombre de usuario ya está en uso"
+      }
+    }else if(emailexiststhis){
+      resp = {
+        data : "error" ,
+        msg : "El email ya está en uso"
       }
     }else{
       await user.doc(sec.to64(body.name)).set({
