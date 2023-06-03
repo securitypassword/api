@@ -352,8 +352,8 @@ export const to64 = function(text){
 export const from64 = function(text){
   let resp = ""
   try{
-    resp = decodeURIComponent(unescape(unescape(atob(text.replace(/-/g, "+")
-    .replace(/_/g, "/")))))
+    resp = decodeURIComponent(unescape(atob(text.replace(/-/g, "+")
+    .replace(/_/g, "/"))))
   }
   catch{
     resp = from64old(text)
