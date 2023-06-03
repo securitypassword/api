@@ -366,9 +366,6 @@ const getActiveRegs = async function(body){
         //juntarlas
         let regList = []
         for(let i in regDocs){
-          console.log(regDocs[i].reg_value)
-          console.log(sec.dec(regDocs[i].reg_value))
-          console.log(sec.to64(sec.dec(regDocs[i].reg_value)))
           let gettingvalue = sec.to64(sec.dec(regDocs[i].reg_value))
           if(regDocs[i].reg_bin==false){
             regList.push(regFormat({"id": regIDs[i], "name": regDocs[i].reg_name, "username": regDocs[i].reg_username, "url": regDocs[i].reg_url, "value": gettingvalue}))
