@@ -346,10 +346,10 @@ export const sha = function(text){
 }
 
 export const to64 = function(text){
-  return btoa(escape(text)).replace(/\+/g, "-")
-  .replace(/\//g, "_");
+  return btoa(unescape(encodeURIComponent(text)).replace(/\+/g, "-")
+  .replace(/\//g, "_"))
 }
 export const from64 = function(text){
-  return unescape(atob(text.replace(/-/g, "+")
-  .replace(/_/g, "/")))
+  return decodeURIComponent(escape(atob(text.replace(/-/g, "+")
+  .replace(/_/g, "/"))))
 }
