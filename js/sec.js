@@ -350,6 +350,17 @@ export const to64 = function(text){
   .replace(/\//g, "_"))
 }
 export const from64 = function(text){
-  return decodeURIComponent(escape(atob(text.replace(/-/g, "+")
-  .replace(/_/g, "/"))))
+  let resp = ""
+  try{
+    resp = decodeURIComponent(escape(atob(text.replace(/-/g, "+")
+    .replace(/_/g, "/"))))
+  }
+  catch{
+    resp = from64old(text)
+  }
+  return resp
+}
+export const from64old = function(text){
+  return escape(atob(text.replace(/-/g, "+")
+  .replace(/_/g, "/")))
 }
