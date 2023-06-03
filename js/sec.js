@@ -101,6 +101,7 @@ export default runSec;
 import crypto from "crypto";
 import db from "./fire.js"
 import jwt from 'jsonwebtoken';
+import { escape, unescape } from "querystring";
 const keys = db.collection("key");
 const tokens = db.collection("token");
 
@@ -345,9 +346,10 @@ export const sha = function(text){
 }
 
 export const to64 = function(text){
-  return btoa(text).replace(/\+/g, "-")
+  return btoa(escape(text)).replace(/\+/g, "-")
   .replace(/\//g, "_");
 }
 export const from64 = function(text){
-  return atob(text.replace(/-/g, "+").replace(/_/g, "/"))
+  return unescape(atob(text.replace(/-/g, "+")
+  .replace(/_/g, "/")))
 }
