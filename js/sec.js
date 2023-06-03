@@ -346,13 +346,13 @@ export const sha = function(text){
 }
 
 export const to64 = function(text){
-  return btoa(unescape(encodeURIComponent(text)).replace(/\+/g, "-")
+  return btoa(escape(encodeURIComponent(text)).replace(/\+/g, "-")
   .replace(/\//g, "_"))
 }
 export const from64 = function(text){
   let resp = ""
   try{
-    resp = decodeURIComponent(escape(atob(text.replace(/-/g, "+")
+    resp = decodeURIComponent(unescape(atob(text.replace(/-/g, "+")
     .replace(/_/g, "/"))))
   }
   catch{
@@ -361,6 +361,6 @@ export const from64 = function(text){
   return resp
 }
 export const from64old = function(text){
-  return escape(atob(text.replace(/-/g, "+")
+  return unescape(atob(text.replace(/-/g, "+")
   .replace(/_/g, "/")))
 }
